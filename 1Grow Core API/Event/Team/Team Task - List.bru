@@ -1,0 +1,31 @@
+meta {
+  name: Team Task - List
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{base-url}}/events/{{eventId}}/team/{{memberIdP}}/tasks
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 20
+  status: TODO
+}
+
+vars:pre-request {
+  eventId: 97330d56-033e-4e25-b834-88bf255049d2
+  memberIdP: 1c1a3f2e-7d84-4f6a-9b25-6f0c2d4e8a11
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,37 @@
+meta {
+  name: Assign Tasks
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base-url}}/bulk/tasks
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "batchId": "{{batchId}}",
+    "tasks": [
+      {
+        "title": "Math Homework",
+        "description": "Complete chapter 5 exercises",
+        "type": "HOMEWORK",
+        "dueDate": "2026-09-16T00:00:00.000Z",
+        "maxScore": 100,
+        "allowLateSubmission": "true"
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

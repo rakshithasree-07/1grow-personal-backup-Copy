@@ -1,0 +1,92 @@
+meta {
+  name: Category - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/finance/expense-categories
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+params:query {
+  search: 
+  isActive: 
+}
+
+docs {
+  ━━━ REQUEST ━━━
+
+  GET /finance/expense-categories
+  GET /finance/expense-categories?search=office
+  GET /finance/expense-categories?isActive=true
+  GET /finance/expense-categories?search=off&isActive=true
+
+  Filters:
+  • search    → matches category name or code (case-insensitive)
+  • isActive  → true / false
+
+  Lists categories for the authed user's tenant only.
+
+
+  ━━━ SUCCESS ━━━
+
+  {
+    "message": "Expense categories retrieved",
+    "data": [
+      {
+        "id": "c1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "name": "Office Supplies",
+        "code": "OFFICE",
+        "description": "Stationery, printing, and general office purchases",
+        "isActive": true,
+        "createdAt": "2026-09-03T09:00:00.000Z",
+        "updatedAt": "2026-09-03T09:00:00.000Z",
+        "_count": { "expenses": 3 }
+      },
+      {
+        "id": "c2b3c4d5-6e7f-8a9b-0c1d-2e3f4a5b6c7d",
+        "name": "Salary & Benefits",
+        "code": "SALARY",
+        "description": "Staff remuneration and benefits",
+        "isActive": true,
+        "createdAt": "2026-08-01T10:00:00.000Z",
+        "updatedAt": "2026-08-01T10:00:00.000Z",
+        "_count": { "expenses": 12 }
+      }
+    ]
+  }
+
+  ━━━ SUCCESS — empty list ━━━
+
+  {
+    "message": "Expense categories retrieved",
+    "data": []
+  }
+
+  ━━━ ERROR RESPONSES ━━━
+
+  401 — Unauthorized:
+
+  {
+    "message": "Unauthorized",
+    "data": null
+  }
+
+  403 — Forbidden:
+
+  {
+    "message": "Forbidden resource",
+    "data": null
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

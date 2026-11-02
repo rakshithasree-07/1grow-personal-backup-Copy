@@ -1,0 +1,298 @@
+meta {
+  name: Team - Bulk Assign Members
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base-url}}/events/team/bulk
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+    "teamMembers": [
+      {
+        "userId": "user-uuid-1",
+        "role": "COORDINATOR",
+        "notes": "Main event coordinator"
+      },
+      {
+        "userId": "user-uuid-2",
+        "role": "SOUND_ENGINEER",
+        "notes": "Responsible for sound setup and operation"
+      },
+      {
+        "userId": "user-uuid-3",
+        "role": "LIGHTING_TECHNICIAN",
+        "notes": "Responsible for stage lighting"
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  ## Audit logging
+  Every successful assignment writes its own `CREATE` audit log for entity
+  `EventTeamMember` (entityId = the new team member id).
+
+  The request as a whole always writes one summary audit log for entity
+  `EventTeamMember` with entityId `bulk`:
+
+  ```json
+  {
+    "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+    "total": 3,
+    "successful": 2,
+    "failed": 1,
+    "failures": [
+      { "userId": "invalid-user-uuid", "role": "COORDINATOR", "error": "User not found" }
+    ]
+  }
+  ```
+
+  `failures` is only present when at least one member failed, so a fully failed
+  request is still traceable in the audit log. View it under
+  `Security > Audit Logs` filtered by entity `EventTeamMember`.
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events/team/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+        "teamMembers": [
+          {
+            "userId": "user-uuid-1",
+            "role": "COORDINATOR",
+            "notes": "Main event coordinator"
+          },
+          {
+            "userId": "user-uuid-2",
+            "role": "SOUND_ENGINEER",
+            "notes": "Responsible for sound setup and operation"
+          },
+          {
+            "userId": "user-uuid-3",
+            "role": "LIGHTING_TECHNICIAN",
+            "notes": "Responsible for stage lighting"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 53598d86-7257-4b1f-8624-4b9484a2396f
+      x-correlation-id: 53598d86-7257-4b1f-8624-4b9484a2396f
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"87d-GVvXk/yrLSLEygTFArTpTL7EhIE"
+      date: Sun, 06 Sep 2026 14:48:09 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Bulk assignment completed: 3 successful, 0 failed",
+          "data": {
+            "total": 3,
+            "successful": 3,
+            "failed": 0,
+            "results": [
+              {
+                "success": true,
+                "userId": "user-uuid-1",
+                "role": "COORDINATOR"
+              },
+              {
+                "success": true,
+                "userId": "user-uuid-2",
+                "role": "SOUND_ENGINEER"
+              },
+              {
+                "success": true,
+                "userId": "user-uuid-3",
+                "role": "LIGHTING_TECHNICIAN"
+              }
+            ]
+          },
+          "timestamp": "2026-09-06T14:48:09.197Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-Error-UserNotFound
+  
+  request: {
+    url: {{base-url}}/events/team/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+        "teamMembers": [
+          {
+            "userId": "invalid-user-uuid",
+            "role": "COORDINATOR",
+            "notes": "Main event coordinator"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "Bulk assignment completed: 0 successful, 1 failed",
+          "data": {
+            "total": 1,
+            "successful": 0,
+            "failed": 1,
+            "results": [
+              {
+                "success": false,
+                "userId": "invalid-user-uuid",
+                "role": "COORDINATOR",
+                "error": "User not found"
+              }
+            ]
+          },
+          "timestamp": "2026-09-06T14:48:09.197Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-Error-OverAllocation
+  
+  request: {
+    url: {{base-url}}/events/team/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+        "teamMembers": [
+          {
+            "userId": "user-uuid-1",
+            "role": "COORDINATOR",
+            "notes": "Already assigned to 5 active events"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "Bulk assignment completed: 0 successful, 1 failed",
+          "data": {
+            "total": 1,
+            "successful": 0,
+            "failed": 1,
+            "results": [
+              {
+                "success": false,
+                "userId": "user-uuid-1",
+                "role": "COORDINATOR",
+                "error": "User is already assigned to 5 active events. Maximum allowed is 5."
+              }
+            ]
+          },
+          "timestamp": "2026-09-06T14:48:09.197Z"
+        }
+      '''
+    }
+  }
+}

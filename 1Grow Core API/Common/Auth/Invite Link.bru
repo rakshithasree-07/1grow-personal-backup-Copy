@@ -1,0 +1,175 @@
+meta {
+  name: Invite Link
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base-url}}/auth/invite
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "name": "Ravi Kumar",
+    "phone": "9200000014",
+    "email": "ravi.kumar2@test.com",
+    "role": "STAFF"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200 Success
+  
+  request: {
+    url: {{base-url}}/auth/invite
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  
+    body:json: {
+      {
+        "name": "Ravi Kumar",
+        "phone": "9200000013",
+        "email": "ravi.kumar@test.com",
+        "role": "STAFF"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+      x-correlation-id: 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 420
+      etag: W/"1a4-xxxx"
+      date: Tue, 01 Sep 2026 18:30:00 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Invite link generated successfully",
+          "data": {
+            "userId": "f473a69e-1fff-4251-80bc-4cc9cc061391",
+            "name": "Ravi Kumar",
+            "email": "ravi.kumar@test.com",
+            "phone": "9200000013",
+            "role": "STAFF",
+            "status": "PENDING",
+            "inviteLink": "https://app.1grow.app/auth/set-password?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.invite-token-sample"
+          },
+          "timestamp": "2026-09-01T18:30:00.123Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 409 Already exists
+  
+  request: {
+    url: {{base-url}}/auth/invite
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  
+    body:json: {
+      {
+        "name": "Ravi Kumar",
+        "phone": "9200000013",
+        "email": "ravi.kumar@test.com",
+        "role": "STAFF"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+      x-correlation-id: 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 190
+      etag: W/"be-xxxx"
+      date: Tue, 01 Sep 2026 18:31:00 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 409
+      text: Conflict
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 409,
+          "message": "A user with this phone or email already exists",
+          "data": null,
+          "timestamp": "2026-09-01T18:31:00.123Z"
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,20 @@
+meta {
+  name: Certificate - Generate PDF
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{base-url}}/class/certificates/00000000-0000-4000-8000-000000000014/generate-pdf
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

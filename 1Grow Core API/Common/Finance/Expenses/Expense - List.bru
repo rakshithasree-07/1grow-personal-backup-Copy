@@ -1,0 +1,96 @@
+meta {
+  name: Expense - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/finance/expenses
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+params:query {
+  page: 1
+  pageSize: 20
+  search: 
+  payeeCategory: 
+  categoryId: 
+  branchId: 
+  status: 
+  dateFrom: 
+  dateTo: 
+  isActive: 
+  sortBy: createdAt
+  sortDir: desc
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Returns ONLY expenses belonging to the authed user's tenant
+  (tenant is taken from auth context, never from query).
+
+
+  ━━━ Filter by payee category ━━━
+
+  GET /finance/expenses?payeeCategory=VENDOR
+
+  ━━━ Filter by status (multiple allowed) ━━━
+
+  GET /finance/expenses?status=PENDING,APPROVED
+
+  ━━━ Filter by date range ━━━
+
+  GET /finance/expenses?dateFrom=2026-09-01&dateTo=2026-09-30
+
+  ━━━ Search by title / payee / reference ━━━
+
+  GET /finance/expenses?search=electricity
+
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Expenses retrieved",
+    "items": [
+      {
+        "id": "e1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "title": "Office Supplies - Staplers & Files",
+        "payeeCategory": "VENDOR",
+        "payeeName": "Ravi Stationers",
+        "amount": 1200,
+        "currency": "INR",
+        "mode": "CASH",
+        "status": "PAID",
+        "expenseDate": "2026-09-03T00:00:00.000Z",
+        "branch": { "id": "b1a2b3c4", "name": "Main Branch" },
+        "category": { "id": "c1a2b3c4", "name": "Office Supplies" },
+        "vendorRef": { "id": "v1a2b3c4", "vendorName": "Ravi Stationers" },
+        "creator": { "id": "u1a2b3c4", "name": "Hapsiba" }
+      },
+      {
+        "id": "e2b3c4d5-6e7f-8a9b-0c1d-2e3f4a5b6c7d",
+        "title": "Electricity Bill",
+        "payeeCategory": "OTHER",
+        "payeeName": "State Electricity Board",
+        "amount": 4300,
+        "status": "PAID",
+        "expenseDate": "2026-08-05T00:00:00.000Z"
+      }
+    ],
+    "total": 2,
+    "page": 1,
+    "pageSize": 20,
+    "totalPages": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

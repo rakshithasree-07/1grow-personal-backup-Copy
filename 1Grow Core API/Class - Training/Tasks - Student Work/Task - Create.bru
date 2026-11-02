@@ -1,0 +1,33 @@
+meta {
+  name: Task - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/class/tasks
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "batchId": "00000000-0000-4000-8000-000000000002",
+    "title": "Kathak Footwork Practice",
+    "description": "Practice tatkaar and record a video submission",
+    "type": "HOMEWORK",
+    "dueDate": "2026-09-16",
+    "maxScore": 10,
+    "allowLateSubmission": true
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

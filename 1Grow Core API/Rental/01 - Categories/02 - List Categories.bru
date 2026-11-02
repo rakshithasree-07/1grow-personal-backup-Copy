@@ -1,0 +1,235 @@
+meta {
+  name: 02 - List Categories
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/rental/categories
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.httpStatusCode: eq 200
+  res.body.data: isDefined
+}
+
+script:post-response {
+  const list = res.body?.data;
+  if (Array.isArray(list) && list.length > 0) {
+    bru.setVar('createdCategoryId', list[0].id);
+    bru.setEnvVar('createdCategoryId', list[0].id);
+  }
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/categories
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: f541dccf-b8d8-4c49-9b4c-62dabb0d8395
+      x-correlation-id: f541dccf-b8d8-4c49-9b4c-62dabb0d8395
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"439-WPswa6VFG1Vz6wUbsTDjRZ0qsSE"
+      date: Thu, 10 Sep 2026 16:26:21 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental categories retrieved successfully",
+          "timestamp": "2026-09-10T16:26:21.734Z",
+          "data": [
+            {
+              "id": "b432dcf5-6964-4115-bf50-3ce2626ff076",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "name": "Cinema & Optical Equipment",
+              "description": "Updated: Comprehensive cine cameras, anamorphic lenses, and professional camera support",
+              "isActive": true,
+              "createdAt": "2026-09-10T15:45:28.062Z",
+              "updatedAt": "2026-09-10T16:01:40.915Z",
+              "_count": {
+                "items": 2
+              }
+            },
+            {
+              "id": "91872974-f8a0-4ae7-bb95-568be7f8b785",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "name": "Cinema & Optical Gear",
+              "description": "Professional cinema line cameras and premium cine optics",
+              "isActive": true,
+              "createdAt": "2026-09-10T15:57:28.182Z",
+              "updatedAt": "2026-09-10T15:57:28.182Z",
+              "_count": {
+                "items": 0
+              }
+            },
+            {
+              "id": "087edcdf-291e-43c1-b58a-0fdc427a2839",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "name": "Cinema Lenses",
+              "description": "Prime and zoom cine lenses for production",
+              "isActive": true,
+              "createdAt": "2026-09-10T14:56:19.459Z",
+              "updatedAt": "2026-09-10T14:56:19.459Z",
+              "_count": {
+                "items": 0
+              }
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/categories
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 0aabd137-f2ba-467e-a903-f10d9fa5ec65
+      x-correlation-id: 0aabd137-f2ba-467e-a903-f10d9fa5ec65
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"565-NgvSECE2IHjmqMHdYoTrBRza32w"
+      date: Fri, 11 Sep 2026 16:56:26 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental categories retrieved successfully",
+          "timestamp": "2026-09-11T16:56:26.508Z",
+          "data": [
+            {
+              "id": "c6009f74-71dd-4337-8173-f61932bc539b",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "name": "Cinema",
+              "description": "Professional cinema line cameras and premium cine optics",
+              "isActive": true,
+              "createdAt": "2026-09-11T16:56:11.779Z",
+              "updatedAt": "2026-09-11T16:56:11.779Z",
+              "_count": {
+                "items": 0
+              }
+            },
+            {
+              "id": "b432dcf5-6964-4115-bf50-3ce2626ff076",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "name": "Cinema & Optical Equipment",
+              "description": "Updated: Comprehensive cine cameras, anamorphic lenses, and professional camera support",
+              "isActive": true,
+              "createdAt": "2026-09-10T15:45:28.062Z",
+              "updatedAt": "2026-09-10T16:27:16.804Z",
+              "_count": {
+                "items": 3
+              }
+            },
+            {
+              "id": "91872974-f8a0-4ae7-bb95-568be7f8b785",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "name": "Cinema & Optical Gear",
+              "description": "Professional cinema line cameras and premium cine optics",
+              "isActive": true,
+              "createdAt": "2026-09-10T15:57:28.182Z",
+              "updatedAt": "2026-09-10T15:57:28.182Z",
+              "_count": {
+                "items": 0
+              }
+            },
+            {
+              "id": "087edcdf-291e-43c1-b58a-0fdc427a2839",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "name": "Cinema Lenses",
+              "description": "Prime and zoom cine lenses for production",
+              "isActive": true,
+              "createdAt": "2026-09-10T14:56:19.459Z",
+              "updatedAt": "2026-09-10T14:56:19.459Z",
+              "_count": {
+                "items": 0
+              }
+            }
+          ]
+        }
+      '''
+    }
+  }
+}

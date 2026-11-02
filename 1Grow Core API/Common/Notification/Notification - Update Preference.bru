@@ -1,0 +1,29 @@
+meta {
+  name: Notification - Update Preference
+  type: http
+  seq: 7
+}
+
+put {
+  url: {{base-url}}/notification/preferences
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "type": "PAYMENT",
+    "channel": "EMAIL",
+    "enabled": true
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

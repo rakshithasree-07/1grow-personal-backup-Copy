@@ -1,0 +1,28 @@
+meta {
+  name: RBAC - List Tenant Users
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{base-url}}/rbac/tenant-users
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  search: 
+  role: 
+  page: 1
+  pageSize: 20
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

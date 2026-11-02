@@ -1,0 +1,149 @@
+meta {
+  name: Service - Update
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{base-url}}/events/services/{{serviceId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Sound System Premium",
+    "code": "SND-001",
+    "description": "Premium sound system with surround speakers",
+    "category": {
+      "name": "Sound & Audio"
+    },
+    "unit": "event",
+    "unitPrice": 25000,
+    "costPrice": 18000,
+    "taxRate": 18,
+    "duration": {
+      "value": 2,
+      "unit": "day"
+    },
+    "isActive": true,
+    "branch": {
+      "id": "c510fb62-dfa7-4d75-a22c-0df4bcff5703"
+    }
+  }
+}
+
+vars:pre-request {
+  serviceId: 4534bfe6-6524-4cda-aa27-a209573011a3
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events/services/{{serviceId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Sound System Premium",
+        "code": "SND-001",
+        "description": "Premium sound system with surround speakers",
+        "category": {
+          "name": "Sound & Audio"
+        },
+        "unit": "event",
+        "unitPrice": 25000,
+        "costPrice": 18000,
+        "taxRate": 18,
+        "duration": {
+          "value": 2,
+          "unit": "day"
+        },
+        "isActive": true,
+        "branch": {
+          "id": "c510fb62-dfa7-4d75-a22c-0df4bcff5703"
+        }
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 81424828-d021-437d-8e7a-96292b2ef608
+      x-correlation-id: 81424828-d021-437d-8e7a-96292b2ef608
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 17
+      content-type: application/json; charset=utf-8
+      content-length: 602
+      etag: W/"25a-N2qLoGj3uL8jiVEMkfsL2lSUUfo"
+      date: Mon, 07 Sep 2026 10:55:26 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event service updated successfully",
+          "data": {
+            "id": "cbf6a499-718f-49cc-a1d3-f08bad0b50f6",
+            "tenantId": "12bf3d33-1f28-4ec2-b2d7-17a8534e87f3",
+            "branchId": "c510fb62-dfa7-4d75-a22c-0df4bcff5703",
+            "code": "SND-001",
+            "name": "Sound System Premium",
+            "categoryName": "Sound & Audio",
+            "description": "Premium sound system with surround speakers",
+            "unitPrice": "25000",
+            "costPrice": "18000",
+            "taxRate": "18",
+            "durationValue": 2,
+            "durationUnit": "day",
+            "unit": "event",
+            "isActive": true,
+            "createdAt": "2026-09-07T10:49:31.503Z",
+            "updatedAt": "2026-09-07T10:55:25.933Z"
+          },
+          "timestamp": "2026-09-07T10:55:26.056Z"
+        }
+      '''
+    }
+  }
+}

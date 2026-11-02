@@ -1,0 +1,88 @@
+meta {
+  name: Security - Audit Logs - Certificate
+  type: http
+  seq: 23
+}
+
+get {
+  url: {{base-url}}/security/audit-logs
+  body: none
+  auth: inherit
+}
+
+docs {
+  # Certificate audit records
+
+  Filtered view of the audit trail for the `Certificate` entity.
+
+  **Roles:** `SUPER_ADMIN`, `OWNER`, `BRANCH_MANAGER`
+
+  ## Written by
+
+  `POST /class/certificates`, `POST /class/certificates/generate-bulk`, `/:id/reissue`, `/:id/revoke`, `POST /:id/generate-pdf`, `GET /:id/download`
+
+  PDF generation and `GET /:id/download` both log `EXPORT`; download carries
+  `newValues.format` = `download-data` plus `certNumber` / `courseName`. Bulk
+  generation logs `CREATE` with `entityId` = `generate-bulk:<count>` and the real
+  ids in `newValues.certificateIds`.
+
+  A `POST /class/certificates/verify` scan does **not** appear here: it logs the
+  `CertificateVerification` entity, which has its own request.
+
+  `entity` is an exact, case-insensitive match. The previous partial match also
+  returned `CertificateTemplate` rows, which is why this request needed a
+  client-side filter; `CertificateTemplate` has its own request. Use
+  `entityContains` for the old partial behaviour, or see
+  `Security - Audit Logs - Class Module` for all seven Class entities in one
+  request.
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 100
+  entity: Certificate
+}
+
+assert {
+  res.status: eq 200
+  res.body.message: eq "Audit logs fetched"
+}
+
+script:post-response {
+  const ENTITY = 'Certificate';
+  const rows = Array.isArray(res.body?.data) ? res.body.data : [];
+  const meta = res.body?.meta;
+
+  console.log(`${ENTITY}: ${rows.length} of ${meta?.total ?? '?'} records (page ${meta?.page ?? '?'}/${meta?.totalPages ?? '?'})`);
+
+  const bulk = rows.filter((row) => (row.entityId ?? '').startsWith('generate-bulk:'));
+  if (bulk.length) console.log(`  note: ${bulk.length} bulk generation row(s) use a synthetic entityId of generate-bulk:<count>`);
+
+  const exports = rows.filter((row) => row.action === 'EXPORT');
+  if (exports.length) console.log(`  note: ${exports.length} EXPORT row(s) (PDF generation and download) have no entityId by design`);
+
+  rows.forEach((row) => {
+    const changes = row.oldValues || row.newValues ? ' [before/after recorded]' : '';
+    console.log(`  ${row.action.padEnd(11)} ${String(row.entityId ?? '(no entityId)').padEnd(40)} ${row.createdAt}${changes}`);
+  });
+  if (!rows.length) console.log(`  -> no ${ENTITY} records; run the matching /class/* request first`);
+
+  if (meta && meta.total > rows.length) {
+    console.log(`  -> ${meta.total - rows.length} more record(s) on later pages; increase page`);
+  }
+
+  const newest = rows[0];
+  if (newest) {
+    bru.setVar('latestCertificateAuditId', newest.id);
+    bru.setVar('latestCertificateAuditEntityId', newest.entityId);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,112 @@
+meta {
+  name: 07 - Transition Status to QUOTATION_SENT
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{base-url}}/rental/enquiries/{{createdEnquiryId}}/status
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "status": "QUOTATION_SENT",
+    "notes": "Formal commercial quotation shared with producer"
+  }
+}
+
+assert {
+  res.status: in [200, 201]
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/enquiries/{{createdEnquiryId}}/status
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "status": "QUOTATION_SENT",
+        "notes": "Formal commercial quotation shared with producer"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: a55b134a-9bf4-493f-b1d9-1e75ad268ca4
+      x-correlation-id: a55b134a-9bf4-493f-b1d9-1e75ad268ca4
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 21
+      content-type: application/json; charset=utf-8
+      content-length: 844
+      etag: W/"34c-6iZasbirGjjRUZDlgXOuubCb9WQ"
+      date: Thu, 10 Sep 2026 16:43:59 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental enquiry status updated successfully",
+          "timestamp": "2026-09-10T16:43:59.515Z",
+          "data": {
+            "id": "a0e2b84d-4e3f-4d5f-80ff-d05f178f3857",
+            "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+            "branchId": null,
+            "customerName": "Karthik Media Productions",
+            "phone": "+919840123456",
+            "email": "karthik@mediapro.com",
+            "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+            "requirements": "Updated: Client requested 2 extra high-capacity V-Mount batteries",
+            "eventDate": "2026-11-10T00:00:00.000Z",
+            "eventEndDate": "2026-11-15T00:00:00.000Z",
+            "quantity": 2,
+            "source": "WALK_IN",
+            "notes": "Contacted director of photography. Confirmed camera kit specification.\nFormal commercial quotation shared with producer",
+            "status": "QUOTATION_SENT",
+            "assignedTo": null,
+            "leadId": null,
+            "createdAt": "2026-09-10T16:39:16.457Z",
+            "updatedAt": "2026-09-10T16:43:59.100Z"
+          }
+        }
+      '''
+    }
+  }
+}

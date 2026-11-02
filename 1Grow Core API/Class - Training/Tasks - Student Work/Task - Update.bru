@@ -1,0 +1,29 @@
+meta {
+  name: Task - Update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base-url}}/class/tasks/{{id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Kathak Footwork Practice (Updated)",
+    "dueDate": "2026-09-18",
+    "maxScore": 20
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

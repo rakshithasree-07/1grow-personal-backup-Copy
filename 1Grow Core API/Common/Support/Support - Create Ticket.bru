@@ -1,0 +1,31 @@
+meta {
+  name: Support - Create Ticket
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base-url}}/support/tickets
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "subject": "Unable to upload certificate",
+    "description": "Getting an error while uploading certificate file",
+    "categoryId": "category-uuid",
+    "priority": "MEDIUM",
+    "module": "CERTIFICATES"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

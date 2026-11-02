@@ -1,0 +1,29 @@
+meta {
+  name: Lead - Convert
+  type: http
+  seq: 14
+}
+
+post {
+  url: {{base-url}}/leads/{{id}}/convert
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "studentName": "Ravi Kumar",
+    "courseId": "course-uuid",
+    "batchId": "batch-uuid"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

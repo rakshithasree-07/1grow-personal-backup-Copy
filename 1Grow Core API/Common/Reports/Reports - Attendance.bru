@@ -1,0 +1,21 @@
+meta {
+  name: Reports - Attendance
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base-url}}/reports/attendance
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

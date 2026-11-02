@@ -1,0 +1,28 @@
+meta {
+  name: Initiate Refund
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base-url}}/billing/payments/refund
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "paymentId": "payment-uuid",
+    "amount": 2500,
+    "reason": "Course cancelled"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Support - List Tickets
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/support/tickets
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 20
+  status: 
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

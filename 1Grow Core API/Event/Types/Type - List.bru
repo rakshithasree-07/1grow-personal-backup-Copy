@@ -1,0 +1,86 @@
+meta {
+  name: Type - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/events/types
+  body: none
+  auth: inherit
+}
+
+params:query {
+  search: 
+  page: 1
+  pageSize: 10
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Active Types
+  
+  request: {
+    url: {{base-url}}/events/types
+    method: GET
+    mode: none
+    params:query: {
+      search: 
+      page: 1
+      pageSize: 10
+    }
+  
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": [
+            {
+              "id": "type-id",
+              "name": "Active Event",
+              "description": "Active type",
+              "isActive": true,
+              "createdAt": "2026-09-01T00:00:00.000Z",
+              "updatedAt": "2026-09-05T00:00:00.000Z",
+              "_count": {
+                "events": 0
+              }
+            }
+          ],
+          "timestamp": "2026-09-07T08:26:04.258Z",
+          "meta": {
+            "page": 1,
+            "pageSize": 10,
+            "total": 1,
+            "totalPages": 1
+          }
+        }
+      '''
+    }
+  }
+}

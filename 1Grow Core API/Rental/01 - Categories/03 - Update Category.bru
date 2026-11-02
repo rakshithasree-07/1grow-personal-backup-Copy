@@ -1,0 +1,173 @@
+meta {
+  name: 03 - Update Category
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{base-url}}/rental/categories/{{createdCategoryId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "description": "Updated: Comprehensive cine cameras, anamorphic lenses, and professional camera support"
+  }
+}
+
+assert {
+  res.status: in [200, 201]
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/categories/{{createdCategoryId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "description": "Updated: Comprehensive cine cameras, anamorphic lenses, and professional camera support"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 186823fb-83b2-48b2-b03b-7989d9115e05
+      x-correlation-id: 186823fb-83b2-48b2-b03b-7989d9115e05
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 447
+      etag: W/"1bf-G6ZOOH3JBuCdqc+ztJrujs0pp5A"
+      date: Thu, 10 Sep 2026 16:26:46 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental category updated successfully",
+          "timestamp": "2026-09-10T16:26:46.286Z",
+          "data": {
+            "id": "b432dcf5-6964-4115-bf50-3ce2626ff076",
+            "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+            "name": "Cinema & Optical Equipment",
+            "description": "Updated: Comprehensive cine cameras, anamorphic lenses, and professional camera support",
+            "isActive": true,
+            "createdAt": "2026-09-10T15:45:28.062Z",
+            "updatedAt": "2026-09-10T16:26:45.881Z"
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/categories/{{createdCategoryId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "description": "Updated: Comprehensive cine cameras, anamorphic lenses, and professional camera support"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 182c2f4c-04ac-418f-b7e8-bde1dacdfbc1
+      x-correlation-id: 182c2f4c-04ac-418f-b7e8-bde1dacdfbc1
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 427
+      etag: W/"1ab-HL0f5EOPpu7P9yXJnfc1xqLbhCk"
+      date: Fri, 11 Sep 2026 16:56:48 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental category updated successfully",
+          "timestamp": "2026-09-11T16:56:48.736Z",
+          "data": {
+            "id": "c6009f74-71dd-4337-8173-f61932bc539b",
+            "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+            "name": "Cinema",
+            "description": "Updated: Comprehensive cine cameras, anamorphic lenses, and professional camera support",
+            "isActive": true,
+            "createdAt": "2026-09-11T16:56:11.779Z",
+            "updatedAt": "2026-09-11T16:56:48.255Z"
+          }
+        }
+      '''
+    }
+  }
+}

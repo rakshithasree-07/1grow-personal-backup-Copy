@@ -1,0 +1,215 @@
+meta {
+  name: Invoice - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/invoices
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "studentId": "{{studentId}}",
+    "description": "Bharatanatyam - Monthly Fee",
+    "items": [
+      {
+        "description": "Tuition Fee - Bharatanatyam",
+        "quantity": 1,
+        "price": 25000
+      },
+      {
+        "description": "Practice Room Rental",
+        "quantity": 4,
+        "price": 500
+      }
+    ],
+    "discount": 1000,
+    "taxPercent": 18,
+    "dueDate": "2026-10-01",
+    "installments": 2,
+    "notes": "Monthly fee for September 2026",
+    "initialStatus": "SENT"
+  }
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  The Create Invoice API works across ALL tenant types. Only these are required:
+  • At least ONE of `clientId` OR `studentId` (who is being billed)
+  • Either `items[]` OR `amount` (positive billable value)
+
+  Everything else is optional and auto-computed:
+  • `invoiceNumber` → auto-generated (PREFIX-TENANT-TIMESTAMP)
+  • `subtotal`/`tax`/`total` → auto-calculated from items + tenant tax config
+  • `dueDate` → defaults to tenant's configured payment window (30 days)
+  • `currency` → defaults to INR
+
+  Choose the right identifier based on who you're billing:
+  • Training (students)  → use `studentId`
+  • Rental / Events / Vendors / other → use `clientId`
+
+
+  ═════════════════════════════════════════════════════════════════
+  🎓 1) TRAINING TENANT — bill a STUDENT (studentId)
+  ═════════════════════════════════════════════════════════════════
+
+  Minimum viable request (only studentId + amount):
+
+  {
+    "studentId": "{{studentId}}",
+    "amount": 5000,
+    "description": "Annual registration fee"
+  }
+
+  Full request with line items, discount, tax:
+
+  {
+    "studentId": "{{studentId}}",
+    "description": "Bharatanatyam - Monthly Fee",
+    "items": [
+      { "description": "Tuition Fee - Bharatanatyam", "quantity": 1, "price": 25000 },
+      { "description": "Practice Room Rental", "quantity": 4, "price": 500 }
+    ],
+    "discount": 1000,
+    "taxPercent": 18,
+    "dueDate": "2026-10-01",
+    "installments": 2,
+    "notes": "Monthly fee for September 2026",
+    "initialStatus": "SENT"
+  }
+
+
+  ═════════════════════════════════════════════════════════════════
+  🏢 2) RENTAL TENANT — bill a CLIENT (clientId)
+  ═════════════════════════════════════════════════════════════════
+
+  Minimum viable request:
+
+  {
+    "clientId": "{{clientId}}",
+    "amount": 15000,
+    "description": "Banquet hall rental - 1 day"
+  }
+
+  Full request with itemised charges:
+
+  {
+    "clientId": "{{clientId}}",
+    "description": "Banquet Hall Rental",
+    "items": [
+      { "description": "Hall Rent - Sat (4 hrs)", "quantity": 1, "price": 12000 },
+      { "description": "Audio System", "quantity": 1, "price": 2000 },
+      { "description": "Cleaning / Security", "quantity": 1, "price": 1000 }
+    ],
+    "taxPercent": 18,
+    "dueDate": "2026-10-05",
+    "notes": "Deposit refundable on no-damage condition"
+  }
+
+
+  ═════════════════════════════════════════════════════════════════
+  🎭 3) EVENTS TENANT — bill a CLIENT (clientId)
+  ═════════════════════════════════════════════════════════════════
+
+  Minimum viable request:
+
+  {
+    "clientId": "{{clientId}}",
+    "amount": 40000,
+    "description": "Wedding photography package"
+  }
+
+  Full request with advance balance broken into installments:
+
+  {
+    "clientId": "{{clientId}}",
+    "description": "Corporate Event - Stage & Lighting",
+    "items": [
+      { "description": "Stage Decoration", "quantity": 1, "price": 30000 },
+      { "description": "Lighting Setup", "quantity": 1, "price": 12000 },
+      { "description": "Event Staff (4)", "quantity": 4, "price": 2000 }
+    ],
+    "discount": 5000,
+    "taxPercent": 18,
+    "installments": 3,
+    "dueDate": "2026-11-15",
+    "notes": "Balance 50% before event, 50% after completion",
+    "initialStatus": "SENT"
+  }
+
+
+  ═════════════════════════════════════════════════════════════════
+  ✅ SAMPLE RESPONSE
+  ═════════════════════════════════════════════════════════════════
+
+  {
+    "message": "Invoice created",
+    "data": {
+      "id": "f1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "tenantId": "t1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "branchId": "b1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "studentId": "s1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "clientId": null,
+      "invoiceNumber": "INV-t1a2b3-1725360600000",
+      "description": "Bharatanatyam - Monthly Fee",
+      "subtotal": 27000,
+      "discount": 1000,
+      "tax": 4680,
+      "totalAmount": 30680,
+      "paidAmount": 0,
+      "dueAmount": 30680,
+      "currency": "INR",
+      "status": "SENT",
+      "issueDate": "2026-09-03",
+      "dueDate": "2026-10-01",
+      "paidAt": null,
+      "notes": "Monthly fee for September 2026",
+      "items": [
+        { "id": "item-uuid-1", "description": "Tuition Fee - Bharatanatyam", "quantity": 1, "price": 25000, "total": 25000 },
+        { "id": "item-uuid-2", "description": "Practice Room Rental", "quantity": 4, "price": 500, "total": 2000 }
+      ],
+      "student": { "id": "s1a2b3c4", "name": "Priya Sharma", "phone": "9876543210" },
+      "client": null,
+      "createdAt": "2026-09-03T10:30:00.000Z",
+      "updatedAt": "2026-09-03T10:30:00.000Z"
+    }
+  }
+
+
+  ═════════════════════════════════════════════════════════════════
+  📋 MANDATORY vs OPTIONAL FIELDS
+  ═════════════════════════════════════════════════════════════════
+
+  MANDATORY
+  ─────────
+  • clientId OR studentId   → who is being billed (at least one)
+  • items[] OR amount       → the billable value (at least one)
+
+  OPTIONAL (auto-computed if omitted)
+  ─────────────────────────
+  • invoiceNumber  → auto-generated
+  • subtotal/tax/total → auto-calculated from items + tenant config
+  • dueDate        → defaults to tenant window (30 days)
+  • currency       → defaults to INR
+  • branchId       → defaults to logged-in user's branch
+
+  OPTIONAL (feature flags)
+  ────────────────────────
+  • discount, taxPercent, taxAmount   → pricing modifiers
+  • installments                      → auto-creates installment schedule
+  • initialStatus: "DRAFT" | "SENT"   → start state
+  • notes, description                → context for the invoice
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

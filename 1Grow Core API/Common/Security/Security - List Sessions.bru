@@ -1,0 +1,27 @@
+meta {
+  name: Security - List Sessions
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/security/sessions
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 20
+  isActive: true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

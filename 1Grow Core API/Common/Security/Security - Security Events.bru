@@ -1,0 +1,26 @@
+meta {
+  name: Security - Security Events
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{base-url}}/security/security-events
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 20
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

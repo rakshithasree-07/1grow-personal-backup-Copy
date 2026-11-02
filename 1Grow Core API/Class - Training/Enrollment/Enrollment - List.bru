@@ -1,0 +1,32 @@
+meta {
+  name: Enrollment - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/enrollments
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  pageSize: 10
+  search: 
+  status: 
+  batchId: {{batchId}}
+  courseId: {{courseId}}
+  studentId: {{studentId}}
+  sortBy: createdAt
+  sortDir: desc
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

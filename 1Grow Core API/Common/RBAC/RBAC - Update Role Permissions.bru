@@ -1,0 +1,27 @@
+meta {
+  name: RBAC - Update Role Permissions
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{base-url}}/rbac/roles/{{role}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "permissions": ["STUDENT.READ", "ENROLLMENT.WRITE"]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

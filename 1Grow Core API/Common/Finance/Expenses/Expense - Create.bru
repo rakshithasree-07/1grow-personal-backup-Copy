@@ -1,0 +1,130 @@
+meta {
+  name: Expense - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/finance/expenses
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "title": "Office Supplies - Staplers & Files",
+    "description": "Monthly office stationery purchase",
+    "categoryId": "{{expenseCategoryId}}",
+    "payeeCategory": "VENDOR",
+    "vendorRefId": "{{vendorId}}",
+    "amount": 1200,
+    "mode": "CASH",
+    "reference": "CASH-RCPT-102",
+    "expenseDate": "2026-09-03",
+    "status": "PAID",
+    "notes": "Purchased from local stationery vendor"
+  }
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Create an expense. `title` + `amount` are the only mandatory fields.
+  `payeeCategory` decides WHO the money goes to (see categories below),
+  and you can optionally link a real record via the matching refId.
+
+  All `create`/`update`/`deactivate` operations are audit-logged and
+  tenant-scoped (the authed user's tenant is used, never from body).
+
+
+  ━━━ PAYEE CATEGORIES ━━━
+
+  payeeCategory   | optional refId     | Meaning
+  ----------------|--------------------|---------------------------
+  USER            | userRefId          | Any platform user
+  CLIENT          | clientRefId        | Rental / event client
+  STAFF           | userRefId          | Staff member
+  MANAGER         | userRefId          | Branch manager / owner
+  STUDENT         | studentRefId       | Student refund / payment
+  VENDOR          | vendorRefId        | Vendor services/goods
+  OTHER           | (none)             | Manual / unknown payee
+
+  Set at most ONE refId per expense. Supply `payeeName` OR let the API
+  auto-fill it from the linked record.
+
+
+  ━━━ Example A — Pay a VENDOR ━━━
+
+  {
+    "title": "Event Decoration Charges",
+    "payeeCategory": "VENDOR",
+    "vendorRefId": "{{vendorId}}",
+    "amount": 15000,
+    "mode": "UPI",
+    "reference": "UPI-778899"
+  }
+
+
+  ━━━ Example B — Staff reimbursement (USER) ━━━
+
+  {
+    "title": "Travel Reimbursement",
+    "payeeCategory": "USER",
+    "userRefId": "{{staffUserId}}",
+    "amount": 850,
+    "mode": "BANK_TRANSFER"
+  }
+
+
+  ━━━ Example C — General / OTHER ━━━
+
+  {
+    "title": "Electricity Bill",
+    "description": "Monthly shop electricity",
+    "payeeCategory": "OTHER",
+    "payeeName": "State Electricity Board",
+    "amount": 4300,
+    "mode": "BANK_TRANSFER",
+    "reference": "EB-987654321"
+  }
+
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Expense created successfully",
+    "data": {
+      "id": "e1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "tenantId": "t1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "branchId": "b1a2b3c4-5d6e-7f8a-9b0c",
+      "categoryId": "c1a2b3c4-5d6e-7f8a-9b0c",
+      "title": "Office Supplies - Staplers & Files",
+      "description": "Monthly office stationery purchase",
+      "payeeCategory": "VENDOR",
+      "payeeName": "Ravi Stationers",
+      "userRefId": null,
+      "clientRefId": null,
+      "studentRefId": null,
+      "vendorRefId": "v1a2b3c4-5d6e-7f8a-9b0c",
+      "amount": 1200,
+      "currency": "INR",
+      "mode": "CASH",
+      "reference": "CASH-RCPT-102",
+      "expenseDate": "2026-09-03T00:00:00.000Z",
+      "status": "PAID",
+      "notes": "Purchased from local stationery vendor",
+      "isActive": true,
+      "createdAt": "2026-09-03T09:00:00.000Z",
+      "updatedAt": "2026-09-03T09:00:00.000Z"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

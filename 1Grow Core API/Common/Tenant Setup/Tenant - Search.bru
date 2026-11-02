@@ -1,0 +1,23 @@
+meta {
+  name: Tenant - Search
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base-url}}/onboarding/tenants/search
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "query": "Kalai"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

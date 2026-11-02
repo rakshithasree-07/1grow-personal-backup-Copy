@@ -1,0 +1,21 @@
+meta {
+  name: Batch - Archive
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base-url}}/training/batches/{{batchId}}/archive
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

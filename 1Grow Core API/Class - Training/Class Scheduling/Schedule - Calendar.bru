@@ -1,0 +1,27 @@
+meta {
+  name: Schedule - Calendar
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/training/schedules/calendar
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+params:query {
+  month: 7
+  year: 2026
+  batchId: {{batchId}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

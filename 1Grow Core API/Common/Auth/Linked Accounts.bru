@@ -1,0 +1,20 @@
+meta {
+  name: Linked Accounts
+  type: http
+  seq: 18
+}
+
+get {
+  url: {{base-url}}/auth/linked-accounts
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

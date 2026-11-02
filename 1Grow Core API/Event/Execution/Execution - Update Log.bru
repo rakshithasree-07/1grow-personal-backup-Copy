@@ -1,0 +1,118 @@
+meta {
+  name: Execution - Update Log
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{base-url}}/events/{{eventId}}/execution/{{logId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "status": "COMPLETED",//NOT STARTED,SETUP,IN_PROGRESS,WARM_UP,COMPLETED
+    "notes": "Event execution completed successfully",
+    "photos": ["https://example.com/final1.jpg"]
+  }
+}
+
+vars:pre-request {
+  eventId: f1c54043-ea31-4b03-b282-3a65de389f66
+  logId: 9d0305cc-5de0-4cf0-8e8f-ac375c9a3695
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/execution/{{logId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "status": "COMPLETED",
+        "notes": "Event execution completed successfully",
+        "photos": ["https://example.com/final1.jpg"]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 45cba63b-531e-4d39-8cd8-e637804c8fac
+      x-correlation-id: 45cba63b-531e-4d39-8cd8-e637804c8fac
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 531
+      etag: W/"213-AR32TA5DcTqtQPzaPSxthgt0VN8"
+      date: Mon, 07 Sep 2026 15:48:02 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Execution log updated successfully",
+          "data": {
+            "id": "93cae746-3f11-40e0-a833-ac5143848b18",
+            "tenantId": "12bf3d33-1f28-4ec2-b2d7-17a8534e87f3",
+            "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+            "userId": "1b6136f2-0269-496b-9671-e69d69d35d97",
+            "status": "COMPLETED",
+            "notes": "Event execution completed successfully",
+            "photos": [
+              "https://example.com/final1.jpg"
+            ],
+            "createdAt": "2026-09-07T15:45:10.071Z",
+            "user": {
+              "id": "1b6136f2-0269-496b-9671-e69d69d35d97",
+              "name": "Lavanya"
+            }
+          },
+          "timestamp": "2026-09-07T15:48:02.301Z"
+        }
+      '''
+    }
+  }
+}

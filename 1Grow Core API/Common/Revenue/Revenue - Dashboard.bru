@@ -1,0 +1,26 @@
+meta {
+  name: Revenue - Dashboard
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/revenue/dashboard
+  body: none
+  auth: inherit
+}
+
+query {
+  startDate: 2026-01-01
+  endDate: 2026-12-31
+  branchId:
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

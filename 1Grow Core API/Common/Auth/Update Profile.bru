@@ -1,0 +1,27 @@
+meta {
+  name: Update Profile
+  type: http
+  seq: 14
+}
+
+put {
+  url: {{base-url}}/auth/profile
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "name": "John Doe",
+    "phone": "9876543210"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

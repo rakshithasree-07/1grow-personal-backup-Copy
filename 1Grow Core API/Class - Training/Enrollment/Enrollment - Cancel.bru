@@ -1,0 +1,20 @@
+meta {
+  name: Enrollment - Cancel
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{base-url}}/enrollments/00000000-0000-4000-8000-000000000007/cancel
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

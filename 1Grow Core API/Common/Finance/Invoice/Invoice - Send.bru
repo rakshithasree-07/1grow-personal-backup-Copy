@@ -1,0 +1,21 @@
+meta {
+  name: Invoice - Send
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base-url}}/invoices/{{id}}/send
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

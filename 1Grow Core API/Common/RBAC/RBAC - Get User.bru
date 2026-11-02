@@ -1,0 +1,21 @@
+meta {
+  name: RBAC - Get User
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{base-url}}/rbac/users/{{id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

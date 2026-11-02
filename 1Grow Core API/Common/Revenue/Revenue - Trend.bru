@@ -1,0 +1,27 @@
+meta {
+  name: Revenue - Trend
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base-url}}/revenue/trend
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  groupBy: month
+  startDate: 2026-01-01
+  endDate: 2026-12-31
+  branchId:
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

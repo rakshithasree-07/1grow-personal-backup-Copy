@@ -1,0 +1,115 @@
+meta {
+  name: Refresh
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{base-url}}/auth/refresh
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "refreshToken": "{{refreshToken}}"
+  }
+}
+
+vars:post-response {
+  accessToken: data.accessToken
+  refreshToken: data.refreshToken
+}
+
+script:post-response {
+  const body = res.getBody();
+  if (body.data) {
+    bru.setVar("token", body.data.accessToken);
+    bru.setVar("refreshToken", body.data.refreshToken);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 201 Success
+  
+  request: {
+    url: {{base-url}}/auth/refresh
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "refreshToken": "{{refreshToken}}"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: b37f67c3-1495-4025-9292-6e83d32f8eb0
+      x-correlation-id: b37f67c3-1495-4025-9292-6e83d32f8eb0
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 30
+      x-ratelimit-remaining: 29
+      x-ratelimit-reset: 3600
+      content-type: application/json; charset=utf-8
+      etag: W/"47b-5gtrfeqmWVUTtSijYFYOsAvqvGg"
+      date: Tue, 01 Sep 2026 17:12:30 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Token refreshed",
+          "data": {
+            "user": {
+              "id": "f473a69e-1fff-4251-80bc-4cc9cc061391",
+              "tenantId": "",
+              "branchId": null,
+              "email": "abi.cbe.dev1@gmail.com",
+              "name": "Demo 1",
+              "role": "STAFF",
+              "status": "ACTIVE",
+              "emailVerified": true,
+              "tenantName": null,
+              "tenantLogoUrl": null,
+              "tenantSlug": null,
+              "industries": []
+            },
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0NzNhNjllLTFmZmYtNDI1MS04MGJjLTRjYzljYzA2MTM5MSIsInRlbmFudElkIjoiIiwiYnJhbmNoSWQiOm51bGwsImVtYWlsIjoiYWJpLmNiZS5kZXYxQGdtYWlsLmNvbSIsIm5hbWUiOiJEZW1vIDEiLCJyb2xlIjoiU1RBRkYiLCJzdGF0dXMiOiJBQ1RJVkUiLCJlbWFpbFZlcmlmaWVkIjp0cnVlLCJ0ZW5hbnROYW1lIjpudWxsLCJ0ZW5hbnRMb2dvVXJsIjpudWxsLCJ0ZW5hbnRTbHVnIjpudWxsLCJpbmR1c3RyaWVzIjpbXSwiaWF0IjoxNzg4MjgyNzUwLCJleHAiOjE3ODgyODM2NTB9.Ke3tmsBgtldy7xmktFfCKK_VQl9DTOgtsErNCR7PoKw",
+            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmNDczYTY5ZS0xZmZmLTQyNTEtODBiYy00Y2M5Y2MwNjEzOTEiLCJqdGkiOiJjMWZhY2Y1NmQxZDU2Y2JkZTEwNzA2OThiOGQ5OTJhYyIsImlhdCI6MTc4ODI4Mjc1MCwiZXhwIjoxNzg4ODg3NTUwfQ.q158CHvEA5y5Ssd96QyDC4pisNy8RGuTsesrMj2Harc",
+            "sessionId": "330cf5a8-b30f-496c-a019-df55104bf9e2"
+          },
+          "timestamp": "2026-09-01T17:12:30.777Z"
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,46 @@
+meta {
+  name: Catalogue - Tenant Services
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base-url}}/catalog/{{slug}}/services
+  body: none
+  auth: none
+}
+
+query {
+  module: 
+}
+
+example {
+  name: success - all enabled modules
+
+  response: {
+    status: { code: 200, text: OK }
+    body: {
+      type: json
+      content: '''
+        {
+          "message": "Public tenant services retrieved",
+          "data": {
+            "tenant": { "id": "tenant-uuid", "name": "Demo Academy", "slug": "demo-academy", "industry": ["TRAINING", "RENTAL", "EVENT"], "enabledModules": ["TRAINING", "RENTAL", "EVENT"], "brand": { "primaryColor": "#2563EB" } },
+            "modules": ["TRAINING", "RENTAL", "EVENT"],
+            "services": {
+              "training": [{ "id": "course-uuid", "name": "Full Stack Development", "batches": [{ "id": "batch-uuid", "name": "Weekend Batch", "branch": { "id": "branch-uuid", "name": "Main Branch" }, "schedules": [] }], "feePlans": [] }],
+              "rental": [{ "id": "rental-item-uuid", "name": "Projector", "availableQty": 4, "rentalPrice": 2500, "depositAmount": 5000, "category": { "id": "category-uuid", "name": "AV Equipment" }, "feePlans": [] }],
+              "event": [{ "id": "event-uuid", "eventNumber": "EVT-0001", "title": "Corporate Meet", "eventType": { "id": "event-type-uuid", "name": "Corporate Event" }, "services": [], "media": [], "feePlans": [] }]
+            },
+            "feePlans": []
+          }
+        }
+      '''
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

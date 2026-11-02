@@ -1,0 +1,31 @@
+meta {
+  name: RBAC - Create Staff
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{base-url}}/rbac/users/staff
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "name": "Staff Name",
+    "email": "staff@example.com",
+    "phone": "9876543210",
+    "role": "STAFF",
+    "branchId": "branch-uuid"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

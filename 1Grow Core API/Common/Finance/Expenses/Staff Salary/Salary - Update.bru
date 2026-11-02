@@ -1,0 +1,63 @@
+meta {
+  name: Salary - Update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base-url}}/finance/salary-payouts/{{id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "baseSalary": 27000,
+    "allowances": 2000,
+    "bonus": 1500,
+    "deductions": 600,
+    "reference": "SAL-SEP2026-001-REV",
+    "status": "APPROVED",
+    "notes": "Revised with appraisal increment"
+  }
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Update salary payout. `netAmount` is recomputed automatically when any
+  salary component changes. A PAID payout cannot be modified (returns 400).
+
+  Note: `staffUserId` and payPeriod (month/year) cannot be changed after
+  creation — update the breakdown/status/mode/reference instead.
+
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Salary payout updated successfully",
+    "data": {
+      "id": "p1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "staffName": "Priya Sharma",
+      "payPeriodMonth": 9,
+      "payPeriodYear": 2026,
+      "baseSalary": 27000,
+      "allowances": 2000,
+      "bonus": 1500,
+      "deductions": 600,
+      "netAmount": 29900,
+      "status": "APPROVED",
+      "reference": "SAL-SEP2026-001-REV",
+      "updatedAt": "2026-09-03T10:00:00.000Z"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

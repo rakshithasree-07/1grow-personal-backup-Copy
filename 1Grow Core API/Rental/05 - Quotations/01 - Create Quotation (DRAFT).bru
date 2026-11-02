@@ -1,0 +1,121 @@
+meta {
+  name: 01 - Create Quotation (DRAFT)
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/rental/quotations
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "customerName": "Suriya Film Studios",
+    "customerPhone": "+919940123456",
+    "customerEmail": "suriya@studios.com",
+    "startDate": "2026-12-01",
+    "endDate": "2026-12-04",
+    "notes": "Commercial shoot for automobile brand",
+    "items": [
+      {
+        "itemId": "{{createdItemId}}",
+        "quantity": 1,
+        "unitPrice": 4500
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: in [200, 201]
+}
+
+script:post-response {
+  if (res.body?.data?.id) {
+    bru.setVar('createdQuotationId', res.body.data.id);
+    bru.setEnvVar('createdQuotationId', res.body.data.id);
+  }
+}
+
+example {
+  name: 201
+  
+  request: {
+    url: {{base-url}}/rental/quotations
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "customerName": "Suriya Film Studios",
+        "customerPhone": "+919940123456",
+        "customerEmail": "suriya@studios.com",
+        "startDate": "2026-12-01",
+        "endDate": "2026-12-04",
+        "notes": "Commercial shoot for automobile brand",
+        "items": [
+          {
+            "itemId": "{{createdItemId}}",
+            "quantity": 1,
+            "unitPrice": 4500
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 8b0c43bb-895b-4ee1-9ece-4d354bcad360
+      x-correlation-id: 8b0c43bb-895b-4ee1-9ece-4d354bcad360
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 111
+      etag: W/"6f-eDFAoDtcrybsArXVDA080AFI5P0"
+      date: Fri, 11 Sep 2026 15:31:59 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Rental quotation created successfully",
+          "timestamp": "2026-09-11T15:31:59.061Z"
+        }
+      '''
+    }
+  }
+}

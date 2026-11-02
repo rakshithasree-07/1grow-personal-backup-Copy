@@ -1,0 +1,44 @@
+meta {
+  name: Catalogue - Submit Inquiry
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base-url}}/catalog/{{slug}}/inquiry
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "9876543210",
+    "module": "RENTAL",
+    "rentalItemIds": ["{{rentalItemId}}"],
+    "rentalStartDate": "2026-09-20",
+    "rentalEndDate": "2026-09-22",
+    "quantity": 1,
+    "message": "Need the projector for a two-day event"
+  }
+}
+
+example {
+  name: success
+
+  response: {
+    status: { code: 201, text: Created }
+    body: {
+      type: json
+      content: '''
+        { "message": "Inquiry submitted successfully", "data": { "leadId": "lead-uuid", "module": "RENTAL", "planName": "Rental Inquiry", "tenantName": "Demo Academy" } }
+      '''
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

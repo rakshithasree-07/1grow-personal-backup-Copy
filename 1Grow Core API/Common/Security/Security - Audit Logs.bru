@@ -1,0 +1,26 @@
+meta {
+  name: Security - Audit Logs
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{base-url}}/security/audit-logs
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 20
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

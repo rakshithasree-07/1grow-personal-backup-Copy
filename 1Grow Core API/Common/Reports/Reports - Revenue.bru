@@ -1,0 +1,26 @@
+meta {
+  name: Reports - Revenue
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/reports/revenue
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  from: 2026-01-01
+  to: 2026-12-31
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

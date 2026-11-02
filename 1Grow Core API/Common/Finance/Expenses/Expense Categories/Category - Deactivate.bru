@@ -1,0 +1,77 @@
+meta {
+  name: Category - Deactivate
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{base-url}}/finance/expense-categories/{{id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+docs {
+  ━━━ REQUEST ━━━
+
+  Soft delete (default):
+  DELETE /finance/expense-categories/{{id}}
+
+  Permanent delete:
+  DELETE /finance/expense-categories/{{id}}?hard=true
+
+  Soft delete sets isActive=false (keeps history + audit). The response
+  also reports how many expenses are currently linked to the category.
+
+
+  ━━━ SUCCESS — soft delete ━━━
+
+  {
+    "message": "Expense category deactivated successfully",
+    "data": {
+      "id": "c1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "name": "Office & Stationery",
+      "isActive": false,
+      "linkedExpenses": 3
+    }
+  }
+
+  ━━━ SUCCESS — hard delete ━━━
+
+  {
+    "message": "Expense category deleted successfully",
+    "data": null
+  }
+
+
+  ━━━ ERROR RESPONSES ━━━
+
+  404 — Category not found (or not in this tenant):
+
+  {
+    "message": "Expense category not found",
+    "data": null
+  }
+
+  401 — Unauthorized:
+
+  {
+    "message": "Unauthorized",
+    "data": null
+  }
+
+  403 — Forbidden:
+
+  {
+    "message": "Forbidden resource",
+    "data": null
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

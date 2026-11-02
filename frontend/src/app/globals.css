@@ -1,0 +1,261 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* ─── Dark mode via .dark class ────────────────────────────────────────────── */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Tailwind v4 Theme ────────────────────────────────────────────────────── */
+@theme inline {
+  /* Fonts */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", monospace;
+
+  /* Brand */
+  --color-brand-50:  var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+
+  /* Dynamic tenant brand (maps bg-primary / text-primary etc.) */
+  --color-primary:            var(--primary);
+  --color-primary-foreground:  var(--primary-foreground);
+  --color-secondary:          var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  /* Semantic */
+  --color-success:            var(--success-500);
+  --color-success-light:      var(--success-50);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning:            var(--warning-500);
+  --color-warning-light:      var(--warning-50);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger:             var(--danger-500);
+  --color-danger-light:       var(--danger-50);
+  --color-danger-foreground:  var(--danger-foreground);
+  --color-info:               var(--info-500);
+  --color-info-light:         var(--info-50);
+  --color-info-foreground:    var(--info-foreground);
+
+  /* Surfaces */
+  --color-surface:         var(--surface);
+  --color-surface-raised:  var(--surface-raised);
+  --color-surface-overlay: var(--surface-overlay);
+
+  /* Borders */
+  --color-border:        var(--border);
+  --color-border-subtle: var(--border-subtle);
+
+  /* Text */
+  --color-text-primary:     var(--text-primary);
+  --color-text-secondary:   var(--text-secondary);
+  --color-text-disabled:    var(--text-disabled);
+  --color-text-placeholder: var(--text-placeholder);
+
+  /* Radius */
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-3: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-4: 0 16px 48px rgba(0, 0, 0, 0.16);
+
+  /* Motion */
+  --duration-fast:   100ms;
+  --duration-base:   150ms;
+  --duration-slow:   250ms;
+  --duration-drawer: 300ms;
+  --duration-modal:  200ms;
+
+  --ease-base:   ease-in-out;
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  text-size-adjust: 100%;
+}
+
+body {
+  /* surface-raised: white in light mode, #1e293b (dark gray) in dark mode.
+     Using raised rather than surface so there is no white-flash behind the
+     AppShell content area in dark mode. */
+  background-color: var(--surface-raised);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Focus Ring ────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar         { width: 6px; height: 6px; }
+::-webkit-scrollbar-track   { background: transparent; }
+::-webkit-scrollbar-thumb   { background: var(--border); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-disabled); }
+
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* ─── Native Select Dropdown ─────────────────────────────────────────────────── */
+/* Prevent dark-mode text-primary from cascading to <option> elements,
+   which would render near-white text on a white native dropdown popup. */
+option {
+  color: var(--text-primary);
+  background-color: var(--surface);
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Sidebar nav items ──────────────────────────────────────────────────────
+   All classes are on the same element — specificity order matters:
+   base → hover → active (active must come last to win).
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.sidebar-item {
+  background: transparent;
+  color: var(--sidebar-text);
+  transition: background 150ms ease, color 150ms ease;
+}
+
+/* hover — only when not active/expanded/child-active */
+.sidebar-item:not(.sidebar-item-active):not(.sidebar-item-expanded):not(.sidebar-item-child-active):hover {
+  background: var(--sidebar-hover-bg);
+  color: var(--sidebar-text-hover);
+  border-radius: 8px;
+}
+
+/* top-level active leaf — white/dark bg, primary/white text */
+.sidebar-item.sidebar-item-active {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+  border-radius: 8px;
+}
+
+.sidebar-item.sidebar-item-active:hover {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+}
+
+/* expanded parent heading — same as active, no radius (group wrapper handles it) */
+.sidebar-item.sidebar-item-expanded {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+}
+
+.sidebar-item.sidebar-item-expanded:hover {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+}
+
+/* inactive child inside open group — uses child-text token
+   light: primary color  |  dark: white */
+.sidebar-group-open .sidebar-item:not(.sidebar-item-child-active) {
+  color: var(--sidebar-child-text);
+}
+
+/* active child — primary bg + white text (punched-in effect) */
+.sidebar-item.sidebar-item-child-active {
+  background: var(--sidebar-child-active-bg);
+  color: #ffffff;
+  border-radius: 6px;
+}
+
+.sidebar-item.sidebar-item-child-active:hover {
+  background: var(--sidebar-child-active-bg);
+  color: #ffffff;
+}
+
+/* ── Group container: themed bg card when open ── */
+.sidebar-group-open {
+  background: var(--sidebar-active-bg);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ─── Razorpay Checkout Overlay ────────────────────────────────────────────
+   The Razorpay SDK creates a modal overlay that must stay above
+   all stacking contexts created by the AppShell layout. */
+.razorpay-container {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  color-scheme: light !important;
+}
+
+.razorpay-container *,
+[class="razorpay"] {
+  color-scheme: light !important;
+}
+
+#razorpay-checkout-modal {
+  z-index: 2147483647 !important;
+}
+
+/* ─── Google Maps Autocomplete Dropdown (Dark/Light mode support) ────────── */
+.pac-container {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-3) !important;
+  font-family: var(--font-sans) !important;
+  color: var(--text-primary) !important;
+  margin-top: 4px;
+}
+.pac-item {
+  padding: 8px 12px !important;
+  border-top: 1px solid var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.pac-item:hover, .pac-item-selected {
+  background-color: var(--surface-raised) !important;
+}
+.pac-item-query {
+  font-size: 14px !important;
+  color: var(--text-primary) !important;
+  font-weight: 500;
+}
+.pac-matched {
+  font-weight: 700;
+  color: var(--primary) !important;
+}

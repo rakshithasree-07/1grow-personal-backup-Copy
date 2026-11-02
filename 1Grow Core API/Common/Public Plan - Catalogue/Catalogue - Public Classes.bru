@@ -1,0 +1,33 @@
+meta {
+  name: Catalogue - Public Classes
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/catalog/{{slug}}/classes
+  body: none
+  auth: none
+}
+
+example {
+  name: success
+
+  response: {
+    status: { code: 200, text: OK }
+    body: {
+      type: json
+      content: '''
+        {
+          "message": "Public fee plans retrieved",
+          "data": { "tenant": { "name": "Demo Academy", "slug": "demo-academy", "industry": ["TRAINING", "EVENT"] }, "feePlans": [{ "id": "fee-plan-uuid", "module": "TRAINING", "name": "Full Stack Program", "totalAmount": 25000, "currency": "INR", "course": { "id": "course-uuid", "name": "Full Stack Development" }, "discounts": [] }] }
+        }
+      '''
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

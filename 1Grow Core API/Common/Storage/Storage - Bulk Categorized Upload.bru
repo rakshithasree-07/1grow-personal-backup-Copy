@@ -1,0 +1,26 @@
+meta {
+  name: Storage - Bulk Categorized Upload
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base-url}}/storage/upload/bulk-categorized
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:multipart-form {
+  files: @file()
+  categories: [{"category":"documents"},{"category":"aadhaar"}]
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

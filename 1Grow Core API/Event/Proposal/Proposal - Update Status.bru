@@ -1,0 +1,172 @@
+meta {
+  name: Proposal - Update Status
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{base-url}}/events/proposals/{{proposalId}}/status
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "status": "SENT"//SENT,VIEWED,APPROVED,REJECTED,EXPRIED
+  }
+}
+
+vars:pre-request {
+  proposalId: 234561d1-02af-4207-8ef7-bfa475038304
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events/proposals/{{proposalId}}/status
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "status": "SENT"//SENT,VIEWED,APPROVED,REJECTED,EXPRIED
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 897faef6-7b67-44d0-b9f0-2ff4cd8db1c9
+      x-correlation-id: 897faef6-7b67-44d0-b9f0-2ff4cd8db1c9
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"947-oRtiZaQPb9L8MwtRhuek3znWUpE"
+      date: Sat, 05 Sep 2026 10:33:54 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Proposal status updated to SENT",
+          "data": {
+            "id": "aa4d46bd-8402-4aef-acdf-92427eadaba1",
+            "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+            "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+            "proposalNumber": "PROP-20260905-0004",
+            "title": "Cultural Event Proposal - Annual Day",
+            "scope": "Full event management including sound, lighting, stage setup, and artist coordination",
+            "shortSummary": "Complete event management and production support for the annual cultural day celebration.",
+            "dateAndTime": {
+              "endTime": "22:00",
+              "eventDate": "2026-04-20",
+              "startTime": "17:00"
+            },
+            "targetAudience": "Students, staff and parents of the institution (approx 1200 attendees)",
+            "servicePlanning": [
+              {
+                "unit": "event",
+                "service": "Sound System",
+                "isActive": true,
+                "quantity": 1,
+                "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                "unitPrice": 15000,
+                "description": "Professional sound system with speakers and mixer"
+              },
+              {
+                "unit": null,
+                "service": null,
+                "quantity": 1,
+                "description": null
+              }
+            ],
+            "pricing": {
+              "tax": 40000,
+              "currency": "INR",
+              "discount": 10000,
+              "subtotal": 320000,
+              "totalAmount": 350000,
+              "additionalCharges": 0
+            },
+            "paymentTerms": "30% advance at booking, 70% balance after event",
+            "budgetValidUntil": "2026-04-30T00:00:00.000Z",
+            "termsConditions": [
+              "Payment due before event date",
+              "Catering and transportation excluded",
+              "Logistics and cleanup by venue"
+            ],
+            "companyLogo": {
+              "url": "https://example.com/logo.png",
+              "altText": "Company logo"
+            },
+            "signature": null,
+            "includes": [
+              "Sound system",
+              "Stage lighting",
+              "LED backdrop",
+              "Event coordinator"
+            ],
+            "excludes": [
+              "Catering",
+              "Transportation"
+            ],
+            "totalAmount": "350000",
+            "validUntil": null,
+            "status": "SENT",
+            "isPublished": false,
+            "publishedVersion": null,
+            "publishedAt": null,
+            "notes": "Proposal valid for 30 days",
+            "sentAt": "2026-09-05T10:33:54.897Z",
+            "viewedAt": null,
+            "approvedAt": null,
+            "rejectedAt": null,
+            "createdAt": "2026-09-05T10:27:16.311Z",
+            "updatedAt": "2026-09-05T10:33:54.898Z"
+          },
+          "timestamp": "2026-09-05T10:33:54.992Z"
+        }
+      '''
+    }
+  }
+}

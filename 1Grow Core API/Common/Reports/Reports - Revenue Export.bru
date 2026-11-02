@@ -1,0 +1,25 @@
+meta {
+  name: Reports - Revenue Export
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/reports/revenue/export
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  format: csv
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

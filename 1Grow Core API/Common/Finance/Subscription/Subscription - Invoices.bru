@@ -1,0 +1,21 @@
+meta {
+  name: Subscription - Invoices
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{base-url}}/subscriptions/invoices
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

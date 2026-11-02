@@ -1,0 +1,25 @@
+meta {
+  name: Reports - Enrollment Export
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base-url}}/reports/enrollment/export
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  format: csv
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

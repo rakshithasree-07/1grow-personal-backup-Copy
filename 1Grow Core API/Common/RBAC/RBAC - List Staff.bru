@@ -1,0 +1,28 @@
+meta {
+  name: RBAC - List Staff
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{base-url}}/rbac/staff
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  search: 
+  branchId: 
+  page: 1
+  pageSize: 20
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

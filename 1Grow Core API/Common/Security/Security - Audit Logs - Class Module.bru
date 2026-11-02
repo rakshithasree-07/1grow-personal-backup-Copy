@@ -1,0 +1,129 @@
+meta {
+  name: Security - Audit Logs - Class Module
+  type: http
+  seq: 18
+}
+
+get {
+  url: {{base-url}}/security/audit-logs
+  body: none
+  auth: inherit
+}
+
+docs {
+  # Class module audit trail
+
+  Verifies the audit records produced by the Class module (`/class/*`).
+  Every Class mutation writes exactly one record through `AuditService.log`:
+  `CREATE` for new resources, `UPDATE` for edits and status transitions
+  (carrying `oldValues` + `newValues`), `EXPORT` for CSV/PDF/download exports.
+
+  ## One request covers the whole module
+
+  The Class module writes **seven** entities that share no common name prefix,
+  and the `entity` filter is an *exact* match, so querying them one at a time is
+  the only reason this needs more than a single call. The `entities` parameter
+  takes a comma-separated list of exact names, so this request returns the
+  complete module trail in one page.
+
+  Use the seven `Security - Audit Logs - <entity>` requests only when you need a
+  single entity.
+
+  > Earlier versions of this collection had no way to filter by several
+  > entities at once, and `entity=Task` matched `TaskSubmission` and
+  > `EventTask` as a side effect of a partial match. That made the Class
+  > records look missing, since they sink below high-volume login and rental
+  > activity once a tenant passes ~100 rows. `entityContains` preserves the old
+  > partial behaviour for anyone who needs it.
+
+  ## Entities written by the Class module
+
+  | Entity                | Written by                                                                              |
+  | --------------------- | --------------------------------------------------------------------------------------- |
+  | `AttendanceSession`   | `POST /class/attendance`, `POST /class/attendance/bulk`, `PATCH /class/attendance/:id`, `GET /class/attendance/export` |
+  | `Task`                | `POST /class/tasks`, `PATCH /class/tasks/:id`, `POST /:id/archive`, `/restore`, `/publish`, `/close` |
+  | `TaskSubmission`      | `POST /class/tasks/:id/submissions` (`CREATE`, or `UPDATE` on resubmission), `PATCH /class/tasks/:id/submissions/:submissionId` |
+  | `StudentProgress`     | `POST /class/progress`, `PATCH /class/progress/:id`, `POST /class/progress/recalculate`   |
+  | `Certificate`         | `POST /class/certificates`, `POST /generate-bulk`, `/:id/reissue`, `/:id/revoke`, `POST /:id/generate-pdf`, `GET /:id/download` |
+  | `CertificateTemplate` | `POST /class/certificate-templates`, `PATCH /:id`, `DELETE /:id`, `POST /:id/duplicate`  |
+  | `CertificateVerification` | `POST /class/certificates/verify` (a valid scan discloses PII, so it logs `EXPORT`) |
+
+  ## Reading the results
+
+  - `meta.total` is the size of the **filtered** trail. If it exceeds
+    `meta.pageSize` (`meta.maxPageSize` is 100), increase `page`.
+  - `meta.entityFilter` echoes the filters actually applied, so you can confirm
+    you are looking at a scoped slice rather than the whole tenant.
+  - `EXPORT` rows have **no** `oldValues`, and the two CSV exports
+    (attendance CSV, bulk certificate generation) also have no `entityId` — an
+    export is not tied to a single record.
+  - Bulk operations use a synthetic `entityId`: `generate-bulk:<count>` for
+    bulk certificates and `recalculate:<count>` for progress recalculation, so
+    the 100-character column is never overflowed. The real ids are listed in
+    `newValues.certificateIds` / `newValues.records`.
+  - `StudentProgress` recalculation only diffs the first 50 records and reports
+    `newValues.omittedRecords` when it truncates.
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 100
+  entities: AttendanceSession,Task,TaskSubmission,StudentProgress,Certificate,CertificateTemplate,CertificateVerification
+}
+
+assert {
+  res.status: eq 200
+  res.body.message: eq "Audit logs fetched"
+  res.body.meta.entityFilter.entities: count 7
+}
+
+script:post-response {
+  const CLASS_ENTITIES = [
+    'AttendanceSession',
+    'Task',
+    'TaskSubmission',
+    'StudentProgress',
+    'Certificate',
+    'CertificateTemplate',
+    'CertificateVerification',
+  ];
+
+  const rows = Array.isArray(res.body?.data) ? res.body.data : [];
+  const meta = res.body?.meta;
+
+  const found = {};
+  for (const entity of CLASS_ENTITIES) found[entity] = 0;
+  for (const row of rows) {
+    if (Object.prototype.hasOwnProperty.call(found, row.entity)) found[row.entity] += 1;
+  }
+
+  console.log(`class audit trail: ${rows.length} of ${meta?.total ?? '?'} filtered records (page ${meta?.page ?? '?'}/${meta?.totalPages ?? '?'})`);
+  for (const entity of CLASS_ENTITIES) {
+    console.log(`  ${found[entity] > 0 ? 'OK  ' : 'MISS'} ${entity.padEnd(21)} ${found[entity]}`);
+  }
+
+  const missing = CLASS_ENTITIES.filter((e) => found[e] === 0);
+  if (missing.length) console.log(`  -> no records yet for: ${missing.join(', ')} (run the matching /class/* request)`);
+
+  if (meta && meta.total > rows.length) {
+    console.log(`  -> ${meta.total - rows.length} more record(s) on later pages; increase page`);
+  }
+
+  const newest = rows[0];
+  if (newest) {
+    bru.setVar('latestClassAuditLogId', newest.id);
+    bru.setVar('latestClassAuditEntity', newest.entity);
+    bru.setVar('latestClassAuditAction', newest.action);
+    bru.setVar('latestClassAuditEntityId', newest.entityId);
+    console.log(`  -> newest: ${newest.action} ${newest.entity} ${newest.entityId ?? '(no entityId)'}`);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

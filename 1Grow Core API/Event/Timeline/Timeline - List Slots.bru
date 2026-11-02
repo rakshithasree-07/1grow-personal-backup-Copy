@@ -1,0 +1,201 @@
+meta {
+  name: Timeline - List Slots
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/events/{{eventId}}/timeline
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+vars:pre-request {
+  eventId: 460e138d-d11c-4e6b-a65e-570b093ec809
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  meta: {
+    name: 200-Success
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Timeline entries retrieved successfully",
+          "data": {
+            "executionDate": "2026-03-15",
+            "timeline": [
+              {
+                "slotId": "43075c6e-5b4d-4e8a-a87c-7c8c1f3b9a2e",
+                "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+                "title": "Stage Setup",
+                "description": "Complete the stage structure and decoration setup",
+                "startTime": "2026-03-15T09:00:00.000Z",
+                "endTime": "2026-03-15T10:00:00.000Z",
+                "priority": "HIGH",
+                "isMilestone": false,
+                "dependencies": [],
+                "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+                "assignees": [
+                  {
+                    "id": "assignee-1",
+                    "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                    "role": "SETUP_TEAM",
+                    "user": {
+                      "id": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                      "name": "John Doe",
+                      "email": "john@example.com",
+                      "phone": "9876543210"
+                    }
+                  }
+                ],
+                "createdAt": "2026-09-09T10:00:00.000Z",
+                "updatedAt": "2026-09-09T10:00:00.000Z"
+              },
+              {
+                "slotId": "a8d2f1c4-2e6b-4f7a-9c1d-5e6a8b9c0d1e",
+                "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+                "title": "Sound System Setup",
+                "description": "Install speakers, microphones and mixer",
+                "startTime": "2026-03-15T10:00:00.000Z",
+                "endTime": "2026-03-15T11:00:00.000Z",
+                "priority": "HIGH",
+                "isMilestone": false,
+                "dependencies": [
+                  {
+                    "slotId": "43075c6e-5b4d-4e8a-a87c-7c8c1f3b9a2e",
+                    "title": "Stage Setup"
+                  }
+                ],
+                "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+                "assignees": [
+                  {
+                    "id": "assignee-2",
+                    "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                    "role": "SOUND_ENGINEER",
+                    "user": {
+                      "id": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                      "name": "John Doe",
+                      "email": "john@example.com",
+                      "phone": "9876543210"
+                    }
+                  }
+                ],
+                "createdAt": "2026-09-09T10:05:00.000Z",
+                "updatedAt": "2026-09-09T10:05:00.000Z"
+              }
+            ]
+          },
+          "timestamp": "2026-09-09T10:05:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-SuccessWithMultipleAssignees
+  meta: {
+    name: 200-SuccessWithMultipleAssignees
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Timeline entries retrieved successfully",
+          "data": {
+            "executionDate": "2026-03-15",
+            "timeline": [
+              {
+                "slotId": "decoration-slot-uuid",
+                "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+                "title": "Decoration Setup",
+                "description": "Complete venue decoration",
+                "startTime": "2026-03-15T14:00:00.000Z",
+                "endTime": "2026-03-15T16:00:00.000Z",
+                "priority": "MEDIUM",
+                "isMilestone": false,
+                "dependencies": [],
+                "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+                "assignees": [
+                  {
+                    "id": "assignee-3",
+                    "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                    "role": "DECORATOR",
+                    "user": {
+                      "id": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                      "name": "John Doe",
+                      "email": "john@example.com",
+                      "phone": "9876543210"
+                    }
+                  },
+                  {
+                    "id": "assignee-4",
+                    "userId": "another-user-uuid-here",
+                    "role": "SETUP_TEAM",
+                    "user": {
+                      "id": "another-user-uuid-here",
+                      "name": "Jane Smith",
+                      "email": "jane@example.com",
+                      "phone": "9876543211"
+                    }
+                  }
+                ],
+                "createdAt": "2026-09-09T14:00:00.000Z",
+                "updatedAt": "2026-09-09T14:00:00.000Z"
+              }
+            ]
+          },
+          "timestamp": "2026-09-09T14:00:00.000Z"
+        }
+      '''
+    }
+  }
+}

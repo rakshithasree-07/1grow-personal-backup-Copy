@@ -1,0 +1,83 @@
+meta {
+  name: Salary - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/finance/salary-payouts
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+params:query {
+  page: 1
+  pageSize: 20
+  search: 
+  staffUserId: 
+  branchId: 
+  status: 
+  month: 
+  year: 
+  isActive: 
+  sortBy: createdAt
+  sortDir: desc
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Returns ONLY salary payouts belonging to the authed user's tenant.
+
+
+  ━━━ Filter by month/year ━━━
+
+  GET /finance/salary-payouts?month=9&year=2026
+
+  ━━━ Filter by staff member ━━━
+
+  GET /finance/salary-payouts?staffUserId=u1a2b3c4
+
+  ━━━ Search by staff name / reference ━━━
+
+  GET /finance/salary-payouts?search=priya
+
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Salary payouts retrieved",
+    "items": [
+      {
+        "id": "p1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "staffUserId": "u1a2b3c4-5d6e-7f8a-9b0c",
+        "staffName": "Priya Sharma",
+        "role": "STAFF",
+        "payPeriodMonth": 9,
+        "payPeriodYear": 2026,
+        "baseSalary": 25000,
+        "allowances": 2000,
+        "bonus": 1000,
+        "deductions": 500,
+        "netAmount": 27500,
+        "mode": "BANK_TRANSFER",
+        "status": "PAID",
+        "branch": { "id": "b1a2b3c4", "name": "Main Branch" },
+        "staff": { "id": "u1a2b3c4", "name": "Priya Sharma", "email": "priya@example.com", "role": "STAFF" }
+      }
+    ],
+    "total": 1,
+    "page": 1,
+    "pageSize": 20,
+    "totalPages": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

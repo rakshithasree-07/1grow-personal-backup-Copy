@@ -1,0 +1,21 @@
+meta {
+  name: Invoice - Cancel
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base-url}}/invoices/{{id}}/cancel
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

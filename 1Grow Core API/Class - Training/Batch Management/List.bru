@@ -1,0 +1,538 @@
+meta {
+  name: List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/training/batches
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  pageSize: 10
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200 success
+  
+  request: {
+    url: {{base-url}}/training/batches
+    method: GET
+    mode: none
+    params:query: {
+      page: 1
+      pageSize: 10
+    }
+  
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: ee8e4132-388f-48a4-8ac3-2892eb0b0001
+      x-correlation-id: ee8e4132-388f-48a4-8ac3-2892eb0b0001
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"70f-B/ZplMRD6ZhFNoIayz7pAcN39XQ"
+      date: Fri, 11 Sep 2026 09:49:43 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "timestamp": "2026-09-11T09:49:43.389Z",
+          "data": [
+            {
+              "id": "9fa99c1c-1c7c-4a3c-b0ea-f4bbf2e53aba",
+              "name": "Code Recheck",
+              "code": "RC-001",
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 12,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "f4455be0-e6b1-4cc6-934e-2d7596e5dde3",
+              "name": "Code Removal Check",
+              "code": null,
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 12,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "07e18524-53d3-43fd-82e7-449e43904495",
+              "name": "Minimal Batch Check",
+              "code": null,
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 30,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "ad792cad-4261-46ad-9d67-95fa455a1251",
+              "name": "Morning Yoga Batch",
+              "code": "MY-001",
+              "courseId": "a8806721-aa64-43dc-95e1-f3e488dca9d6",
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 25,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            },
+            {
+              "id": "5968a108-5d3e-45db-a4f2-785e91ffe86d",
+              "name": "Bruno Branch Batch",
+              "code": null,
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 20,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "ca70fec5-7e4a-4aff-b2e1-0d3121179935",
+              "name": "Batch B",
+              "code": "BB-001",
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "1201b2f0-78bd-4fc6-a697-d1d4d88ff5d6",
+              "capacity": 25,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            },
+            {
+              "id": "79f7f566-56e5-49a7-8992-867a3db99ca0",
+              "name": "Batch A",
+              "code": "BA-001",
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 30,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            }
+          ],
+          "meta": {
+            "page": 1,
+            "pageSize": 10,
+            "total": 7,
+            "totalPages": 1
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200 success
+  
+  request: {
+    url: {{base-url}}/training/batches
+    method: GET
+    mode: none
+    params:query: {
+      page: 1
+      pageSize: 10
+    }
+  
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: a2b6042a-2848-407e-bee9-9f18b1fda096
+      x-correlation-id: a2b6042a-2848-407e-bee9-9f18b1fda096
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"836-Q0VUL560o/oaNemlDAUr0iCK4es"
+      date: Fri, 11 Sep 2026 10:04:34 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "timestamp": "2026-09-11T10:04:34.800Z",
+          "data": [
+            {
+              "id": "2db495bc-2e4b-4427-b1be-326c8de23005",
+              "name": "Daily Yoga Batch",
+              "code": "MY-002",
+              "courseId": "a8806721-aa64-43dc-95e1-f3e488dca9d6",
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 25,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            },
+            {
+              "id": "9fa99c1c-1c7c-4a3c-b0ea-f4bbf2e53aba",
+              "name": "Code Recheck",
+              "code": "RC-001",
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 12,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "f4455be0-e6b1-4cc6-934e-2d7596e5dde3",
+              "name": "Code Removal Check",
+              "code": null,
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 12,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "07e18524-53d3-43fd-82e7-449e43904495",
+              "name": "Minimal Batch Check",
+              "code": null,
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 30,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "ad792cad-4261-46ad-9d67-95fa455a1251",
+              "name": "Morning Yoga Batch",
+              "code": "MY-001",
+              "courseId": "a8806721-aa64-43dc-95e1-f3e488dca9d6",
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 25,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            },
+            {
+              "id": "5968a108-5d3e-45db-a4f2-785e91ffe86d",
+              "name": "Bruno Branch Batch",
+              "code": null,
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 20,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "ca70fec5-7e4a-4aff-b2e1-0d3121179935",
+              "name": "Batch B",
+              "code": "BB-001",
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "1201b2f0-78bd-4fc6-a697-d1d4d88ff5d6",
+              "capacity": 25,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            },
+            {
+              "id": "79f7f566-56e5-49a7-8992-867a3db99ca0",
+              "name": "Batch A",
+              "code": "BA-001",
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "capacity": 30,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            }
+          ],
+          "meta": {
+            "page": 1,
+            "pageSize": 10,
+            "total": 8,
+            "totalPages": 1
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200 success
+  
+  request: {
+    url: {{base-url}}/training/batches
+    method: GET
+    mode: none
+    params:query: {
+      page: 1
+      pageSize: 10
+    }
+  
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 947e1466-74fe-4a88-96c2-c3c86fc6a3bd
+      x-correlation-id: 947e1466-74fe-4a88-96c2-c3c86fc6a3bd
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"b1e-2JXWqHsidwkaWV4yi3vP1+f3ebc"
+      date: Sat, 12 Sep 2026 08:31:41 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "timestamp": "2026-09-12T08:31:41.442Z",
+          "data": [
+            {
+              "id": "2db495bc-2e4b-4427-b1be-326c8de23005",
+              "name": "Daily Yoga Batch",
+              "code": "MY-002",
+              "courseId": "a8806721-aa64-43dc-95e1-f3e488dca9d6",
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "branch": {
+                "id": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+                "name": "North Coimbatore",
+                "code": null
+              },
+              "capacity": 25,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            },
+            {
+              "id": "9fa99c1c-1c7c-4a3c-b0ea-f4bbf2e53aba",
+              "name": "Code Recheck",
+              "code": "RC-001",
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "branch": {
+                "id": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+                "name": "North Coimbatore",
+                "code": null
+              },
+              "capacity": 12,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "f4455be0-e6b1-4cc6-934e-2d7596e5dde3",
+              "name": "Code Removal Check",
+              "code": null,
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "branch": {
+                "id": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+                "name": "North Coimbatore",
+                "code": null
+              },
+              "capacity": 12,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "07e18524-53d3-43fd-82e7-449e43904495",
+              "name": "Minimal Batch Check",
+              "code": null,
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "branch": {
+                "id": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+                "name": "North Coimbatore",
+                "code": null
+              },
+              "capacity": 30,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "ad792cad-4261-46ad-9d67-95fa455a1251",
+              "name": "Morning Yoga Batch",
+              "code": "MY-001",
+              "courseId": "a8806721-aa64-43dc-95e1-f3e488dca9d6",
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "branch": {
+                "id": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+                "name": "North Coimbatore",
+                "code": null
+              },
+              "capacity": 25,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            },
+            {
+              "id": "5968a108-5d3e-45db-a4f2-785e91ffe86d",
+              "name": "Bruno Branch Batch",
+              "code": null,
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "branch": {
+                "id": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+                "name": "North Coimbatore",
+                "code": null
+              },
+              "capacity": 20,
+              "startDate": null,
+              "endDate": null
+            },
+            {
+              "id": "ca70fec5-7e4a-4aff-b2e1-0d3121179935",
+              "name": "Batch B",
+              "code": "BB-001",
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "1201b2f0-78bd-4fc6-a697-d1d4d88ff5d6",
+              "branch": {
+                "id": "1201b2f0-78bd-4fc6-a697-d1d4d88ff5d6",
+                "name": "South Coimbatore",
+                "code": null
+              },
+              "capacity": 25,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            },
+            {
+              "id": "79f7f566-56e5-49a7-8992-867a3db99ca0",
+              "name": "Batch A",
+              "code": "BA-001",
+              "courseId": null,
+              "trainerId": null,
+              "branchId": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+              "branch": {
+                "id": "9bcc44f6-c392-4079-99c4-38de73a8950d",
+                "name": "North Coimbatore",
+                "code": null
+              },
+              "capacity": 30,
+              "startDate": "2026-07-01T00:00:00.000Z",
+              "endDate": "2026-09-30T00:00:00.000Z"
+            }
+          ],
+          "meta": {
+            "page": 1,
+            "pageSize": 10,
+            "total": 8,
+            "totalPages": 1
+          }
+        }
+      '''
+    }
+  }
+}

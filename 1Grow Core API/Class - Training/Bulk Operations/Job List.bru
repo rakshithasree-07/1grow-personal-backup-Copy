@@ -1,0 +1,27 @@
+meta {
+  name: Job List
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base-url}}/bulk/jobs
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  pageSize: 20
+  type: 
+  status: 
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

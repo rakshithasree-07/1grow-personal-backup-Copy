@@ -1,0 +1,29 @@
+meta {
+  name: Verify Payment
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base-url}}/billing/payments/verify
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "razorpayPaymentId": "pay_xxxxxxxx",
+    "razorpayOrderId": "order_xxxxxxxx",
+    "razorpaySignature": "signature",
+    "paymentOrderId": "payment-order-uuid"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

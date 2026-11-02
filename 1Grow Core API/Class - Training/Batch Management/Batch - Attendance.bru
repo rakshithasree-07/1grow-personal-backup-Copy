@@ -1,0 +1,21 @@
+meta {
+  name: Batch - Attendance
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{base-url}}/training/batches/{{batchId}}/attendance
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

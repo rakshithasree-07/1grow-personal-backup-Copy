@@ -1,0 +1,28 @@
+meta {
+  name: Lead - Bulk Assign
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{base-url}}/leads/bulk-assign
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "leadIds": ["lead-uuid-1", "lead-uuid-2"],
+    "assignedTo": "user-uuid"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

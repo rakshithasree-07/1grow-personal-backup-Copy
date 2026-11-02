@@ -1,0 +1,49 @@
+meta {
+  name: Expense - Deactivate
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{base-url}}/finance/expenses/{{id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Soft-deletes (deactivates) an expense — sets isActive=false and
+  status=CANCELLED. The record is kept for audit/history and hidden
+  from default list views.
+
+  For a hard/permanent delete use:
+  DELETE /finance/expenses/{{id}}?hard=true
+
+  ━━━ Sample Response (soft delete) ━━━
+
+  {
+    "message": "Expense deactivated successfully",
+    "data": {
+      "id": "e1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "status": "CANCELLED",
+      "isActive": false
+    }
+  }
+
+  ━━━ Sample Response (hard delete) ━━━
+
+  {
+    "message": "Expense deleted successfully",
+    "data": null
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

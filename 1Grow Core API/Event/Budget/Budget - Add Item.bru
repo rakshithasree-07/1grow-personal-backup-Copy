@@ -1,0 +1,31 @@
+meta {
+  name: Budget - Add Item
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/events/{{eventId}}/budget
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "category": "Sound & Lighting",
+    "description": "Professional sound and lighting setup",
+    "budgetedAmount": 50000,
+    "actualAmount": 45000,
+    "notes": "Within budget"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

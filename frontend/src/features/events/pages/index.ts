@@ -1,0 +1,10 @@
+export { EventsPage } from "./events-page";
+export { ProposalsPage } from "./proposals-page";
+export { QuotationsPage } from "./quotations-page";
+export { ClientsPage } from "./clients-page";
+export { TeamAssignmentPage } from "./team-assignment-page";
+export { VendorsPage } from "./vendors-page";
+export { TasksPage } from "./tasks-page";
+export { TimelinePage } from "./timeline-page";
+export { BudgetPage } from "./budget-page";
+export { ExecutionPage } from "./execution-page";

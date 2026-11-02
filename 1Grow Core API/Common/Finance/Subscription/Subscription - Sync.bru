@@ -1,0 +1,21 @@
+meta {
+  name: Subscription - Sync
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{base-url}}/subscriptions/sync
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

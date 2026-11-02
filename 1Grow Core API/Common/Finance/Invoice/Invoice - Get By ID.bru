@@ -1,0 +1,97 @@
+meta {
+  name: Invoice - Get By ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/invoices/{{id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+docs {
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Invoice retrieved",
+    "data": {
+      "id": "f1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "tenantId": "t1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "branchId": "b1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "invoiceNumber": "INV-t1a2b3-1725360600000",
+      "description": "Bharatanatyam - Monthly Fee",
+      "studentId": "s1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "clientId": null,
+      "subtotal": 27000,
+      "discount": 1000,
+      "tax": 4680,
+      "totalAmount": 30680,
+      "paidAmount": 15000,
+      "dueAmount": 15680,
+      "currency": "INR",
+      "status": "PARTIALLY_PAID",
+      "issueDate": "2026-09-03T00:00:00.000Z",
+      "dueDate": "2026-10-01T00:00:00.000Z",
+      "paidAt": null,
+      "notes": "Monthly fee for September 2026",
+      "student": {
+        "id": "s1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "name": "Priya Sharma",
+        "email": "priya@example.com",
+        "phone": "9876543210"
+      },
+      "client": null,
+      "items": [
+        { "id": "item-uuid-1", "description": "Tuition Fee - Bharatanatyam", "quantity": 1, "price": 25000, "total": 25000 },
+        { "id": "item-uuid-2", "description": "Practice Room Rental", "quantity": 4, "price": 500, "total": 2000 }
+      ],
+      "payments": [
+        { "id": "pay-uuid-1", "amount": 15000, "createdAt": "2026-09-05T10:00:00.000Z" }
+      ],
+      "installments": [
+        { "installmentNo": 1, "amount": 15340, "paidAmount": 15000, "status": "PAID", "dueDate": "2026-09-15" },
+        { "installmentNo": 2, "amount": 15340, "paidAmount": 0, "status": "PENDING", "dueDate": "2026-10-01" }
+      ],
+      "createdAt": "2026-09-03T10:30:00.000Z",
+      "updatedAt": "2026-09-05T10:00:00.000Z"
+    }
+  }
+
+  ━━━ Client Invoice (Events/Rental) ━━━
+
+  {
+    "message": "Invoice retrieved",
+    "data": {
+      "id": "g2a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "invoiceNumber": "INV-t1a2b3-1725360700000",
+      "description": "Event service - Wedding Decoration",
+      "studentId": null,
+      "clientId": "c1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "client": {
+        "id": "c1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "name": "Ravi Kumar",
+        "email": "ravi@example.com",
+        "phone": "9876543211"
+      },
+      "subtotal": 65000,
+      "totalAmount": 76700,
+      "paidAmount": 0,
+      "dueAmount": 76700,
+      "status": "SENT",
+      "items": [
+        { "description": "Stage Decoration", "quantity": 1, "price": 50000, "total": 50000 },
+        { "description": "Lighting Setup", "quantity": 1, "price": 15000, "total": 15000 }
+      ]
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

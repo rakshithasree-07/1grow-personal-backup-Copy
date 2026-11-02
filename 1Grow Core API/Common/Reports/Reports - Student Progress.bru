@@ -1,0 +1,21 @@
+meta {
+  name: Reports - Student Progress
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{base-url}}/reports/student-progress
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

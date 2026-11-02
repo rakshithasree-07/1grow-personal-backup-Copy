@@ -1,0 +1,28 @@
+meta {
+  name: Lead - Update Followup
+  type: http
+  seq: 17
+}
+
+patch {
+  url: {{base-url}}/leads/followups/{{id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "outcome": "NOT_INTERESTED",
+    "notes": "Student deferred"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

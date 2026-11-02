@@ -1,0 +1,336 @@
+meta {
+  name: 01 - Check Item Availability (Available)
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/rental/items/check-availability
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "itemId": "{{createdItemId}}",
+    "startDate": "2026-11-01",
+    "endDate": "2026-11-05",
+    "quantity": 2
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.httpStatusCode: eq 200
+  res.body.data.isAvailable: eq true
+}
+
+example {
+  name: 201
+  
+  request: {
+    url: {{base-url}}/rental/items/check-availability
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "itemId": "{{createdItemId}}",
+        "startDate": "2026-11-01",
+        "endDate": "2026-11-05",
+        "quantity": 2
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 1d97c869-ffcd-45cb-9f70-d1b10254998e
+      x-correlation-id: 1d97c869-ffcd-45cb-9f70-d1b10254998e
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 363
+      etag: W/"16b-PU7rOEMT25BtHcluTMxM9SXnpEY"
+      date: Thu, 10 Sep 2026 16:34:08 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Item is available for the requested period",
+          "timestamp": "2026-09-10T16:34:08.640Z",
+          "data": {
+            "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+            "itemName": "Sony FX6 Cinema Camera",
+            "requestedQuantity": 2,
+            "totalQuantity": 5,
+            "peakReservedQuantity": 0,
+            "availableQuantity": 5,
+            "startDate": "2026-11-01",
+            "endDate": "2026-11-05",
+            "isAvailable": true
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400
+  
+  request: {
+    url: {{base-url}}/rental/items/check-availability
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "itemId": "{{createdItemId}}",
+        "startDate": "2026-11-06",
+        "endDate": "2026-11-05",
+        "quantity": 2
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: a2a512fd-5bd0-4978-92f1-33cf4f98df35
+      x-correlation-id: a2a512fd-5bd0-4978-92f1-33cf4f98df35
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 32
+      content-type: application/json; charset=utf-8
+      content-length: 122
+      etag: W/"7a-8TPTRQepJ8uzrdP4Tt6Hct45jYc"
+      date: Thu, 10 Sep 2026 16:34:34 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "End date cannot be before start date",
+          "data": null,
+          "timestamp": "2026-09-10T16:34:34.397Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201
+  
+  request: {
+    url: {{base-url}}/rental/items/check-availability
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "itemId": "{{createdItemId}}",
+        "startDate": "2026-11-01",
+        "endDate": "2026-11-05",
+        "quantity": 99
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 3550d18c-d596-4e9a-93e1-5ee2bcaad15a
+      x-correlation-id: 3550d18c-d596-4e9a-93e1-5ee2bcaad15a
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 117
+      x-ratelimit-reset: 54
+      content-type: application/json; charset=utf-8
+      content-length: 369
+      etag: W/"171-4rbLUbmZWrVARv6aafTiJw/wh68"
+      date: Thu, 10 Sep 2026 16:35:14 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Item is not available for the requested period",
+          "timestamp": "2026-09-10T16:35:14.835Z",
+          "data": {
+            "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+            "itemName": "Sony FX6 Cinema Camera",
+            "requestedQuantity": 99,
+            "totalQuantity": 5,
+            "peakReservedQuantity": 0,
+            "availableQuantity": 5,
+            "startDate": "2026-11-01",
+            "endDate": "2026-11-05",
+            "isAvailable": false
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201
+  
+  request: {
+    url: {{base-url}}/rental/items/check-availability
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "itemId": "{{createdItemId}}",
+        "startDate": "2026-11-01",
+        "endDate": "2026-11-05",
+        "quantity": 2
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 6dfd9443-28d3-45d9-81c9-a39dc127738d
+      x-correlation-id: 6dfd9443-28d3-45d9-81c9-a39dc127738d
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 359
+      etag: W/"167-jAloF0r4PRXOsiV4JhjNlZR/ED8"
+      date: Fri, 11 Sep 2026 17:00:49 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Item is available for the requested period",
+          "timestamp": "2026-09-11T17:00:49.675Z",
+          "data": {
+            "itemId": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+            "itemName": "Sony Cinema Camera",
+            "requestedQuantity": 2,
+            "totalQuantity": 5,
+            "peakReservedQuantity": 0,
+            "availableQuantity": 5,
+            "startDate": "2026-11-01",
+            "endDate": "2026-11-05",
+            "isAvailable": true
+          }
+        }
+      '''
+    }
+  }
+}

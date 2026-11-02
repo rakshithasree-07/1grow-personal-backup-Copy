@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "1Grow Core API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

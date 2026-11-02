@@ -1,0 +1,20 @@
+meta {
+  name: Transfer - Approve
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base-url}}/enrollments/transfers/00000000-0000-4000-8000-000000000010/approve
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

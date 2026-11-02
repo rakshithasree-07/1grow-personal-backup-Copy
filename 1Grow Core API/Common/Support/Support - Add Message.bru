@@ -1,0 +1,27 @@
+meta {
+  name: Support - Add Message
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base-url}}/support/tickets/{{id}}/messages
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "message": "Thanks, the issue is resolved"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

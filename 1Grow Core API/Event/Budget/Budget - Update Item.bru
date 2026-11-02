@@ -1,0 +1,31 @@
+meta {
+  name: Budget - Update Item
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base-url}}/events/{{eventId}}/budget/{{itemId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "category": "Sound & Lighting - Updated",
+    "description": "Updated description",
+    "budgetedAmount": 55000,
+    "actualAmount": 48000,
+    "notes": "Updated budget item"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

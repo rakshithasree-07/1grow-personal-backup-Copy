@@ -1,0 +1,85 @@
+meta {
+  name: Invoice - Update
+  type: http
+  seq: 9
+}
+
+patch {
+  url: {{base-url}}/invoices/{{id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "description": "Updated - Bharatanatyam Monthly Fee (with discount)",
+    "items": [
+      {
+        "description": "Tuition Fee - Bharatanatyam",
+        "quantity": 1,
+        "price": 25000
+      },
+      {
+        "description": "Practice Room Rental",
+        "quantity": 4,
+        "price": 500
+      },
+      {
+        "description": "Exam Fee",
+        "quantity": 1,
+        "price": 1000
+      }
+    ],
+    "discount": 2000,
+    "taxPercent": 18,
+    "notes": "Courtesy discount applied for early payment"
+  }
+}
+
+docs {
+  ━━━ Update only status ━━━
+
+  {
+    "status": "SENT"
+  }
+
+  ━━━ Update client mapping ━━━
+
+  {
+    "clientId": "{{clientId}}",
+    "description": "Rental service invoice"
+  }
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Invoice updated",
+    "data": {
+      "id": "f1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "invoiceNumber": "INV-t1a2b3-1725360600000",
+      "description": "Updated - Bharatanatyam Monthly Fee (with discount)",
+      "subtotal": 28000,
+      "discount": 2000,
+      "tax": 4680,
+      "totalAmount": 30680,
+      "status": "DRAFT",
+      "items": [
+        { "description": "Tuition Fee - Bharatanatyam", "quantity": 1, "price": 25000, "total": 25000 },
+        { "description": "Practice Room Rental", "quantity": 4, "price": 500, "total": 2000 },
+        { "description": "Exam Fee", "quantity": 1, "price": 1000, "total": 1000 }
+      ],
+      "student": { "id": "s1a2b3c4", "name": "Priya Sharma", "phone": "9876543210" },
+      "client": null,
+      "updatedAt": "2026-09-04T09:00:00.000Z"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

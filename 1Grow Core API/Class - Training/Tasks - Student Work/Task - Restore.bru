@@ -1,0 +1,21 @@
+meta {
+  name: Task - Restore
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base-url}}/class/tasks/{{id}}/restore
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

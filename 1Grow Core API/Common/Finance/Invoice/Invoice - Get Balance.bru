@@ -1,0 +1,21 @@
+meta {
+  name: Invoice - Get Balance
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{base-url}}/invoices/{{id}}/balance
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

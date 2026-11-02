@@ -1,0 +1,7 @@
+"use client";
+
+import { BookingsPage } from "@/features/rental";
+
+export default function StaffRentalBookingsPage() {
+  return <BookingsPage />;
+}

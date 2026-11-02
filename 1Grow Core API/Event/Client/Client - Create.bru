@@ -1,0 +1,450 @@
+meta {
+  name: Client - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/events/clients
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "leadId": "146cb887-c13b-4699-a303-0f66c955db80",
+    "name": "Ravi Kumar",
+    "phone": "9788583045",
+    "email": "ravi024@enterprises.com",
+    "companyName": "Ravi Enterprises Pvt Ltd",
+    "numberOfBranches": 3,
+    "gstNumber": "33AAACR1234F1Z5",
+    "panNumber": "AAACR12314F",
+    "designation": "Managing Director",
+    "preferredCommunication": "Email",
+    "street": "456 Business Paris",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "notes": "Business Type: Private Limited"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  ## leadId is optional
+  `leadId` is **optional**. Omit it and supply `name`, `phone` and `email` instead.
+  When `leadId` is sent it must be a UUID belonging to the same tenant, and any
+  missing `name` / `phone` / `email` is auto-filled from the lead. The link can
+  only be set at creation time - `Client - Update` does not accept `leadId`.
+  See the `success` and `example` examples below for requests without a `leadId`.
+}
+
+example {
+  name: success
+  
+  request: {
+    url: {{base-url}}/events/clients
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Ravi Kumar",
+        "phone": "9876543210",
+        "email": "ravi@enterprises.com",
+        "companyName": "Ravi Enterprises Pvt Ltd",
+        "numberOfBranches": 3,
+        "gstNumber": "33AAACR1234F1Z5",
+        "panNumber": "AAACR1234F",
+        "designation": "Managing Director",
+        "preferredCommunication": "Email",
+        "street": "456 Business Park, Chennai - 600001",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "notes": "Business Type: Private Limited"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 0e895f18-d788-4758-baa2-d439cb813526
+      x-correlation-id: 0e895f18-d788-4758-baa2-d439cb813526
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 489
+      etag: W/"1e9-hn1e3nvB22/aWTwr3geGqX9p+LE"
+      date: Tue, 01 Sep 2026 15:25:06 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Event client created successfully",
+          "data": null,
+          "timestamp": "2026-09-01T15:25:06.208Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example
+  
+  request: {
+    url: {{base-url}}/events/clients
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Ravi Kumar",
+        "phone": "8825474846",
+        "email": "ravi05@enterprises.com",
+        "companyName": "Ravi Enterprises Pvt Ltd",
+        "numberOfBranches": 3,
+        "gstNumber": "33AAACR1234F1Z5",
+        "panNumber": "AAACR1234F",
+        "designation": "Managing Director",
+        "preferredCommunication": "Email",
+        "street": "456 Business Park, Chennai - 600001",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "notes": "Business Type: Private Limited"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 7f3eda1c-98a6-4c78-85b3-ce63ee3ead90
+      x-correlation-id: 7f3eda1c-98a6-4c78-85b3-ce63ee3ead90
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 119
+      etag: W/"77-XEXSIe34ohsu3V9EA5LgRFlyThU"
+      date: Wed, 02 Sep 2026 18:25:48 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Event client created successfully",
+          "data": null,
+          "timestamp": "2026-09-02T18:25:48.632Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: duplicate
+  
+  request: {
+    url: {{base-url}}/events/clients
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Ravi Kumar",
+        "phone": "9788583045",
+        "email": "ravi04@enterprises.com",
+        "companyName": "Ravi Enterprises Pvt Ltd",
+        "numberOfBranches": 3,
+        "gstNumber": "33AAACR1234F1Z5",
+        "panNumber": "AAACR1234F",
+        "designation": "Managing Director",
+        "preferredCommunication": "Email",
+        "street": "456 Business Paris",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "notes": "Business Type: Private Limited"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: bd895dd7-4dab-4636-913c-13fd459980cf
+      x-correlation-id: bd895dd7-4dab-4636-913c-13fd459980cf
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 184
+      etag: W/"b8-3fQWObShYkhpOqyxyzsi/Q9ITF8"
+      date: Thu, 03 Sep 2026 14:48:26 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 409
+      text: Conflict
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 409,
+          "message": "An event client with this phone number already exists. Use the update (PATCH) method to modify it.",
+          "data": null,
+          "timestamp": "2026-09-03T14:48:26.130Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: invalid number
+  
+  request: {
+    url: {{base-url}}/events/clients
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Ravi Kumar",
+        "phone": "978858045",
+        "email": "ravi04@enterprises.com",
+        "companyName": "Ravi Enterprises Pvt Ltd",
+        "numberOfBranches": 3,
+        "gstNumber": "33AAACR1234F1Z5",
+        "panNumber": "AAACR1234F",
+        "designation": "Managing Director",
+        "preferredCommunication": "Email",
+        "street": "456 Business Paris",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "notes": "Business Type: Private Limited"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: b914a8a5-73ad-477d-ae72-189dcf537f60
+      x-correlation-id: b914a8a5-73ad-477d-ae72-189dcf537f60
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 144
+      etag: W/"90-IUW6iH3F/cpvbFuqv81yiAXB14s"
+      date: Thu, 03 Sep 2026 14:57:07 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "Phone number must be longer than or equal to 10 characters",
+          "data": null,
+          "timestamp": "2026-09-03T14:57:07.647Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: PAn number invalid
+  
+  request: {
+    url: {{base-url}}/events/clients
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Ravi Kumar",
+        "phone": "9788583045",
+        "email": "ravi024@enterprises.com",
+        "companyName": "Ravi Enterprises Pvt Ltd",
+        "numberOfBranches": 3,
+        "gstNumber": "33AAACR1234F1Z5",
+        "panNumber": "AAACR12314F",
+        "designation": "Managing Director",
+        "preferredCommunication": "Email",
+        "street": "456 Business Paris",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "notes": "Business Type: Private Limited"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: df28df75-f42e-40d3-b975-8cc06ead0036
+      x-correlation-id: df28df75-f42e-40d3-b975-8cc06ead0036
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 48
+      content-type: application/json; charset=utf-8
+      content-length: 113
+      etag: W/"71-ol7/stoKm6IOwdptDcUgUGrpp7o"
+      date: Thu, 03 Sep 2026 15:16:41 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "panNumber is invalid format",
+          "data": null,
+          "timestamp": "2026-09-03T15:16:41.465Z"
+        }
+      '''
+    }
+  }
+}

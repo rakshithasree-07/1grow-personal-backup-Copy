@@ -1,0 +1,118 @@
+meta {
+  name: Get Profile
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{base-url}}/auth/profile
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200 User profile
+  
+  request: {
+    url: {{base-url}}/auth/profile
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: c0af3604-97ee-42c3-b3b0-0ab95bf34c0a
+      x-correlation-id: c0af3604-97ee-42c3-b3b0-0ab95bf34c0a
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"4f4-x/3vCMIKR7ai+AjtUhPZmfMI7Fg"
+      date: Tue, 01 Sep 2026 18:17:11 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Profile retrieved",
+          "data": {
+            "id": "cb1003d5-3d8a-4e89-98fd-8eb68922329f",
+            "tenantId": "185d41a4-0abf-4829-80f2-f298e4405135",
+            "email": "owner@test.com",
+            "name": "Karthikeyan",
+            "phone": "9000000001",
+            "role": "OWNER",
+            "status": "ACTIVE",
+            "avatarUrl": "https://res.cloudinary.com/dcvyai79m/image/upload/v1785704146/profile/185d41a4-0abf-4829-80f2-f298e4405135/avatar/2026/08/34051017-jpg.jpg",
+            "latitude": 11.0103886,
+            "longitude": 76.952635,
+            "formattedAddress": "K.C. Arcade, 17/c, E TV Swamy Rd, below Mia by Tanishq, R.S. Puram, Coimbatore, Tamil Nadu 641002, India",
+            "lastLoginAt": "2026-09-01T18:13:30.678Z",
+            "createdAt": "2026-07-23T15:12:32.977Z",
+            "hasPassword": true,
+            "emailVerified": true,
+            "preferences": {
+              "theme": "light",
+              "pushNotifications": true,
+              "notificationsEnabled": true
+            },
+            "profile": {
+              "dateOfBirth": "1985-06-15",
+              "gender": "MALE",
+              "addressLine1": "17/c East TV Swamy Road",
+              "addressLine2": "ppg it",
+              "city": "Coimbatore",
+              "district": "Coimbatore",
+              "state": "Tamil Nadu",
+              "country": "India",
+              "pincode": "641002",
+              "latitude": 11.0103886,
+              "longitude": 76.952635,
+              "formattedAddress": "K.C. Arcade, 17/c, E TV Swamy Rd, below Mia by Tanishq, R.S. Puram, Coimbatore, Tamil Nadu 641002, India",
+              "emergencyName": null,
+              "emergencyPhone": null,
+              "bio": null
+            }
+          },
+          "timestamp": "2026-09-01T18:17:11.352Z"
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,86 @@
+meta {
+  name: Attachments - Get By ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/attachments/{{attachmentId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+vars:pre-request {
+  attachmentId: 0d0fc813-9d72-414e-8a8f-553913ea7641
+}
+
+script:pre-request {
+  const axios = require("axios");
+  const baseUrl = bru.getEnvVar("base-url") || bru.getVar("base-url");
+  const token = bru.getEnvVar("token") || bru.getVar("token");
+  if (!baseUrl || !token) return;
+  
+  try {
+    const res = await axios.get(`${baseUrl}/attachments`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  
+    const attachments = res.data && res.data.data && Array.isArray(res.data.data) ? res.data.data : [];
+    if (attachments.length > 0) {
+      bru.setVar("attachmentId", attachments[0].id);
+    }
+  } catch (err) {
+    console.error("Failed to fetch attachments:", err.message);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Retrieved
+  
+  request: {
+    url: {{base-url}}/attachments/{{attachmentId}}
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+      access-control-allow-credentials: true
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Attachment retrieved successfully",
+          "data": {
+            "id": "859a412c-75b6-45a3-8582-911b55e6255d",
+            "type": "document",
+            "url": "https://example.com/documents/event-brochure.pdf",
+            "createdAt": "2026-09-06T11:05:10.821Z"
+          },
+          "timestamp": "2026-09-06T11:14:00.493Z"
+        }
+      '''
+    }
+  }
+}

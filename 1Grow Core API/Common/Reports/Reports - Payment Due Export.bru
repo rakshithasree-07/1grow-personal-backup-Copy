@@ -1,0 +1,25 @@
+meta {
+  name: Reports - Payment Due Export
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{base-url}}/reports/payment-due/export
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  format: csv
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

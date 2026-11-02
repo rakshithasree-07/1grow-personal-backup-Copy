@@ -1,0 +1,24 @@
+meta {
+  name: Batches
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/class/attendance/batches
+  body: none
+  auth: inherit
+}
+
+params:query {
+  branchId: {{branchId}}
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

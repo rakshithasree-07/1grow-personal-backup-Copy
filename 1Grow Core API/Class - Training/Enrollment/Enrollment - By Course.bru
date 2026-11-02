@@ -1,0 +1,20 @@
+meta {
+  name: Enrollment - By Course
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/enrollments/cource/{{courseId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

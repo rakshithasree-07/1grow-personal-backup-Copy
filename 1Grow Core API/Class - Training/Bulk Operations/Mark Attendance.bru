@@ -1,0 +1,43 @@
+meta {
+  name: Mark Attendance
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base-url}}/bulk/attendance
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "batchId": "{{batchId}}",
+    "classSessionId": "{{classSessionId}}",
+    "date": "2026-09-09T00:00:00.000Z",
+    "records": [
+      {
+        "studentId": "{{studentId}}",
+        "status": "PRESENT",
+        "remarks": "On time",
+        "checkInTime": "09:00 AM"
+      },
+      {
+        "studentId": "{{studentId2}}",
+        "status": "ABSENT",
+        "remarks": "Medical leave",
+        "checkInTime": "10:05 AM"
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,26 @@
+meta {
+  name: Schedule - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/training/schedules
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+params:query {
+  page: 1
+  pageSize: 10
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

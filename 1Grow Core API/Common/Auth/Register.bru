@@ -1,0 +1,241 @@
+meta {
+  name: Register
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base-url}}/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Demo 1",
+    "email": "abi.cbe.dev2@gmail.com",
+    "phone": "9200000012",
+    "password": "Demo@123"
+   // "role": "OWNER"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 409 Email already exists
+  
+  request: {
+    url: {{base-url}}/auth/register
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "name": "Demo 1",
+        "email": "abi.cbe.dev@gmail.com",
+        "phone": "9000000001",
+        "password": "Demo@123"
+       // "role": "OWNER"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: e5118795-b7cf-49e1-bf83-67710ee9b30c
+      x-correlation-id: e5118795-b7cf-49e1-bf83-67710ee9b30c
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 106
+      etag: W/"6a-re5zDdyEKUVaAv6UHujWivOK6rE"
+      date: Tue, 01 Sep 2026 04:15:36 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 409
+      text: Conflict
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 409,
+          "message": "Email already exists",
+          "data": null,
+          "timestamp": "2026-09-01T04:15:36.855Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 409 Phone number already exsits
+  
+  request: {
+    url: {{base-url}}/auth/register
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "name": "Demo 1",
+        "email": "abi.cbe.dev1@gmail.com",
+        "phone": "9000000001",
+        "password": "Demo@123"
+       // "role": "OWNER"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 873b5cd9-1bbd-4127-9f97-0cd2cbbe710d
+      x-correlation-id: 873b5cd9-1bbd-4127-9f97-0cd2cbbe710d
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 28
+      content-type: application/json; charset=utf-8
+      content-length: 117
+      etag: W/"75-UBpfZqIoV62H0ZWOvaJDgiotd9Y"
+      date: Tue, 01 Sep 2026 04:16:09 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 409
+      text: Conflict
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 409,
+          "message": "Phone number already registered",
+          "data": null,
+          "timestamp": "2026-09-01T04:16:09.263Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201 Account Created
+  
+  request: {
+    url: {{base-url}}/auth/register
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "name": "Demo 1",
+        "email": "abi.cbe.dev1@gmail.com",
+        "phone": "9100000012",
+        "password": "Demo@123"
+       // "role": "OWNER"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 40212334-1957-4398-aab0-162639e27bec
+      x-correlation-id: 40212334-1957-4398-aab0-162639e27bec
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 117
+      x-ratelimit-reset: 46
+      content-type: application/json; charset=utf-8
+      etag: W/"440-+EOCkeujVO110q16kIj+1WE+oB8"
+      date: Tue, 01 Sep 2026 04:23:14 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Success",
+          "data": {
+            "user": {
+              "id": "f473a69e-1fff-4251-80bc-4cc9cc061391",
+              "tenantId": "",
+              "branchId": null,
+              "email": "abi.cbe.dev1@gmail.com",
+              "name": "Demo 1",
+              "role": "STAFF",
+              "status": "ACTIVE",
+              "emailVerified": true,
+              "tenantName": null,
+              "tenantLogoUrl": null,
+              "tenantSlug": null,
+              "industries": []
+            },
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0NzNhNjllLTFmZmYtNDI1MS04MGJjLTRjYzljYzA2MTM5MSIsInRlbmFudElkIjoiIiwiYnJhbmNoSWQiOm51bGwsImVtYWlsIjoiYWJpLmNiZS5kZXYxQGdtYWlsLmNvbSIsIm5hbWUiOiJEZW1vIDEiLCJyb2xlIjoiU1RBRkYiLCJzdGF0dXMiOiJBQ1RJVkUiLCJlbWFpbFZlcmlmaWVkIjp0cnVlLCJ0ZW5hbnROYW1lIjpudWxsLCJ0ZW5hbnRMb2dvVXJsIjpudWxsLCJ0ZW5hbnRTbHVnIjpudWxsLCJpbmR1c3RyaWVzIjpbXSwiaWF0IjoxNzg4MjM2NTk0LCJleHAiOjE3ODgyMzc0OTR9.wGYevBQ2yfW-m3I7F81QAT6LPot-WH-uW-cA_BK8Rsw",
+            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmNDczYTY5ZS0xZmZmLTQyNTEtODBiYy00Y2M5Y2MwNjEzOTEiLCJqdGkiOiJlM2RiODZmMTU1NThlODZhMmY4OGVlNzVhY2ZlOTNjNCIsImlhdCI6MTc4ODIzNjU5NCwiZXhwIjoxNzg4ODQxMzk0fQ.jPPUNCuTJWn5p23uTJY3gb8uPbRp3jRwRST1EsFHL_M"
+          },
+          "timestamp": "2026-09-01T04:23:14.644Z"
+        }
+      '''
+    }
+  }
+}

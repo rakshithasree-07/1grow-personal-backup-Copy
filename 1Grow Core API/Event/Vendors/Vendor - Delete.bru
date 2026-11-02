@@ -1,0 +1,25 @@
+meta {
+  name: Vendor - Delete
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{base-url}}/events/{{eventId}}/vendors/{{eventVendorId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+vars:pre-request {
+  eventId: 97330d56-033e-4e25-b834-88bf255049d2
+  eventVendorId: 3f9a7c21-5b6d-4e8f-a0c3-7d2e9b4f1a55
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

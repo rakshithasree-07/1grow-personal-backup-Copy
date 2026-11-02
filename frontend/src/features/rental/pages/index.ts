@@ -1,0 +1,9 @@
+export { InventoryPage } from "./inventory-page";
+export { BookingsPage } from "./bookings-page";
+export { EnquiriesPage } from "./enquiries-page";
+export { DispatchPage } from "./dispatch-page";
+export { ReturnsPage } from "./returns-page";
+export { MaintenancePage } from "./maintenance-page";
+export { DamagePage } from "./damage-page";
+export { CataloguePage } from "./catalogue-page";
+export { QuotationsPage } from "./quotations-page";

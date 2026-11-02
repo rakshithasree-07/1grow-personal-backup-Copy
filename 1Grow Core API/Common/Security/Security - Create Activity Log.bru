@@ -1,0 +1,30 @@
+meta {
+  name: Security - Create Activity Log
+  type: http
+  seq: 14
+}
+
+post {
+  url: {{base-url}}/security/activity-logs
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "action": "CREATE",
+    "resource": "LEAD",
+    "resourceId": "lead-uuid",
+    "description": "Lead created"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

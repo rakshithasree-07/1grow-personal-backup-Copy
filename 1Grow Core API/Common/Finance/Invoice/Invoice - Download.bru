@@ -1,0 +1,21 @@
+meta {
+  name: Invoice - Download
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base-url}}/invoices/{{id}}/download
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

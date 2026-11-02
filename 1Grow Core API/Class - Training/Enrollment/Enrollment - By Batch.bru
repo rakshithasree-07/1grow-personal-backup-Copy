@@ -1,0 +1,20 @@
+meta {
+  name: Enrollment - By Batch
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/enrollments/batch/{{batchId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

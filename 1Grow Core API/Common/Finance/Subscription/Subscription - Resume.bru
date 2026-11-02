@@ -1,0 +1,21 @@
+meta {
+  name: Subscription - Resume
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{base-url}}/subscriptions/{{id}}/resume
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

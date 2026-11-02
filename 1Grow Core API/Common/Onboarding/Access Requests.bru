@@ -1,0 +1,20 @@
+meta {
+  name: Access Requests
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{base-url}}/onboarding/access-requests
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,211 @@
+meta {
+  name: Team - List All Teams
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base-url}}/events/team
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success-WithTeams
+  
+  request: {
+    url: {{base-url}}/events/team
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "data": [
+            {
+              "id": "99a37c63-f9b5-424c-93d8-0584fb70e347",
+              "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+              "userId": "2714b455-9f5c-4c58-8445-aa69f4d1120f",
+              "role": "COORDINATOR",
+              "status": "AVAILABLE",
+              "notes": "Main event coordinator",
+              "createdAt": "2026-09-06T19:12:18.346Z",
+              "user": {
+                "id": "2714b455-9f5c-4c58-8445-aa69f4d1120f",
+                "name": "Tharun",
+                "email": "student9.branch2@test.com",
+                "phone": "9000000032"
+              },
+              "event": {
+                "id": "460e138d-d11c-4e6b-a65e-570b093ec809",
+                "title": "Annual Day Celebration",
+                "eventType": {
+                  "name": "Cultural"
+                }
+              }
+            },
+            {
+              "id": "aa11bb22-cc33-dd44-ee55-ff6677889900",
+              "eventId": "570f149e-e22d-5f7c-b76f-681c1a4fd91a",
+              "userId": "3825c566-aa6d-5d69-9556-bb70g5e2231g",
+              "role": "MANAGER",
+              "status": "ASSIGNED",
+              "notes": "Tech event manager",
+              "createdAt": "2026-09-07T08:00:00.000Z",
+              "user": {
+                "id": "3825c566-aa6d-5d69-9556-bb70g5e2231g",
+                "name": "Priya",
+                "email": "priya.branch1@test.com",
+                "phone": "9000000045"
+              },
+              "event": {
+                "id": "570f149e-e22d-5f7c-b76f-681c1a4fd91a",
+                "title": "Tech Fest 2026",
+                "eventType": {
+                  "name": "Technical"
+                }
+              }
+            }
+          ],
+          "meta": {
+            "total": 2,
+            "page": 1,
+            "pageSize": 10,
+            "totalPages": 1
+          },
+          "timestamp": "2026-09-08T10:00:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-Success-EmptyList
+  
+  request: {
+    url: {{base-url}}/events/team
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "data": [],
+          "meta": {
+            "total": 0,
+            "page": 1,
+            "pageSize": 10,
+            "totalPages": 0
+          },
+          "timestamp": "2026-09-08T10:00:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-Success-WithPagination
+  
+  request: {
+    url: {{base-url}}/events/team?page=1&pageSize=5
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "data": [
+            {
+              "id": "99a37c63-f9b5-424c-93d8-0584fb70e347",
+              "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+              "userId": "2714b455-9f5c-4c58-8445-aa69f4d1120f",
+              "role": "COORDINATOR",
+              "status": "AVAILABLE",
+              "notes": "Main event coordinator",
+              "createdAt": "2026-09-06T19:12:18.346Z",
+              "user": {
+                "id": "2714b455-9f5c-4c58-8445-aa69f4d1120f",
+                "name": "Tharun",
+                "email": "student9.branch2@test.com",
+                "phone": "9000000032"
+              },
+              "event": {
+                "id": "460e138d-d11c-4e6b-a65e-570b093ec809",
+                "title": "Annual Day Celebration",
+                "eventType": {
+                  "name": "Cultural"
+                }
+              }
+            }
+          ],
+          "meta": {
+            "total": 12,
+            "page": 1,
+            "pageSize": 5,
+            "totalPages": 3
+          },
+          "timestamp": "2026-09-08T10:00:00.000Z"
+        }
+      '''
+    }
+  }
+}

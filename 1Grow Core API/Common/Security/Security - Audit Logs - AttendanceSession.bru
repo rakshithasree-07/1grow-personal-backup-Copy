@@ -1,0 +1,89 @@
+meta {
+  name: Security - Audit Logs - AttendanceSession
+  type: http
+  seq: 19
+}
+
+get {
+  url: {{base-url}}/security/audit-logs
+  body: none
+  auth: inherit
+}
+
+docs {
+  # AttendanceSession audit records
+
+  Filtered view of the audit trail for the `AttendanceSession` entity.
+
+  **Roles:** `SUPER_ADMIN`, `OWNER`, `BRANCH_MANAGER`
+
+  ## Written by
+
+  `POST /class/attendance`, `POST /class/attendance/bulk`, `PATCH /class/attendance/:id`, `GET /class/attendance/export`
+
+  The CSV export is logged as `EXPORT` with **no** `entityId` (an export is not tied to one record) and carries the applied filters plus `sessionCount` / `rowCount` in `newValues`.
+
+  Bulk marking logs `CREATE` when it had to open the session and `UPDATE`
+  when an existing session was reused, and always records a per-student diff in
+  `newValues.records` as `{ studentId, oldStatus, newStatus, oldRemarks, newRemarks }`.
+  The prior state of a reused session is in `oldValues.records` as
+  `{ studentId, status, remarks }`. `oldStatus` / `oldRemarks` are `null` for
+  students the same call added for the first time.
+
+  `entity` is an exact, case-insensitive match, so every returned row is a
+  genuine `AttendanceSession` record. Use `entityContains` for the old partial
+  behaviour, or see `Security - Audit Logs - Class Module` for all seven Class
+  entities in one request.
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 100
+  entity: AttendanceSession
+}
+
+assert {
+  res.status: eq 200
+  res.body.message: eq "Audit logs fetched"
+}
+
+script:post-response {
+  const ENTITY = 'AttendanceSession';
+  const rows = Array.isArray(res.body?.data) ? res.body.data : [];
+  const meta = res.body?.meta;
+
+  console.log(`${ENTITY}: ${rows.length} of ${meta?.total ?? '?'} records (page ${meta?.page ?? '?'}/${meta?.totalPages ?? '?'})`);
+
+  rows.forEach((row) => {
+    const changes = row.oldValues || row.newValues ? ' [before/after recorded]' : '';
+    console.log(`  ${row.action.padEnd(11)} ${String(row.entityId ?? '(no entityId)').padEnd(40)} ${row.createdAt}${changes}`);
+  });
+  if (!rows.length) console.log(`  -> no ${ENTITY} records; run the matching /class/* request first`);
+
+  const bulk = rows.filter((row) => row.action === 'UPDATE');
+  if (bulk.length) {
+    console.log(`  note: ${bulk.length} row(s) reused an existing session; check newValues.records for the per-student diff`);
+  }
+
+  const exports = rows.filter((row) => row.action === 'EXPORT');
+  if (exports.length) console.log(`  note: ${exports.length} EXPORT row(s) (CSV export) have no entityId by design`);
+
+  if (meta && meta.total > rows.length) {
+    console.log(`  -> ${meta.total - rows.length} more record(s) on later pages; increase page`);
+  }
+
+  const newest = rows[0];
+  if (newest) {
+    bru.setVar('latestAttendanceSessionAuditId', newest.id);
+    bru.setVar('latestAttendanceSessionAuditEntityId', newest.entityId);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

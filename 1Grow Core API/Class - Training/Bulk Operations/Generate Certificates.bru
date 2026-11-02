@@ -1,0 +1,30 @@
+meta {
+  name: Generate Certificates
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base-url}}/bulk/certificates
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "batchId": "{{batchId}}",
+    "templateId": "00000000-0000-4000-8000-000000000011",
+    "studentIds": ["{{studentId}}", "{{studentId2}}"],
+    "issuedDate": "2026-09-09T00:00:00.000Z"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

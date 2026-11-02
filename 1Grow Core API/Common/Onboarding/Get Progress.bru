@@ -1,0 +1,160 @@
+meta {
+  name: Get Progress
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/onboarding/progress
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200 In-progress (current process)
+
+  request: {
+    url: {{base-url}}/onboarding/progress
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+      x-correlation-id: 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 900
+      etag: W/"384-xxxx"
+      date: Tue, 01 Sep 2026 19:00:00 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+
+    status: {
+      code: 200
+      text: OK
+    }
+
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Onboarding progress retrieved",
+          "data": {
+            "session": {
+              "selectedRole": "OWNER",
+              "currentStep": "PROFILE_SETUP",
+              "isCompleted": false,
+              "completionPct": 10,
+              "completedSections": [
+                "ROLE_SELECTION"
+              ],
+              "lastVisitedStep": "ROLE_SELECTION",
+              "startedAt": "2026-09-01T06:00:00.000Z",
+              "lastActivityAt": "2026-09-01T06:05:00.000Z",
+              "updatedAt": "2026-09-01T06:05:00.000Z"
+            },
+            "steps": [
+              { "step": "ROLE_SELECTION", "status": "COMPLETED" },
+              { "step": "PROFILE_SETUP", "status": "CURRENT" },
+              { "step": "TENANT_SETUP", "status": "PENDING" },
+              { "step": "BRANCH_SETUP", "status": "PENDING" },
+              { "step": "MODULE_SELECTION", "status": "PENDING" }
+            ],
+            "onboardingRequired": true,
+            "isFirstLogin": true
+          },
+          "timestamp": "2026-09-01T19:00:00.123Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200 Completed
+
+  request: {
+    url: {{base-url}}/onboarding/progress
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+
+  response: {
+    status: {
+      code: 200
+      text: OK
+    }
+
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Onboarding progress retrieved",
+          "data": {
+            "session": {
+              "selectedRole": "OWNER",
+              "currentStep": "COMPLETED",
+              "isCompleted": true,
+              "completionPct": 100,
+              "completedSections": [
+                "ROLE_SELECTION",
+                "PROFILE_SETUP",
+                "TENANT_SETUP",
+                "BRANCH_SETUP",
+                "MODULE_SELECTION"
+              ],
+              "lastVisitedStep": "MODULE_SELECTION",
+              "updatedAt": "2026-09-01T19:00:00.000Z"
+            },
+            "steps": [
+              { "step": "ROLE_SELECTION", "status": "COMPLETED" },
+              { "step": "PROFILE_SETUP", "status": "COMPLETED" },
+              { "step": "TENANT_SETUP", "status": "COMPLETED" },
+              { "step": "BRANCH_SETUP", "status": "COMPLETED" },
+              { "step": "MODULE_SELECTION", "status": "COMPLETED" }
+            ],
+            "onboardingRequired": false,
+            "isFirstLogin": false
+          },
+          "timestamp": "2026-09-01T19:00:00.123Z"
+        }
+      '''
+    }
+  }
+}

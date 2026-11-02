@@ -1,0 +1,229 @@
+meta {
+  name: Service - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/events/services
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Music Smopund System",
+    "code": "SND-0052",
+    "description": "Professional sound system with speakers and mixer",
+    "category": {
+      "name": "Sound & MicAudio"
+    },
+    "unit": "1",
+    "unitPrice": 15000,
+    "costPrice": 10000,
+    "taxRate": 18,
+    "duration": {
+      "value": 1,
+      "unit": "day"
+    },
+    "isActive": true,
+    "branch": {
+      "id": "120dd0db-4037-45b9-8528-c9ecfef1f126"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-success
+  
+  request: {
+    url: {{base-url}}/events/services
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Music Smound System",
+        "code": "SND-002",
+        "description": "Professional sound system with speakers and mixer",
+        "category": {
+          "name": "Sound & MicAudio"
+        },
+        "unit": "event",
+        "unitPrice": 15000,
+        "costPrice": 10000,
+        "taxRate": 18,
+        "duration": {
+          "value": 1,
+          "unit": "day"
+        },
+        "isActive": true,
+        "branch": {
+          "id": "120dd0db-4037-45b9-8528-c9ecfef1f126"
+        }
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 676c516e-9805-4eb2-a251-fa1891ca5782
+      x-correlation-id: 676c516e-9805-4eb2-a251-fa1891ca5782
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 610
+      etag: W/"262-bwuFTrNXr7Rh4VDWF2wofuRAIq4"
+      date: Mon, 07 Sep 2026 10:49:31 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Event service created successfully",
+          "data": {
+            "id": "cbf6a499-718f-49cc-a1d3-f08bad0b50f6",
+            "tenantId": "12bf3d33-1f28-4ec2-b2d7-17a8534e87f3",
+            "branchId": "120dd0db-4037-45b9-8528-c9ecfef1f126",
+            "code": "SND-002",
+            "name": "Music Smound System",
+            "categoryName": "Sound & MicAudio",
+            "description": "Professional sound system with speakers and mixer",
+            "unitPrice": "15000",
+            "costPrice": "10000",
+            "taxRate": "18",
+            "durationValue": 1,
+            "durationUnit": "day",
+            "unit": "event",
+            "isActive": true,
+            "createdAt": "2026-09-07T10:49:31.503Z",
+            "updatedAt": "2026-09-07T10:49:31.503Z"
+          },
+          "timestamp": "2026-09-07T10:49:31.632Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-Error
+  
+  request: {
+    url: {{base-url}}/events/services
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Music Smound System",
+        "code": "SND-002",
+        "description": "Professional sound system with speakers and mixer",
+        "category": {
+          "name": "Sound & MicAudio"
+        },
+        "unit": "event",
+        "unitPrice": 15000,
+        "costPrice": 10000,
+        "taxRate": 18,
+        "duration": {
+          "value": 1,
+          "unit": "day"
+        },
+        "isActive": true,
+        "branch": {
+          "id": "120dd0db-4037-45b9-8528-c9ecfef1f126"
+        }
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 9428e243-79a6-4b79-b98b-bd05dbdee5b2
+      x-correlation-id: 9428e243-79a6-4b79-b98b-bd05dbdee5b2
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 137
+      etag: W/"89-DtIl8zOHIw32Gd6uh4VWId1tLWg"
+      date: Mon, 07 Sep 2026 10:51:44 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "Event service with this name or code already exists",
+          "data": null,
+          "timestamp": "2026-09-07T10:51:44.165Z"
+        }
+      '''
+    }
+  }
+}

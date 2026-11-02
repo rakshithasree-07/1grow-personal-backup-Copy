@@ -1,0 +1,32 @@
+meta {
+  name: Tenant - Setup Branch
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base-url}}/onboarding/branch
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "branchName": "Chennai Main Branch",
+    "addressLine1": "45, Mount Road",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "pincode": "600002"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

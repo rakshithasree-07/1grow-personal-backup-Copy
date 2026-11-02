@@ -1,0 +1,21 @@
+meta {
+  name: Duplicate
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base-url}}/class/certificate-templates/{{id}}/duplicate
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,141 @@
+/* ─── 1Grow Design Tokens ───────────────────────────────────────────
+   All primitive values live here.
+   globals.css maps them into the Tailwind @theme.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Brand — Indigo blue */
+  --brand-50:  #eef2ff;
+  --brand-100: #e0e7ff;
+  --brand-200: #c7d2fe;
+  --brand-300: #a5b4fc;
+  --brand-400: #818cf8;
+  --brand-500: #6366f1;
+  --brand-600: #4f46e5;
+  --brand-700: #4338ca;
+  --brand-800: #3730a3;
+  --brand-900: #312e81;
+
+  /* Dynamic tenant brand (overridden by BrandThemeProvider) */
+  --primary:             #6366f1;
+  --primary-foreground:   #ffffff;
+  --secondary:           #818cf8;
+  --secondary-foreground: #ffffff;
+
+  /* Success — Green */
+  --success-50:  #f0fdf4;
+  --success-500: #22c55e;
+  --success-700: #15803d;
+  --success-foreground: #ffffff;
+
+  /* Warning — Amber */
+  --warning-50:  #fffbeb;
+  --warning-500: #f59e0b;
+  --warning-700: #b45309;
+  --warning-foreground: #ffffff;
+
+  /* Danger — Red */
+  --danger-50:  #fff1f2;
+  --danger-500: #ef4444;
+  --danger-700: #b91c1c;
+  --danger-foreground: #ffffff;
+
+  /* Info — Sky */
+  --info-50:  #f0f9ff;
+  --info-500: #0ea5e9;
+  --info-700: #0369a1;
+  --info-foreground: #ffffff;
+
+  /* Surfaces — Light */
+  --surface:         #ffffff;
+  --surface-raised:  #f8fafc;
+  --surface-overlay: #f1f5f9;
+
+  /* Borders — Light */
+  --border:        #e2e8f0;
+  --border-subtle: #f1f5f9;
+
+  /* Text — Light */
+  --text-primary:     #0f172a;
+  --text-secondary:   #475569;
+  --text-disabled:    #94a3b8;
+  --text-placeholder: #cbd5e1;
+
+  /* Sidebar */
+  --sidebar-width:           240px;
+  --sidebar-width-collapsed: 64px;
+  --topbar-height:           60px;
+
+  /* Sidebar — light+primary */
+  --sidebar-bg:              var(--primary);
+  --sidebar-text:            var(--primary-foreground);
+  --sidebar-text-hover:      #1e293b;          /* dark text on white hover pill */
+  --sidebar-hover-bg:        var(--surface);   /* #ffffff */
+  --sidebar-active-bg:       var(--surface);   /* #ffffff */
+  --sidebar-active-text:     var(--primary);   /* primary color */
+  --sidebar-child-text:      var(--primary);   /* child text on white group bg — light: primary */
+  --sidebar-child-active-bg: var(--primary);   /* active child bg — light: primary */
+  --sidebar-parent-active-bg: var(--surface);  /* #ffffff */
+  --sidebar-border:          rgba(255, 255, 255, 0.15);
+  --sidebar-child-border:    rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Dark Mode ─────────────────────────────────────────────────────────────── */
+.dark {
+  /* Dynamic tenant brand — dark mode overrides */
+  --primary-foreground: #0f172a;
+
+  /* Surfaces */
+  --surface:         #0f172a;
+  --surface-raised:  #1e293b;
+  --surface-overlay: #273344;
+
+  /* Borders */
+  --border:        #334155;
+  --border-subtle: #1e293b;
+
+  /* Text */
+  --text-primary:     #f1f5f9;
+  --text-secondary:   #94a3b8;
+  --text-disabled:    #475569;
+  --text-placeholder: #64748b;
+
+  /* Brand (slightly brighter on dark) */
+  --brand-500: #818cf8;
+  --brand-600: #6366f1;
+  --brand-700: #4f46e5;
+
+  /* Sidebar — dark+primary */
+  --sidebar-bg:              var(--primary);
+  --sidebar-text:            var(--primary-foreground);
+  --sidebar-text-hover:      var(--primary);   /* primary color on hover */
+  --sidebar-hover-bg:        #1e293b;          /* always #1e293b in dark */
+  --sidebar-active-bg:       #1e293b;          /* always #1e293b in dark */
+  --sidebar-active-text:     #ffffff;          /* white when active */
+  --sidebar-child-text:      #ffffff;          /* child text on dark group bg — dark: white */
+  --sidebar-child-active-bg: var(--primary);   /* active child bg — dark: primary */
+  --sidebar-parent-active-bg: #1e293b;         /* always #1e293b in dark */
+  --sidebar-border:          rgba(0, 0, 0, 0.22);
+  --sidebar-child-border:    rgba(255, 255, 255, 0.12);
+
+  /* Semantic */
+  --success-50:  rgba(74, 222, 128, 0.15);
+  --success-500: #4ade80;
+  --success-700: #4ade80;
+  --success-foreground: #0f172a;
+
+  --warning-50:  rgba(251, 191, 36, 0.15);
+  --warning-500: #fbbf24;
+  --warning-700: #fbbf24;
+  --warning-foreground: #0f172a;
+
+  --danger-50:   rgba(248, 113, 113, 0.15);
+  --danger-500:  #f87171;
+  --danger-700:  #f87171;
+  --danger-foreground: #0f172a;
+
+  --info-50:     rgba(56, 189, 248, 0.15);
+  --info-500:    #38bdf8;
+  --info-700:    #38bdf8;
+  --info-foreground: #0f172a;
+}

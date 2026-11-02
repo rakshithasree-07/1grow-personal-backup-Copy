@@ -1,0 +1,74 @@
+meta {
+  name: Attachments - Activate
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{base-url}}/attachments/{{attachmentId}}/status
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "isActive": true
+  }
+}
+
+vars:pre-request {
+  attachmentId: c891d2db-f80a-48f0-8425-5cdf0caa5768
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Activated
+  
+  request: {
+    url: {{base-url}}/attachments/{{attachmentId}}/status
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "isActive": true
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+      access-control-allow-credentials: true
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Attachment activated successfully",
+          "data": null
+        }
+      '''
+    }
+  }
+}

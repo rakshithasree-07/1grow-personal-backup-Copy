@@ -1,0 +1,233 @@
+meta {
+  name: 03 - Get Booking Calendar
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/rental/bookings/calendar?startDate=2026-10-01&endDate=2026-12-31
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.httpStatusCode: eq 200
+  res.body.data: isDefined
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/bookings/calendar?startDate=2026-10-01&endDate=2026-12-31
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 7bacb461-ec75-442d-84bd-d9880d98a6d8
+      x-correlation-id: 7bacb461-ec75-442d-84bd-d9880d98a6d8
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 522
+      etag: W/"20a-gcI8NGx06BfdM5j4JUQDZv6Zw4Q"
+      date: Thu, 10 Sep 2026 16:35:59 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental booking calendar retrieved successfully",
+          "timestamp": "2026-09-10T16:35:59.668Z",
+          "data": [
+            {
+              "bookingId": "bc98bc6f-df35-412c-9654-b60202b05123",
+              "bookingNumber": "BK-2026-000001",
+              "customerName": "Karthik Media Productions",
+              "phone": "+919840123456",
+              "startDate": "2026-11-10",
+              "endDate": "2026-11-15",
+              "status": "CONFIRMED",
+              "venue": "Mahabalipuram Outdoor Sets",
+              "items": [
+                {
+                  "itemId": "43131a78-defe-4d6d-a59d-091894ffdfcc",
+                  "itemName": "Sony FX6 Cinema Camera",
+                  "sku": "CAM-FX6-NEW-0942",
+                  "quantity": 2
+                }
+              ]
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/bookings/calendar?startDate=2026-10-01&endDate=2026-12-31
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 01e38eaa-3f79-4655-9bfc-91711efaf352
+      x-correlation-id: 01e38eaa-3f79-4655-9bfc-91711efaf352
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"665-7a+NOXSoFuXoWLVdYVrgTDCL/ig"
+      date: Fri, 11 Sep 2026 17:02:13 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental booking calendar retrieved successfully",
+          "timestamp": "2026-09-11T17:02:13.665Z",
+          "data": [
+            {
+              "bookingId": "bc98bc6f-df35-412c-9654-b60202b05123",
+              "bookingNumber": "BK-2026-000001",
+              "customerName": "Karthik Media Productions",
+              "phone": "+919840123456",
+              "startDate": "2026-11-10",
+              "endDate": "2026-11-15",
+              "status": "CONFIRMED",
+              "venue": "Mahabalipuram Outdoor Sets",
+              "items": [
+                {
+                  "itemId": "43131a78-defe-4d6d-a59d-091894ffdfcc",
+                  "itemName": "Sony FX6 Cinema Camera",
+                  "sku": "CAM-FX6-NEW-0942",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "bookingId": "683cc417-f387-4792-b6f1-7efc35c342cb",
+              "bookingNumber": "BK-2026-000002",
+              "customerName": "Karthik Media Productions",
+              "phone": "+919840123456",
+              "startDate": "2026-11-10",
+              "endDate": "2026-11-15",
+              "status": "CONFIRMED",
+              "venue": "Mahabalipuram Outdoor Sets",
+              "items": [
+                {
+                  "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                  "itemName": "Sony FX6 Cinema Camera",
+                  "sku": "CAM-FA6-4K-001",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "bookingId": "a1bdd823-b291-49fb-b3ba-e015d7868464",
+              "bookingNumber": "BK-2026-000003",
+              "customerName": "Suriya Film Studios",
+              "phone": "+919940123457",
+              "startDate": "2026-12-01",
+              "endDate": "2026-12-04",
+              "status": "CONFIRMED",
+              "venue": null,
+              "items": [
+                {
+                  "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                  "itemName": "Sony FX6 Cinema Camera",
+                  "sku": "CAM-FA6-4K-001",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "bookingId": "981db755-5320-4370-9e0b-61e1cad33f96",
+              "bookingNumber": "BK-2026-000004",
+              "customerName": "Aditya Walk-in Client",
+              "phone": "+919123456780",
+              "startDate": "2026-12-10",
+              "endDate": "2026-12-12",
+              "status": "CONFIRMED",
+              "venue": null,
+              "items": [
+                {
+                  "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                  "itemName": "Sony FX6 Cinema Camera",
+                  "sku": "CAM-FA6-4K-001",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        }
+      '''
+    }
+  }
+}

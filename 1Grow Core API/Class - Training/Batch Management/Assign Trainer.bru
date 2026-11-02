@@ -1,0 +1,179 @@
+meta {
+  name: Assign Trainer
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{base-url}}/training/batches/{{batch-Id}}/assign-trainer
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "trainerId": "fda8c0fa-8c8d-4955-9b31-dd45b5b9fcbf",
+    "isPrimary": true
+  }
+}
+
+vars:pre-request {
+  batch-Id: 2db495bc-2e4b-4427-b1be-326c8de23005
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200 success
+  
+  request: {
+    url: {{base-url}}/training/batches/{{batch-Id}}/assign-trainer
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "trainerId": "fda8c0fa-8c8d-4955-9b31-dd45b5b9fcbf",
+        "isPrimary": true
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 7e8631dc-443a-43e1-839b-0a2527d92ff5
+      x-correlation-id: 7e8631dc-443a-43e1-839b-0a2527d92ff5
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 420
+      etag: W/"1a4-Tl9KOw4krQvtLsJgxjIbRfE4m1I"
+      date: Sat, 12 Sep 2026 09:02:10 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Trainer assigned successfully",
+          "timestamp": "2026-09-12T09:02:10.879Z",
+          "data": {
+            "id": "ad7faf6c-8cd2-4e44-a226-1340f0cf1106",
+            "batchId": "2db495bc-2e4b-4427-b1be-326c8de23005",
+            "trainerId": "fda8c0fa-8c8d-4955-9b31-dd45b5b9fcbf",
+            "isPrimary": true,
+            "assignedAt": "2026-09-12T09:02:10.542Z",
+            "trainer": {
+              "id": "fda8c0fa-8c8d-4955-9b31-dd45b5b9fcbf",
+              "name": "Bhavani",
+              "email": "staff1.branch1@test.com"
+            }
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 409 Trainer already assigned
+  
+  request: {
+    url: {{base-url}}/training/batches/{{batch-Id}}/assign-trainer
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "trainerId": "fda8c0fa-8c8d-4955-9b31-dd45b5b9fcbf",
+        "isPrimary": true
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 5f720796-e322-4060-8fb5-37784b03d4ed
+      x-correlation-id: 5f720796-e322-4060-8fb5-37784b03d4ed
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 44
+      content-type: application/json; charset=utf-8
+      content-length: 127
+      etag: W/"7f-gai4VzrzUwFt7WRzJjCoRtJD8zQ"
+      date: Sat, 12 Sep 2026 10:10:54 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 409
+      text: Conflict
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 409,
+          "message": "Trainer is already assigned to this batch",
+          "data": null,
+          "timestamp": "2026-09-12T10:10:54.298Z"
+        }
+      '''
+    }
+  }
+}

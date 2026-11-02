@@ -1,0 +1,60 @@
+meta {
+  name: Lead - List
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/leads
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 10
+  search: 
+  status: 
+  module: 
+  branchId: 
+  assignedTo: 
+}
+
+example {
+  name: success
+
+  response: {
+    status: { code: 200, text: OK }
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": [
+            {
+              "id": "lead-uuid",
+              "module": "EVENT",
+              "name": "Anita Sharma",
+              "phone": "9876543210",
+              "eventId": "event-uuid",
+              "event": { "id": "event-uuid", "eventNumber": "EVT-20260907-0001", "title": "Corporate Annual Meet", "eventType": { "id": "event-type-uuid", "name": "Corporate Event" }, "services": [{ "id": "service-uuid", "name": "Catering", "unitPrice": 15000 }] },
+              "status": "INTERESTED",
+              "_count": { "followups": 2 }
+            }
+          ],
+          "meta": { "page": 1, "pageSize": 10, "total": 1, "totalPages": 1 }
+        }
+      '''
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

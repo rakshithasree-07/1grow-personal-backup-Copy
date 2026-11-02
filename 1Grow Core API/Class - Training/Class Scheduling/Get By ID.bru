@@ -1,0 +1,21 @@
+meta {
+  name: Get By ID
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base-url}}/training/schedules/00000000-0000-4000-8000-000000000003
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

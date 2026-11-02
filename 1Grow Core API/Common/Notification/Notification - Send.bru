@@ -1,0 +1,29 @@
+meta {
+  name: Notification - Send
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{base-url}}/notification/send
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "title": "Payment Reminder",
+    "body": "Your payment is due",
+    "audience": "ALL"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

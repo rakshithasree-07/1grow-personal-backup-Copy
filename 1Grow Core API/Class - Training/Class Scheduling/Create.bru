@@ -1,0 +1,32 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/training/schedules
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "batchId": "{{batch-Id}}",
+    "date": "2026-07-05",
+    "startTime": "06:00",
+    "endTime": "07:00",
+    "topic": "Sun Salutation Basics",
+    "notes": "Bring mats"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

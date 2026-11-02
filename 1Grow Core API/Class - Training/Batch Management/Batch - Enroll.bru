@@ -1,0 +1,27 @@
+meta {
+  name: Batch - Enroll
+  type: http
+  seq: 16
+}
+
+post {
+  url: {{base-url}}/training/batches/{{batchId}}/enroll
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "studentId": "{{studentId}}"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

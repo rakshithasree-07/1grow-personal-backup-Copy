@@ -1,0 +1,21 @@
+meta {
+  name: RBAC - List Permissions
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/rbac/permissions
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

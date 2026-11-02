@@ -1,0 +1,21 @@
+meta {
+  name: Reports - Trainer Performance
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{base-url}}/reports/trainer-performance
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

@@ -1,0 +1,29 @@
+meta {
+  name: File - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/training/files
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+params:query {
+  page: 1
+  pageSize: 10
+  category: TRAINING_MATERIAL
+  search: sun salutation
+  isArchived: false
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Lead - Assign
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{base-url}}/leads/{{id}}/assign
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "assignedTo": "user-uuid"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

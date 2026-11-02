@@ -1,0 +1,88 @@
+meta {
+  name: 03 - Get Dispatch Stats
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/rental/dispatches/stats
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.httpStatusCode: eq 200
+  res.body.data: isDefined
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/dispatches/stats
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 7051e2a9-c149-464f-9714-06a91830e313
+      x-correlation-id: 7051e2a9-c149-464f-9714-06a91830e313
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 210
+      etag: W/"d2-CTdfCS6sQ4iTXzNqXKCDNDksd6g"
+      date: Fri, 11 Sep 2026 17:29:41 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental dispatch statistics retrieved successfully",
+          "timestamp": "2026-09-11T17:29:41.455Z",
+          "data": {
+            "total": 1,
+            "pending": 1,
+            "dispatched": 0,
+            "delivered": 0,
+            "returned": 0,
+            "cancelled": 0
+          }
+        }
+      '''
+    }
+  }
+}

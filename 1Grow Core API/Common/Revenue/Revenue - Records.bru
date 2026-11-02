@@ -1,0 +1,56 @@
+meta {
+  name: Revenue - Records
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/revenue/records
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  direction: ALL
+  source: ALL
+  branchId:
+  startDate: 2026-01-01
+  endDate: 2026-12-31
+  paymentType:
+  search:
+  page: 1
+  limit: 20
+}
+
+example {
+  name: success - income and outgo with branch summary
+
+  response: {
+    status: { code: 200, text: OK }
+    body: {
+      type: json
+      content: '''
+        {
+          "message": "Revenue records retrieved successfully",
+          "data": {
+            "tenant": { "id": "tenant-uuid", "name": "Demo Academy", "slug": "demo-academy", "industry": ["TRAINING", "RENTAL"] },
+            "filters": { "direction": "ALL", "source": "ALL", "branchId": null, "startDate": "2026-01-01", "endDate": "2026-12-31" },
+            "summary": { "totalIncome": 125000, "totalOutgo": 34000, "net": 91000, "incomeRecordCount": 8, "outgoRecordCount": 4 },
+            "branchSummary": [{ "branchId": "branch-uuid", "branchName": "Main Branch", "branchCode": "MAIN", "income": 125000, "outgo": 34000, "net": 91000, "recordCount": 12 }],
+            "records": [{ "id": "ledger-uuid", "recordSource": "CAPTURED", "recordType": "REVENUE_LEDGER", "direction": "INCOME", "amount": 25000, "netAmount": 25000, "currency": "INR", "transactionDate": "2026-09-07T10:00:00.000Z", "paymentType": "STUDENT_FEE", "branch": { "id": "branch-uuid", "name": "Main Branch", "code": "MAIN" }, "details": { "paymentOrderId": "payment-order-uuid", "payerType": "STUDENT", "refundAmount": 0 } }, { "id": "expense-uuid", "recordSource": "MANUAL", "recordType": "EXPENSE", "direction": "OUTGO", "amount": 5000, "netAmount": -5000, "currency": "INR", "transactionDate": "2026-09-06T00:00:00.000Z", "status": "PAID", "details": { "title": "Venue supplies", "payeeCategory": "VENDOR" } }],
+            "pagination": { "page": 1, "limit": 20, "total": 12, "totalPages": 1 }
+          }
+        }
+      '''
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

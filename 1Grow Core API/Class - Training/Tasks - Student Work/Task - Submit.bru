@@ -1,0 +1,29 @@
+meta {
+  name: Task - Submit
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{base-url}}/class/tasks/{{id}}/submissions
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "studentId": "00000000-0000-4000-8000-000000000005",
+    "content": "Recorded my Kathak footwork practice reel and uploaded it",
+    "fileUrl": "https://vimeo.com/kathak-practice-reel"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

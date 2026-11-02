@@ -1,0 +1,20 @@
+meta {
+  name: Task - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/class/tasks?page=1&pageSize=10&batchId=00000000-0000-4000-8000-000000000002&status=ACTIVE&type=HOMEWORK
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

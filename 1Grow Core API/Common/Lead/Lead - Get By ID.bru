@@ -1,0 +1,21 @@
+meta {
+  name: Lead - Get By ID
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base-url}}/leads/{{id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

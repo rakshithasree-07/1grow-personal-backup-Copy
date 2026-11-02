@@ -1,0 +1,105 @@
+meta {
+  name: Batch - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/training/batches
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Daily Yoga Batch",
+    "code": "MY-002",
+    "courseId": "{{courseId}}",
+    "branchId": "{{branchId}}",
+    "capacity": 25,
+    "startDate": "2026-07-01",
+    "endDate": "2026-09-30"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200 success
+  
+  request: {
+    url: {{base-url}}/training/batches
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Daily Yoga Batch",
+        "code": "MY-002",
+        "courseId": "{{courseId}}",
+        "branchId": "{{branchId}}",
+        "capacity": 25,
+        "startDate": "2026-07-01",
+        "endDate": "2026-09-30"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 77c2b85a-1c33-4393-984c-deb5f8755b4f
+      x-correlation-id: 77c2b85a-1c33-4393-984c-deb5f8755b4f
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 42
+      content-type: application/json; charset=utf-8
+      content-length: 100
+      etag: W/"64-XfVdqqVR615zAQhMOIdyK7Digrk"
+      date: Fri, 11 Sep 2026 10:04:03 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Batch created successfully",
+          "timestamp": "2026-09-11T10:04:03.356Z"
+        }
+      '''
+    }
+  }
+}

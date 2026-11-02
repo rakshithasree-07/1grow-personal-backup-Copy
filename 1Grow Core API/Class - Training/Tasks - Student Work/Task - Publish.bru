@@ -1,0 +1,21 @@
+meta {
+  name: Task - Publish
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base-url}}/class/tasks/{{id}}/publish
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

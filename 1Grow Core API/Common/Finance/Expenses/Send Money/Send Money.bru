@@ -1,0 +1,82 @@
+meta {
+  name: Send Money
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/billing/send-money
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "amount": 1000,
+    "clientId": "{{clientId}}",
+    "description": "Vendor payout for event services",
+    "mode": "BANK_TRANSFER",
+    "metadata": {
+      "purpose": "service_fee",
+      "vendorRef": "VND-001"
+    }
+  }
+}
+
+docs {
+  ━━━ Send to Student (Refund/Advance) ━━━
+
+  {
+    "amount": 500,
+    "studentId": "{{studentId}}",
+    "description": "Refund for cancelled class",
+    "mode": "UPI"
+  }
+
+  ━━━ Send via Cash ━━━
+
+  {
+    "amount": 2000,
+    "clientId": "{{clientId}}",
+    "description": "Petty cash payout",
+    "mode": "CASH"
+  }
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Money sent successfully",
+    "data": {
+      "paymentOrder": {
+        "id": "8d2b3c4e-9a5f-4f6b-8d1e-3f5a7b9c0d12",
+        "amount": 1000,
+        "status": "MONEY_SENT",
+        "paymentType": "OTHER",
+        "clientId": "7a1c2e3f-9b4d-4f5a-9c1e-2d4f6a8b0c12",
+        "studentId": null,
+        "description": "Vendor payout for event services",
+        "createdAt": "2026-09-03T11:00:00.000Z"
+      },
+      "transaction": {
+        "id": "9e3c4d5f-0b6a-4f7c-9e2f-4a6b8c0d1e23",
+        "mode": "BANK_TRANSFER",
+        "reference": "PAYOUT-8d2b3c4e",
+        "amount": 1000
+      },
+      "recipient": {
+        "name": "Ravi Kumar",
+        "phone": "9876543210",
+        "email": "ravi@example.com"
+      }
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

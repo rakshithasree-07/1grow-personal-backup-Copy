@@ -1,0 +1,31 @@
+meta {
+  name: Renewal - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/enrollments/renewals
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "enrollmentId": "00000000-0000-4000-8000-000000000007",
+    "tenantId": "00000000-0000-4000-8000-000000000008",
+    "currentEndDate": "2026-09-09T00:00:00.000Z",
+    "extendedEndDate": "2026-12-09T00:00:00.000Z",
+    "notes": "Testing standard enrollment renewal process"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

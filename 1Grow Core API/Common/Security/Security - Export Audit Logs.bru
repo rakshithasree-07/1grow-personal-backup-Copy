@@ -1,0 +1,98 @@
+meta {
+  name: Security - Export Audit Logs
+  type: http
+  seq: 17
+}
+
+get {
+  url: {{base-url}}/security/export/audit-logs
+  body: none
+  auth: inherit
+}
+
+docs {
+  # Export audit logs as CSV
+
+  Streams up to 10 000 audit records as `text/csv`.
+  The response is a file download (`Content-Disposition: attachment; filename="audit_logs_<timestamp>.csv"`),
+  not a JSON envelope.
+
+  **Roles:** `SUPER_ADMIN`, `OWNER`, `BRANCH_MANAGER`
+
+  ## Query parameters
+
+  The export accepts the same filters as `GET /security/audit-logs` and
+  applies them with the same rules, so an export always matches the
+  corresponding list request. Unknown parameters are rejected.
+
+  | Name           | Type   | Notes                                                                       |
+  | -------------- | ------ | --------------------------------------------------------------------------- |
+  | tenantId       | uuid   | `SUPER_ADMIN` only; ignored for other roles, which are forced to their tenant |
+  | userId         | uuid   | Filter by actor                                                            |
+  | action         | enum   | `AuditAction`, e.g. `CREATE`, `UPDATE`, `EXPORT`                             |
+  | entity         | string | **Exact**, case-insensitive match                                           |
+  | entityContains | string | Explicit partial match                                                      |
+  | entities       | string | Comma-separated list of exact names                                         |
+  | search         | string | Matches actor name, actor email or entity                                    |
+  | from           | date   | Inclusive lower bound on `createdAt`                                        |
+  | to             | date   | Inclusive upper bound on `createdAt`                                        |
+
+  `page` and `pageSize` are accepted for schema compatibility with the list
+  endpoint and are **ignored**: the export always streams the whole filtered
+  set, up to the 10 000 row cap.
+
+  ## CSV columns
+
+  `User`, `Action`, `Entity`, `Entity ID`, `Old Values`, `New Values`, `IP Address`, `Created`
+
+  Old and new values are flattened JSON inside a quoted cell, so a field
+  containing a comma or newline is preserved. The post-response script counts
+  data rows and warns when the cap truncated the file.
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  entities: AttendanceSession,Task,TaskSubmission,StudentProgress,Certificate,CertificateTemplate,CertificateVerification
+}
+
+assert {
+  res.status: eq 200
+  res.headers.content-type: contains "text/csv"
+  res.headers.content-disposition: contains "attachment"
+}
+
+script:post-response {
+  const csv = typeof res.body === 'string' ? res.body : '';
+  if (!csv) {
+    console.log('export-audit-logs: empty response body');
+    return;
+  }
+
+  const lines = csv.split(/\r?\n/).filter((line) => line.trim().length > 0);
+  const dataRows = Math.max(lines.length - 1, 0);
+
+  console.log(`export-audit-logs: ${dataRows} data row(s) + header`);
+  console.log(`  header: ${lines[0]}`);
+
+  if (dataRows >= 10000) {
+    console.log('  warning: 10000 rows reached - the export is truncated; narrow the filter (entity, entities, action or date range)');
+  }
+
+  const byEntity = {};
+  for (const line of lines.slice(1)) {
+    const match = line.match(/,([A-Za-z]+),/);
+    if (match) byEntity[match[1]] = (byEntity[match[1]] || 0) + 1;
+  }
+  const entities = Object.entries(byEntity).sort((a, b) => b[1] - a[1]);
+  if (entities.length) {
+    console.log(`  entities: ${entities.map(([k, v]) => `${k}=${v}`).join(', ')}`);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,17 @@
+meta {
+  name: Catalogue - Fee Plan Detail
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/catalog/{{slug}}/classes/{{planId}}
+  body: none
+  auth: none
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

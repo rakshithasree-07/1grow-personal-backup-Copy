@@ -1,0 +1,29 @@
+meta {
+  name: Update Preferences
+  type: http
+  seq: 16
+}
+
+put {
+  url: {{base-url}}/auth/preferences
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "preferences": {
+      "language": "en",
+      "timezone": "Asia/Kolkata"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

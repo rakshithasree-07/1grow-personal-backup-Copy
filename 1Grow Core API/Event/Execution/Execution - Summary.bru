@@ -1,0 +1,24 @@
+meta {
+  name: Execution - Summary
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/events/{{eventId}}/execution/summary
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+vars:pre-request {
+  eventId: f1c54043-ea31-4b03-b282-3a65de389f66
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

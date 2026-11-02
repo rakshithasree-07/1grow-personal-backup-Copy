@@ -1,0 +1,1103 @@
+meta {
+  name: Timeline - Create Bulk Slots
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base-url}}/events/{{eventId}}/timeline/bulk
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "slots": [
+      {
+        "startTime": "2026-05-15T09:00:00.000Z",
+        "endTime": "2026-05-15T10:00:00.000Z",
+        "title": "Stage Setup",
+        "description": "Complete the stage structure and decoration setup",
+        "priority": "HIGH",
+        "dependencies": [],
+        "assignedTo": [
+          {
+            "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+            "role": "SETUP_TEAM"
+          }
+        ]
+      },
+      {
+        "startTime": "2026-05-15T10:00:00.000Z",
+        "endTime": "2026-05-15T11:00:00.000Z",
+        "title": "Sound System Setup",
+        "description": "Install speakers, microphones and mixer",
+        "priority": "HIGH",
+        "dependencies": [],
+        "assignedTo": [
+          {
+            "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+            "role": "SOUND_ENGINEER"
+          }
+        ]
+      },
+      {
+        "startTime": "2026-05-15T11:00:00.000Z",
+        "endTime": "2026-05-15T12:00:00.000Z",
+        "title": "Lighting Setup",
+        "description": "Setup stage lighting and effects",
+        "priority": "MEDIUM",
+        "dependencies": [],
+        "assignedTo": [
+          {
+            "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+            "role": "TECHNICIAN"
+          }
+        ]
+      },
+      {
+        "startTime": "2026-05-15T13:00:00.000Z",
+        "endTime": "2026-05-15T14:00:00.000Z",
+        "title": "Decoration",
+        "description": "Complete venue decoration",
+        "priority": "MEDIUM",
+        "dependencies": [],
+        "assignedTo": [
+          {
+            "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+            "role": "DECORATOR"
+          },
+          {
+            "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+            "role": "SETUP_TEAM"
+          }
+        ]
+      },
+      {
+        "startTime": "2026-05-15T15:00:00.000Z",
+        "endTime": "2026-05-15T16:00:00.000Z",
+        "title": "Final Checks",
+        "description": "Final venue inspection and setup verification",
+        "priority": "URGENT",
+        "dependencies": [],
+        "assignedTo": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5"
+      }
+    ]
+  }
+}
+
+vars:pre-request {
+  eventId: 460e138d-d11c-4e6b-a65e-570b093ec809
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  ## One slot or many
+  `slots` accepts **1 to 50** timeline slots. Only the first slot is required -
+  every additional slot is optional, so a single payload is enough:
+
+  ```json
+  {
+    "slots": {
+      "startTime": "2026-05-15T09:00:00.000Z",
+      "endTime": "2026-05-15T10:00:00.000Z",
+      "title": "Stage Setup"
+    }
+  }
+  ```
+
+  The array form works as before - `{"slots": [ { ... }, { ... } ]}`. An empty
+  array is rejected with `slots must contain at least one timeline slot`.
+
+  `startTime`, `endTime` and `title` are required per slot. `description`,
+  `priority` (defaults to `MEDIUM`), `dependencies`, `assignedTo`, `assignees`
+  and `taskId` are optional. `taskId` must be a task of **this** event - a task
+  from another event is rejected with
+  `One or more taskIds do not exist or do not belong to this event`. The same
+  task may be linked to more than one slot.
+}
+
+example {
+  name: 201-CreatedBulk
+  meta: {
+    name: 201-CreatedBulk
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "slots": [
+          {
+            "startTime": "2026-05-15T09:00:00.000Z",
+            "endTime": "2026-05-15T10:00:00.000Z",
+            "title": "Stage Setup",
+            "description": "Complete the stage structure and decoration setup",
+            "priority": "HIGH",
+            "assignedTo": [
+              {
+                "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                "role": "SETUP_TEAM"
+              }
+            ]
+          },
+          {
+            "startTime": "2026-05-15T10:00:00.000Z",
+            "endTime": "2026-05-15T11:00:00.000Z",
+            "title": "Sound System Setup",
+            "description": "Install speakers, microphones and mixer",
+            "priority": "HIGH",
+            "assignedTo": [
+              {
+                "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                "role": "SOUND_ENGINEER"
+              }
+            ]
+          },
+          {
+            "startTime": "2026-05-15T11:00:00.000Z",
+            "endTime": "2026-05-15T12:00:00.000Z",
+            "title": "Lighting Setup",
+            "description": "Setup stage lighting and effects",
+            "priority": "MEDIUM",
+            "assignedTo": [
+              {
+                "userId": "another-user-uuid-here",
+                "role": "TECHNICIAN"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Created 5 timeline slots successfully",
+          "data": [
+            {
+              "eventId": "4bd83e46-e759-4117-8336-cae92dbed13e",
+              "title": "Stage Setup",
+              "description": "Complete the stage structure and decoration setup",
+              "startTime": "2026-05-15T09:00:00.000Z",
+              "endTime": "2026-05-15T10:00:00.000Z",
+              "isMilestone": false,
+              "isActive": true,
+              "priority": "HIGH",
+              "dependencies": [],
+              "assignedTo": null,
+              "startedAt": null,
+              "completedAt": null,
+              "createdAt": "2026-09-27T10:56:54.380Z",
+              "updatedAt": "2026-09-27T10:56:54.380Z",
+              "assignedUser": null,
+              "assignees": [
+                {
+                  "id": "73fcdaea-480f-4a98-a3c4-5928dac0b940",
+                  "userId": "03ba9867-b323-4f1a-ab7f-cf07954b50d7",
+                  "role": "SETUP_TEAM",
+                  "user": {
+                    "id": "03ba9867-b323-4f1a-ab7f-cf07954b50d7",
+                    "name": "Dinesh",
+                    "email": "staff2.branch1@test.com",
+                    "phone": "9000000005"
+                  }
+                }
+              ],
+              "slotId": "974d1c3c-8936-4e02-9c20-7cbabcf912ff"
+            },
+            {
+              "eventId": "4bd83e46-e759-4117-8336-cae92dbed13e",
+              "title": "Sound System Setup",
+              "description": "Install speakers, microphones and mixer",
+              "startTime": "2026-05-15T10:00:00.000Z",
+              "endTime": "2026-05-15T11:00:00.000Z",
+              "isMilestone": false,
+              "isActive": true,
+              "priority": "HIGH",
+              "dependencies": [],
+              "assignedTo": null,
+              "taskId": "a345c6a2-8ca6-4fa7-86c1-ace49f2caf31",
+              "startedAt": null,
+              "completedAt": null,
+              "createdAt": "2026-09-27T10:56:54.736Z",
+              "updatedAt": "2026-09-27T10:56:54.736Z",
+              "assignedUser": null,
+              "assignees": [
+                {
+                  "id": "70e57f4d-55bb-4138-aa70-656901ffaeea",
+                  "userId": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+                  "role": "SOUND_ENGINEER",
+                  "user": {
+                    "id": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+                    "name": "Sundarapandiyan",
+                    "email": "manager1@test.com",
+                    "phone": "9000000002"
+                  }
+                }
+              ],
+              "slotId": "b2d780d3-2cbc-472c-921c-378b3dbfa27e"
+            },
+            {
+              "eventId": "4bd83e46-e759-4117-8336-cae92dbed13e",
+              "title": "Lighting Setup",
+              "description": "Setup stage lighting and effects",
+              "startTime": "2026-05-15T11:00:00.000Z",
+              "endTime": "2026-05-15T12:00:00.000Z",
+              "isMilestone": false,
+              "isActive": true,
+              "priority": "MEDIUM",
+              "dependencies": [],
+              "assignedTo": null,
+              "startedAt": null,
+              "completedAt": null,
+              "createdAt": "2026-09-27T10:56:55.098Z",
+              "updatedAt": "2026-09-27T10:56:55.098Z",
+              "assignedUser": null,
+              "assignees": [
+                {
+                  "id": "6ec9d5df-a5ad-4ae0-8148-78a590707524",
+                  "userId": "03ba9867-b323-4f1a-ab7f-cf07954b50d7",
+                  "role": "TECHNICIAN",
+                  "user": {
+                    "id": "03ba9867-b323-4f1a-ab7f-cf07954b50d7",
+                    "name": "Dinesh",
+                    "email": "staff2.branch1@test.com",
+                    "phone": "9000000005"
+                  }
+                }
+              ],
+              "slotId": "b6ffd91a-4eb8-4546-812f-568f307003f2"
+            },
+            {
+              "eventId": "4bd83e46-e759-4117-8336-cae92dbed13e",
+              "title": "Decoration",
+              "description": "Complete venue decoration",
+              "startTime": "2026-05-15T13:00:00.000Z",
+              "endTime": "2026-05-15T14:00:00.000Z",
+              "isMilestone": false,
+              "isActive": true,
+              "priority": "MEDIUM",
+              "dependencies": [],
+              "assignedTo": null,
+              "taskId": "a345c6a2-8ca6-4fa7-86c1-ace49f2caf31",
+              "startedAt": null,
+              "completedAt": null,
+              "createdAt": "2026-09-27T10:56:55.451Z",
+              "updatedAt": "2026-09-27T10:56:55.451Z",
+              "assignedUser": null,
+              "assignees": [
+                {
+                  "id": "7c1dc5b4-10d1-4514-b7e0-530919d18b43",
+                  "userId": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+                  "role": "DECORATOR",
+                  "user": {
+                    "id": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+                    "name": "Sundarapandiyan",
+                    "email": "manager1@test.com",
+                    "phone": "9000000002"
+                  }
+                },
+                {
+                  "id": "dcd799e3-4287-4d1d-9abb-6bea8811f086",
+                  "userId": "03ba9867-b323-4f1a-ab7f-cf07954b50d7",
+                  "role": "SETUP_TEAM",
+                  "user": {
+                    "id": "03ba9867-b323-4f1a-ab7f-cf07954b50d7",
+                    "name": "Dinesh",
+                    "email": "staff2.branch1@test.com",
+                    "phone": "9000000005"
+                  }
+                }
+              ],
+              "slotId": "ff229731-c1f9-4a53-937f-735644713f6c"
+            },
+            {
+              "eventId": "4bd83e46-e759-4117-8336-cae92dbed13e",
+              "title": "Final Checks",
+              "description": "Final venue inspection and setup verification",
+              "startTime": "2026-05-15T15:00:00.000Z",
+              "endTime": "2026-05-15T16:00:00.000Z",
+              "isMilestone": false,
+              "isActive": true,
+              "priority": "URGENT",
+              "dependencies": [],
+              "assignedTo": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+              "startedAt": null,
+              "completedAt": null,
+              "createdAt": "2026-09-27T10:56:55.798Z",
+              "updatedAt": "2026-09-27T10:56:55.798Z",
+              "assignedUser": {
+                "id": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+                "name": "Sundarapandiyan",
+                "email": "manager1@test.com",
+                "phone": "9000000002"
+              },
+              "assignees": [],
+              "slotId": "5cc62350-7186-4abd-9c06-f378ef46e53d"
+            }
+          ],
+          "timestamp": "2026-09-27T10:56:56.152Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201-CreatedWithDependencies
+  meta: {
+    name: 201-CreatedWithDependencies
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "slots": [
+          {
+            "startTime": "2026-05-15T09:00:00.000Z",
+            "endTime": "2026-05-15T10:00:00.000Z",
+            "title": "Stage Setup",
+            "priority": "HIGH",
+            "assignedTo": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5"
+          },
+          {
+            "startTime": "2026-05-15T10:00:00.000Z",
+            "endTime": "2026-05-15T11:00:00.000Z",
+            "title": "Sound Check",
+            "priority": "HIGH",
+            "dependencies": [],
+            "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+            "assignedTo": [
+              {
+                "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                "role": "SOUND_ENGINEER"
+              }
+            ]
+          },
+          {
+            "startTime": "2026-05-15T11:00:00.000Z",
+            "endTime": "2026-05-15T12:00:00.000Z",
+            "title": "Final Sound Check",
+            "priority": "URGENT",
+            "dependencies": [],
+            "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+            "assignedTo": [
+              {
+                "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                "role": "SOUND_ENGINEER"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Created 3 timeline slots successfully",
+          "data": [
+            {
+              "slotId": "stage-setup-uuid",
+              "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+              "title": "Stage Setup",
+              "startTime": "2026-05-15T09:00:00.000Z",
+              "endTime": "2026-05-15T10:00:00.000Z",
+              "priority": "HIGH",
+              "isActive": true,
+              "dependencies": [],
+        "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+              "assignees": [],
+              "createdAt": "2026-09-10T15:35:00.000Z",
+              "updatedAt": "2026-09-10T15:35:00.000Z"
+            },
+            {
+              "slotId": "sound-check-uuid",
+              "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+              "title": "Sound Check",
+              "startTime": "2026-05-15T10:00:00.000Z",
+              "endTime": "2026-05-15T11:00:00.000Z",
+              "priority": "HIGH",
+              "isActive": true,
+              "dependencies": [
+                {
+                  "slotId": "stage-setup-uuid",
+                  "title": "Stage Setup"
+                }
+              ],
+              "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+              "assignees": [
+                {
+                  "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                  "role": "SOUND_ENGINEER",
+                  "user": {
+                    "id": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                    "name": "John Doe",
+                    "email": "john@example.com",
+                    "phone": "9876543210"
+                  }
+                }
+              ],
+              "createdAt": "2026-09-10T15:35:00.000Z",
+              "updatedAt": "2026-09-10T15:35:00.000Z"
+            },
+            {
+              "slotId": "final-check-uuid",
+              "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+              "title": "Final Sound Check",
+              "startTime": "2026-05-15T11:00:00.000Z",
+              "endTime": "2026-05-15T12:00:00.000Z",
+              "priority": "HIGH",
+              "isActive": true,
+              "dependencies": [
+                {
+                  "slotId": "sound-check-uuid",
+                  "title": "Sound Check"
+                }
+              ],
+              "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+              "assignees": [
+                {
+                  "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                  "role": "SOUND_ENGINEER",
+                  "user": {
+                    "id": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                    "name": "John Doe",
+                    "email": "john@example.com",
+                    "phone": "9876543210"
+                  }
+                }
+              ],
+              "createdAt": "2026-09-10T15:35:00.000Z",
+              "updatedAt": "2026-09-10T15:35:00.000Z"
+            }
+          ],
+          "timestamp": "2026-09-10T15:35:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201-SingleSlot
+  meta: {
+    name: 201-SingleSlot
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "slots": [
+          {
+            "startTime": "2026-05-15T14:00:00.000Z",
+            "endTime": "2026-05-15T15:00:00.000Z",
+            "title": "Setup",
+            "description": "Test single slot creation",
+            "priority": "MEDIUM"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Created 1 timeline slots successfully",
+          "data": [
+            {
+              "slotId": "single-slot-uuid",
+              "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+              "title": "Setup",
+              "description": "Test single slot creation",
+              "startTime": "2026-05-15T14:00:00.000Z",
+              "endTime": "2026-05-15T15:00:00.000Z",
+              "priority": "HIGH",
+              "isActive": true,
+              "isMilestone": false,
+              "dependencies": [],
+        "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+              "assignees": [],
+              "createdAt": "2026-09-10T15:40:00.000Z",
+              "updatedAt": "2026-09-10T15:40:00.000Z"
+            }
+          ],
+          "timestamp": "2026-09-10T15:40:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201-SingleSlotObject
+  meta: {
+    name: 201-SingleSlotObject
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "slots": {
+          "startTime": "2026-05-15T14:00:00.000Z",
+          "endTime": "2026-05-15T15:00:00.000Z",
+          "title": "Setup"
+        }
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Created 1 timeline slots successfully",
+          "data": [
+            {
+              "slotId": "3b2f5d84-1c6a-4f0e-9a71-5d8c2e4f7a10",
+              "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+              "title": "Setup",
+              "description": null,
+              "startTime": "2026-05-15T14:00:00.000Z",
+              "endTime": "2026-05-15T15:00:00.000Z",
+              "priority": "MEDIUM",
+              "isActive": true,
+              "isMilestone": false,
+              "dependencies": [],
+              "assignees": [],
+              "createdAt": "2026-09-27T15:40:00.000Z",
+              "updatedAt": "2026-09-27T15:40:00.000Z"
+            }
+          ],
+          "timestamp": "2026-09-27T15:40:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-InvalidSlotTime
+  meta: {
+    name: 400-InvalidSlotTime
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "slots": [
+          {
+            "startTime": "2026-05-15T10:00:00.000Z",
+            "endTime": "2026-05-15T09:00:00.000Z",
+            "title": "Invalid Slot"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "startTime must be before endTime in slot \"Invalid Slot\"",
+          "error": "Bad Request",
+          "timestamp": "2026-09-10T15:30:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-MaxSlotsExceeded
+  meta: {
+    name: 400-MaxSlotsExceeded
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "slots": [
+          {
+            "startTime": "2026-05-15T09:00:00.000Z",
+            "endTime": "2026-05-15T10:00:00.000Z",
+            "title": "Slot 1"
+          },
+          {
+            "startTime": "2026-05-15T10:00:00.000Z",
+            "endTime": "2026-05-15T11:00:00.000Z",
+            "title": "Slot 2"
+          },
+          {
+            "startTime": "2026-05-15T11:00:00.000Z",
+            "endTime": "2026-05-15T12:00:00.000Z",
+            "title": "Slot 3"
+          },
+          {
+            "startTime": "2026-05-15T12:00:00.000Z",
+            "endTime": "2026-05-15T13:00:00.000Z",
+            "title": "Slot 4"
+          },
+          {
+            "startTime": "2026-05-15T13:00:00.000Z",
+            "endTime": "2026-05-15T14:00:00.000Z",
+            "title": "Slot 5"
+          },
+          {
+            "startTime": "2026-05-15T14:00:00.000Z",
+            "endTime": "2026-05-15T15:00:00.000Z",
+            "title": "Slot 6"
+          },
+          {
+            "startTime": "2026-05-15T15:00:00.000Z",
+            "endTime": "2026-05-15T16:00:00.000Z",
+            "title": "Slot 7"
+          },
+          {
+            "startTime": "2026-05-15T16:00:00.000Z",
+            "endTime": "2026-05-15T17:00:00.000Z",
+            "title": "Slot 8"
+          },
+          {
+            "startTime": "2026-05-15T17:00:00.000Z",
+            "endTime": "2026-05-15T18:00:00.000Z",
+            "title": "Slot 9"
+          },
+          {
+            "startTime": "2026-05-15T18:00:00.000Z",
+            "endTime": "2026-05-15T19:00:00.000Z",
+            "title": "Slot 10"
+          },
+          {
+            "startTime": "2026-05-15T19:00:00.000Z",
+            "endTime": "2026-05-15T20:00:00.000Z",
+            "title": "Slot 11"
+          },
+          {
+            "startTime": "2026-05-15T20:00:00.000Z",
+            "endTime": "2026-05-15T21:00:00.000Z",
+            "title": "Slot 12"
+          },
+          {
+            "startTime": "2026-05-15T21:00:00.000Z",
+            "endTime": "2026-05-15T22:00:00.000Z",
+            "title": "Slot 13"
+          },
+          {
+            "startTime": "2026-05-15T22:00:00.000Z",
+            "endTime": "2026-05-15T23:00:00.000Z",
+            "title": "Slot 14"
+          },
+          {
+            "startTime": "2026-05-16T00:00:00.000Z",
+            "endTime": "2026-05-16T01:00:00.000Z",
+            "title": "Slot 15"
+          },
+          {
+            "startTime": "2026-05-16T01:00:00.000Z",
+            "endTime": "2026-05-16T02:00:00.000Z",
+            "title": "Slot 16"
+          },
+          {
+            "startTime": "2026-05-16T02:00:00.000Z",
+            "endTime": "2026-05-16T03:00:00.000Z",
+            "title": "Slot 17"
+          },
+          {
+            "startTime": "2026-05-16T03:00:00.000Z",
+            "endTime": "2026-05-16T04:00:00.000Z",
+            "title": "Slot 18"
+          },
+          {
+            "startTime": "2026-05-16T04:00:00.000Z",
+            "endTime": "2026-05-16T05:00:00.000Z",
+            "title": "Slot 19"
+          },
+          {
+            "startTime": "2026-05-16T05:00:00.000Z",
+            "endTime": "2026-05-16T06:00:00.000Z",
+            "title": "Slot 20"
+          },
+          {
+            "startTime": "2026-05-16T06:00:00.000Z",
+            "endTime": "2026-05-16T07:00:00.000Z",
+            "title": "Slot 21"
+          },
+          {
+            "startTime": "2026-05-16T07:00:00.000Z",
+            "endTime": "2026-05-16T08:00:00.000Z",
+            "title": "Slot 22"
+          },
+          {
+            "startTime": "2026-05-16T08:00:00.000Z",
+            "endTime": "2026-05-16T09:00:00.000Z",
+            "title": "Slot 23"
+          },
+          {
+            "startTime": "2026-05-16T09:00:00.000Z",
+            "endTime": "2026-05-16T10:00:00.000Z",
+            "title": "Slot 24"
+          },
+          {
+            "startTime": "2026-05-16T10:00:00.000Z",
+            "endTime": "2026-05-16T11:00:00.000Z",
+            "title": "Slot 25"
+          },
+          {
+            "startTime": "2026-05-16T11:00:00.000Z",
+            "endTime": "2026-05-16T12:00:00.000Z",
+            "title": "Slot 26"
+          },
+          {
+            "startTime": "2026-05-16T12:00:00.000Z",
+            "endTime": "2026-05-16T13:00:00.000Z",
+            "title": "Slot 27"
+          },
+          {
+            "startTime": "2026-05-16T13:00:00.000Z",
+            "endTime": "2026-05-16T14:00:00.000Z",
+            "title": "Slot 28"
+          },
+          {
+            "startTime": "2026-05-16T14:00:00.000Z",
+            "endTime": "2026-05-16T15:00:00.000Z",
+            "title": "Slot 29"
+          },
+          {
+            "startTime": "2026-05-16T15:00:00.000Z",
+            "endTime": "2026-05-16T16:00:00.000Z",
+            "title": "Slot 30"
+          },
+          {
+            "startTime": "2026-05-16T16:00:00.000Z",
+            "endTime": "2026-05-16T17:00:00.000Z",
+            "title": "Slot 31"
+          },
+          {
+            "startTime": "2026-05-16T17:00:00.000Z",
+            "endTime": "2026-05-16T18:00:00.000Z",
+            "title": "Slot 32"
+          },
+          {
+            "startTime": "2026-05-16T18:00:00.000Z",
+            "endTime": "2026-05-16T19:00:00.000Z",
+            "title": "Slot 33"
+          },
+          {
+            "startTime": "2026-05-16T19:00:00.000Z",
+            "endTime": "2026-05-16T20:00:00.000Z",
+            "title": "Slot 34"
+          },
+          {
+            "startTime": "2026-05-16T20:00:00.000Z",
+            "endTime": "2026-05-16T21:00:00.000Z",
+            "title": "Slot 35"
+          },
+          {
+            "startTime": "2026-05-16T21:00:00.000Z",
+            "endTime": "2026-05-16T22:00:00.000Z",
+            "title": "Slot 36"
+          },
+          {
+            "startTime": "2026-05-16T22:00:00.000Z",
+            "endTime": "2026-05-16T23:00:00.000Z",
+            "title": "Slot 37"
+          },
+          {
+            "startTime": "2026-05-17T00:00:00.000Z",
+            "endTime": "2026-05-17T01:00:00.000Z",
+            "title": "Slot 38"
+          },
+          {
+            "startTime": "2026-05-17T01:00:00.000Z",
+            "endTime": "2026-05-17T02:00:00.000Z",
+            "title": "Slot 39"
+          },
+          {
+            "startTime": "2026-05-17T02:00:00.000Z",
+            "endTime": "2026-05-17T03:00:00.000Z",
+            "title": "Slot 40"
+          },
+          {
+            "startTime": "2026-05-17T03:00:00.000Z",
+            "endTime": "2026-05-17T04:00:00.000Z",
+            "title": "Slot 41"
+          },
+          {
+            "startTime": "2026-05-17T04:00:00.000Z",
+            "endTime": "2026-05-17T05:00:00.000Z",
+            "title": "Slot 42"
+          },
+          {
+            "startTime": "2026-05-17T05:00:00.000Z",
+            "endTime": "2026-05-17T06:00:00.000Z",
+            "title": "Slot 43"
+          },
+          {
+            "startTime": "2026-05-17T06:00:00.000Z",
+            "endTime": "2026-05-17T07:00:00.000Z",
+            "title": "Slot 44"
+          },
+          {
+            "startTime": "2026-05-17T07:00:00.000Z",
+            "endTime": "2026-05-17T08:00:00.000Z",
+            "title": "Slot 45"
+          },
+          {
+            "startTime": "2026-05-17T08:00:00.000Z",
+            "endTime": "2026-05-17T09:00:00.000Z",
+            "title": "Slot 46"
+          },
+          {
+            "startTime": "2026-05-17T09:00:00.000Z",
+            "endTime": "2026-05-17T10:00:00.000Z",
+            "title": "Slot 47"
+          },
+          {
+            "startTime": "2026-05-17T10:00:00.000Z",
+            "endTime": "2026-05-17T11:00:00.000Z",
+            "title": "Slot 48"
+          },
+          {
+            "startTime": "2026-05-17T11:00:00.000Z",
+            "endTime": "2026-05-17T12:00:00.000Z",
+            "title": "Slot 49"
+          },
+          {
+            "startTime": "2026-05-17T12:00:00.000Z",
+            "endTime": "2026-05-17T13:00:00.000Z",
+            "title": "Slot 50"
+          },
+          {
+            "startTime": "2026-05-17T13:00:00.000Z",
+            "endTime": "2026-05-17T14:00:00.000Z",
+            "title": "Slot 51"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "Maximum 50 slots can be created in a single request",
+          "error": "Bad Request",
+          "timestamp": "2026-09-10T15:30:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-EmptySlotsArray
+  meta: {
+    name: 400-EmptySlotsArray
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "slots": []
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "slots must contain at least one timeline slot",
+          "error": "Bad Request",
+          "timestamp": "2026-09-27T15:30:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-InvalidUserId
+  meta: {
+    name: 400-InvalidUserId
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline/bulk
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "slots": [
+          {
+            "startTime": "2026-05-15T09:00:00.000Z",
+            "endTime": "2026-05-15T10:00:00.000Z",
+            "title": "Test Slot",
+            "assignedTo": [
+              {
+                "userId": "invalid-user-id-not-uuid",
+                "role": "SETUP_TEAM"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "each value in assignedTo must be a UUID",
+          "error": "Bad Request",
+          "timestamp": "2026-09-10T15:30:00.000Z"
+        }
+      '''
+    }
+  }
+}

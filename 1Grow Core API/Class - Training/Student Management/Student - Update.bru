@@ -1,0 +1,39 @@
+meta {
+  name: Student - Update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base-url}}/students/{{studentId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "{{studentName}}",
+    "email": "{{studentEmail}}",
+    "phone": "{{studentPhone}}",
+    "dateOfBirth": "{{dateOfBirth}}",
+    "gender": "{{gender}}",
+    "parentName": "{{parentName}}",
+    "parentPhone": "{{parentPhone}}",
+    "address": "{{address}}",
+    "city": "{{city}}",
+    "state": "{{state}}",
+    "pincode": "{{pincode}}",
+    "medicalNotes": "{{medicalNotes}}",
+    "isActive": true
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

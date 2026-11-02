@@ -1,0 +1,26 @@
+meta {
+  name: List Payments
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/billing/payments
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  pageSize: 20
+  status: 
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

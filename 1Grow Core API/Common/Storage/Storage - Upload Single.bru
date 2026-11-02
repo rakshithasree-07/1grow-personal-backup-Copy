@@ -1,0 +1,27 @@
+meta {
+  name: Storage - Upload Single
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base-url}}/storage/upload
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:multipart-form {
+  file: @file()
+  category: documents
+  subCategory: 
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

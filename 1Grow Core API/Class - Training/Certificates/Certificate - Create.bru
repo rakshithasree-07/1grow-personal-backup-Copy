@@ -1,0 +1,32 @@
+meta {
+  name: Certificate - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/class/certificates
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "studentId": "00000000-0000-4000-8000-000000000005",
+    "templateId": "00000000-0000-4000-8000-000000000011",
+    "batchId": "00000000-0000-4000-8000-000000000002",
+    "courseName": "Kathak Intermediate",
+    "issuedDate": "2026-09-09",
+    "data": { "grade": "A+" }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

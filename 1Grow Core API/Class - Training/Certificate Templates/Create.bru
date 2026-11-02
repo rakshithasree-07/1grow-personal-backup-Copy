@@ -1,0 +1,37 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/class/certificate-templates
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Intermediate Completion",
+    "htmlContent": "<h1>{{studentName}}</h1><p>{{courseName}} - {{grade}}</p>",
+    "cssStyles": "h1 { color: #b8860b; }",
+    "fields": [
+      { "key": "studentName", "label": "Student Name" },
+      { "key": "courseName", "label": "Course Name" },
+      { "key": "grade", "label": "Grade" }
+    ],
+    "orientation": "LANDSCAPE",
+    "paperSize": "A4",
+    "isDefault": true
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

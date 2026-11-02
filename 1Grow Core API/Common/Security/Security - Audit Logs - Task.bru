@@ -1,0 +1,76 @@
+meta {
+  name: Security - Audit Logs - Task
+  type: http
+  seq: 20
+}
+
+get {
+  url: {{base-url}}/security/audit-logs
+  body: none
+  auth: inherit
+}
+
+docs {
+  # Task audit records
+
+  Filtered view of the audit trail for the `Task` entity.
+
+  **Roles:** `SUPER_ADMIN`, `OWNER`, `BRANCH_MANAGER`
+
+  ## Written by
+
+  `POST /class/tasks`, `PATCH /class/tasks/:id`, `POST /class/tasks/:id/archive`, `/restore`, `/publish`, `/close`
+
+  All lifecycle transitions audit as `UPDATE` with the `isArchived` / `status` before-and-after in `oldValues` / `newValues`.
+
+  `entity` is an exact, case-insensitive match, so `Task` no longer pulls in
+  `TaskSubmission` or `EventTask`. That matters because `EventTask` is not part
+  of the Class module: the old partial match made this request look like it had
+  found Class data when it had not. Use `entityContains` for the old partial
+  behaviour, or see `Security - Audit Logs - Class Module` for all seven Class
+  entities in one request.
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 100
+  entity: Task
+}
+
+assert {
+  res.status: eq 200
+  res.body.message: eq "Audit logs fetched"
+}
+
+script:post-response {
+  const ENTITY = 'Task';
+  const rows = Array.isArray(res.body?.data) ? res.body.data : [];
+  const meta = res.body?.meta;
+
+  console.log(`${ENTITY}: ${rows.length} of ${meta?.total ?? '?'} records (page ${meta?.page ?? '?'}/${meta?.totalPages ?? '?'})`);
+
+  rows.forEach((row) => {
+    const changes = row.oldValues || row.newValues ? ' [before/after recorded]' : '';
+    console.log(`  ${row.action.padEnd(11)} ${String(row.entityId ?? '(no entityId)').padEnd(40)} ${row.createdAt}${changes}`);
+  });
+  if (!rows.length) console.log(`  -> no ${ENTITY} records; run the matching /class/* request first`);
+
+  if (meta && meta.total > rows.length) {
+    console.log(`  -> ${meta.total - rows.length} more record(s) on later pages; increase page`);
+  }
+
+  const newest = rows[0];
+  if (newest) {
+    bru.setVar('latestTaskAuditId', newest.id);
+    bru.setVar('latestTaskAuditEntityId', newest.entityId);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

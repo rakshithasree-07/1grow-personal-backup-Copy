@@ -1,0 +1,214 @@
+meta {
+  name: Event - Get By ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/events/{{eventId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+vars:pre-request {
+  eventId: 4bd83e46-e759-4117-8336-cae92dbed13e
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: success
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 14bb2096-1283-436d-abbd-9538039379d7
+      x-correlation-id: 14bb2096-1283-436d-abbd-9538039379d7
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"4f7-pouXuWqBYFS06thnpDfC4xVLFPk"
+      date: Tue, 01 Sep 2026 16:08:55 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event retrieved successfully",
+          "data": {
+            "id": "b7d874d0-19b1-4786-bd12-b4f7050ae0cf",
+            "tenantId": "185d41a4-0abf-4829-80f2-f298e4405135",
+            "branchId": null,
+            "eventNumber": "EVT-20260903-0001",
+            "title": "Annual Day Celebration 2026",
+            "description": "School annual day cultural event",
+            "thumbnailImage": "https://example.com/images/annual-day.jpg",
+            "eventTypeId": "f30799ec-c45a-47a5-9173-c2ce3a8edc19",
+            "status": "ACTIVE",
+            "eventType": {
+              "id": "f30799ec-c45a-47a5-9173-c2ce3a8edc19",
+              "name": "Cultural Event",
+              "description": "Cultural and artistic celebrations",
+              "isActive": true
+            },
+            "branch": {
+              "id": "branch-uuid",
+              "name": "Chennai Main Branch",
+              "code": "CHN-01",
+              "city": "Chennai",
+              "district": "Chennai",
+              "state": "Tamil Nadu",
+              "address": "123 Main Street, Chennai"
+            },
+            "proposals": [],
+            "quotations": [],
+            "teamMembers": [],
+            "vendors": [],
+            "tasks": [],
+            "budgetItems": [],
+            "timeline": [],
+            "executions": [],
+            "services": [
+              {
+                "name": "Catering",
+                "eventId": "38513d81-5b9b-4cfd-96fb-63cece08bcce",
+                "serviceId": "38513d81-5b9b-4cfd-96fb-63cece08bcce"
+              }
+            ]
+          },
+          "timestamp": "2026-09-03T10:00:55.618Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 14dc86a3-3b96-4a6f-94bc-2bbbeabdbb5a
+      x-correlation-id: 14dc86a3-3b96-4a6f-94bc-2bbbeabdbb5a
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 931
+      etag: W/"3a3-7UFK3eZiu2NiTPCP/ixNKcX5LuE"
+      date: Sat, 05 Sep 2026 06:18:34 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event retrieved successfully",
+          "data": {
+            "tenantId": "66ad2f57-cbdd-4f3f-b0e7-c29d8051c946",
+            "branchId": null,
+            "eventNumber": "EVT-20260903-0001",
+            "title": "College culturals",
+            "description": "School annual day cultural event",
+            "thumbnailImage": "https://example.com/images/annual-day.jpg",
+            "attachments": null,
+            "eventTypeId": "eaf5230f-d9b2-4949-931f-f7e88e2f1194",
+            "status": "ACTIVE",
+            "eventType": {
+              "name": "Cultural Event",
+              "description": "Traditional and modern cultural performances",
+              "isActive": true,
+              "eventId": "eaf5230f-d9b2-4949-931f-f7e88e2f1194"
+            },
+            "branch": null,
+            "services": [
+              {
+                "name": "Sound System",
+                "description": "Professional sound system with speakers and mixer",
+                "unitPrice": "15000",
+                "unit": "event",
+                "isActive": true,
+                "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                "eventId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b"
+              }
+            ],
+            "media": [],
+            "eventId": "f4346233-0294-4ea3-ae3e-24637b6445c1"
+          },
+          "timestamp": "2026-09-05T06:18:34.469Z"
+        }
+      '''
+    }
+  }
+}

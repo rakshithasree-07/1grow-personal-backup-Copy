@@ -1,0 +1,60 @@
+meta {
+  name: Expense - Update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base-url}}/finance/expenses/{{id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "title": "Office Supplies - Revised",
+    "description": "Updated stationery purchase including printer paper",
+    "amount": 1800,
+    "mode": "UPI",
+    "reference": "UPI-991100",
+    "status": "APPROVED",
+    "notes": "Added printer paper to order"
+  }
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Update expense fields. Only provided fields are changed.
+  A PAID expense cannot be edited (returns 400).
+
+  Note: keep the payee consistent — at most ONE refId per expense;
+  changing payee fields re-validates the linked record exists in the
+  same tenant.
+
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Expense updated successfully",
+    "data": {
+      "id": "e1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "title": "Office Supplies - Revised",
+      "amount": 1800,
+      "mode": "UPI",
+      "reference": "UPI-991100",
+      "status": "APPROVED",
+      "notes": "Added printer paper to order",
+      "updatedAt": "2026-09-03T10:00:00.000Z"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

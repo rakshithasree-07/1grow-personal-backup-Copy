@@ -1,0 +1,66 @@
+meta {
+  name: Fee Plan - Update
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{base-url}}/fee-plans/{{id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "module": "TRAINING",
+    "courseId": "{{courseId}}",
+    "name": "Updated Class Program Fee",
+    "feeType": "MONTHLY",
+    "totalAmount": 5500,
+    "installments": 1,
+    "durationMonths": 6,
+    "publicVisible": true,
+    "publicStatus": "PUBLIC",
+    "isActive": true
+  }
+}
+
+example {
+  name: success
+
+  response: {
+    status: { code: 200, text: OK }
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Fee plan updated successfully",
+          "data": {
+            "id": "fee-plan-uuid",
+            "module": "TRAINING",
+            "courseId": "{{courseId}}",
+            "planName": "Updated Class Program Fee",
+            "totalAmount": 5500,
+            "isActive": true,
+            "status": "active",
+            "isPublic": true,
+            "publicVisible": true,
+            "publicStatus": "PUBLIC",
+            "updatedAt": "2026-09-07T10:00:00.000Z"
+          }
+        }
+      '''
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

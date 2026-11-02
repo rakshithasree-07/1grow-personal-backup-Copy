@@ -1,0 +1,271 @@
+meta {
+  name: Timeline - Create Slot
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/events/{{eventId}}/timeline
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "startTime": "2026-05-15T09:00:00.000Z",
+    "endTime": "2026-05-15T10:00:00.000Z",
+    "title": "Stage Setup",
+    "description": "Complete the stage structure and decoration setup",
+    "priority": "HIGH",
+    "dependencies": [],
+    "assignedTo": [
+      {
+        "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+        "role": "SETUP_TEAM"
+      }
+    ]
+  }
+}
+
+vars:pre-request {
+  eventId: 460e138d-d11c-4e6b-a65e-570b093ec809
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  ## Linking a task
+  `taskId` is **optional**. When sent it must be a task of the same event,
+  otherwise the request is rejected with
+  `One or more taskIds do not exist or do not belong to this event`.
+  The linked task is returned in the response as `taskId`.
+}
+
+example {
+  name: 201-Created
+  meta: {
+    name: 201-Created
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "startTime": "2026-03-15T09:00:00.000Z",
+        "endTime": "2026-03-15T10:00:00.000Z",
+        "title": "Stage Setup",
+        "description": "Complete the stage structure and decoration setup",
+        "priority": "HIGH",
+        "assignedTo": [
+          {
+            "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+            "role": "SETUP_TEAM"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Timeline slot created successfully",
+          "data": {
+            "slotId": "43075c6e-5b4d-4e8a-a87c-7c8c1f3b9a2e",
+            "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+            "title": "Stage Setup",
+            "description": "Complete the stage structure and decoration setup",
+            "startTime": "2026-03-15T09:00:00.000Z",
+            "endTime": "2026-03-15T10:00:00.000Z",
+            "priority": "HIGH",
+            "isActive": true,
+            "isMilestone": false,
+            "dependencies": [],
+            "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+            "assignees": [
+              {
+                "id": "assignee-id-1",
+                "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                "role": "SETUP_TEAM",
+                "user": {
+                  "id": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                  "name": "John Doe",
+                  "email": "john@example.com",
+                  "phone": "9876543210"
+                }
+              }
+            ],
+            "createdAt": "2026-09-09T10:00:00.000Z",
+            "updatedAt": "2026-09-09T10:00:00.000Z"
+          },
+          "timestamp": "2026-09-09T10:00:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201-CreatedWithMultipleAssignees
+  meta: {
+    name: 201-CreatedWithMultipleAssignees
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "startTime": "2026-03-15T14:00:00.000Z",
+        "endTime": "2026-03-15T16:00:00.000Z",
+        "title": "Decoration Setup",
+        "description": "Complete venue decoration",
+        "priority": "MEDIUM",
+        "dependencies": [],
+        "assignedTo": [
+          {
+            "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+            "role": "DECORATOR"
+          },
+          {
+            "userId": "another-user-uuid-here",
+            "role": "SETUP_TEAM"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Timeline slot created successfully",
+          "data": {
+            "slotId": "decoration-slot-uuid",
+            "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+            "title": "Decoration Setup",
+            "description": "Complete venue decoration",
+            "startTime": "2026-03-15T14:00:00.000Z",
+            "endTime": "2026-03-15T16:00:00.000Z",
+            "priority": "MEDIUM",
+            "isActive": true,
+            "isMilestone": false,
+            "dependencies": [],
+            "taskId": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+            "assignees": [
+              {
+                "id": "assignee-1",
+                "userId": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                "role": "DECORATOR",
+                "user": {
+                  "id": "63a2ee91-c0a9-4ce7-88ec-17e3037946d5",
+                  "name": "John Doe",
+                  "email": "john@example.com",
+                  "phone": "9876543210"
+                }
+              },
+              {
+                "id": "assignee-2",
+                "userId": "another-user-uuid-here",
+                "role": "SETUP_TEAM",
+                "user": {
+                  "id": "another-user-uuid-here",
+                  "name": "Jane Smith",
+                  "email": "jane@example.com",
+                  "phone": "9876543211"
+                }
+              }
+            ],
+            "createdAt": "2026-09-09T14:00:00.000Z",
+            "updatedAt": "2026-09-09T14:00:00.000Z"
+          },
+          "timestamp": "2026-09-09T14:00:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-StartAfterEnd
+  meta: {
+    name: 400-StartAfterEnd
+    enabled: true
+  }
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/timeline
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "startTime": "2026-03-15T10:00:00.000Z"
+        "endTime": "2026-03-15T09:00:00.000Z"
+        "title": "Invalid Slot"
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "startTime must be before endTime",
+          "error": "Bad Request",
+          "timestamp": "2026-09-09T10:00:00.000Z"
+        }
+      '''
+    }
+  }
+}

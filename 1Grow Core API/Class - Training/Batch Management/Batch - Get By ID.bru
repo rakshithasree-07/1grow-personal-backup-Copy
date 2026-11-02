@@ -1,0 +1,21 @@
+meta {
+  name: Batch - Get By ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/training/batches/{{batchId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

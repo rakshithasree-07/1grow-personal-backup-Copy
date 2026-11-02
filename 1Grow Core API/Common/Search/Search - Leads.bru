@@ -1,0 +1,25 @@
+meta {
+  name: Search - Leads
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/search/leads
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  q: ravi
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

@@ -1,0 +1,206 @@
+meta {
+  name: 07 - Dispute Damage Penalty
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{base-url}}/rental/damages/{{createdDamageId}}/dispute
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "notes": "Client requested waiver based on corporate tier agreement"
+  }
+}
+
+assert {
+  res.status: in [200, 201]
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/damages/{{createdDamageId}}/dispute
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "notes": "Client requested waiver based on corporate tier agreement"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 94d98f0d-d50b-47d9-b369-59c569e74f41
+      x-correlation-id: 94d98f0d-d50b-47d9-b369-59c569e74f41
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"58b-Z7fJw4X/AIrSlBJuN4fHJA6s96o"
+      date: Fri, 11 Sep 2026 17:39:02 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Damage penalty marked as disputed",
+          "timestamp": "2026-09-11T17:39:02.193Z",
+          "data": {
+            "id": "8170fabc-f592-4538-ac46-90fa5097ef96",
+            "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+            "bookingId": null,
+            "returnId": null,
+            "returnItemId": null,
+            "itemId": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+            "quantity": 1,
+            "severity": "MINOR",
+            "status": "DISPUTED",
+            "resolutionType": null,
+            "restockedQty": 0,
+            "maintenanceQty": 0,
+            "writtenOffQty": 0,
+            "description": "Minor surface scuff on magnesium body shell",
+            "penaltyAmount": "1500",
+            "assessedBy": "181be242-f78d-4037-8b6f-cebb45dfd44d",
+            "assessedAt": "2026-09-11T17:38:11.632Z",
+            "photos": null,
+            "notes": "Standard surface touch-up charge\n[Disputed]: Client requested waiver based on corporate tier agreement",
+            "createdAt": "2026-09-11T17:34:43.974Z",
+            "updatedAt": "2026-09-11T17:38:59.340Z",
+            "item": {
+              "id": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "categoryId": "c6009f74-71dd-4337-8173-f61932bc539b",
+              "name": "Sony Cinema Camera",
+              "description": "Updated: Includes dual high-capacity batteries and card reader",
+              "sku": "CLEN-FA6-4K-001",
+              "quantity": 5,
+              "availableQty": 5,
+              "rentalPrice": "4800",
+              "depositAmount": "6000",
+              "condition": "NEW",
+              "status": "AVAILABLE",
+              "imageUrl": null,
+              "images": null,
+              "tags": [
+                "cinema",
+                "sony",
+                "4k",
+                "pro-video"
+              ],
+              "isArchived": false,
+              "isActive": true,
+              "createdAt": "2026-09-11T16:57:43.922Z",
+              "updatedAt": "2026-09-11T17:34:00.548Z"
+            },
+            "booking": null
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400
+  
+  request: {
+    url: {{base-url}}/rental/damages/{{createdDamageId}}/dispute
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "notes": "Client requested waiver based on corporate tier agreement"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: b4d8b0a5-af9a-403a-a11d-cc0269990bd1
+      x-correlation-id: b4d8b0a5-af9a-403a-a11d-cc0269990bd1
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 165
+      etag: W/"a5-53wmLT1lFfP++DdfAt3IybAx/f8"
+      date: Fri, 11 Sep 2026 17:50:03 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "Cannot dispute penalty on damage in 'DISPUTED' status (must be PENALTY_APPLIED)",
+          "data": null,
+          "timestamp": "2026-09-11T17:50:03.233Z"
+        }
+      '''
+    }
+  }
+}

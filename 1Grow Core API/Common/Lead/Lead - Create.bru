@@ -1,0 +1,68 @@
+meta {
+  name: Lead - Create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base-url}}/leads
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "module": "RENTAL",
+    "name": "Ravi Kumar",
+    "email": "ravi@example.com",
+    "phone": "9876543210",
+    "course": "Web Development",
+    "branchId": "branch-uuid",
+    "source": "WEBSITE",
+    "status": "NEW",
+    "notes": "Needs equipment for a weekend event",
+    "rentalStartDate": "2026-10-10",
+    "rentalEndDate": "2026-10-12",
+    "rentalItems": [
+      { "rentalItemId": "rental-item-uuid", "quantity": 2 }
+    ]
+  }
+}
+
+example {
+  name: success
+
+  response: {
+    status: { code: 201, text: Created }
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Lead created successfully",
+          "data": {
+            "id": "lead-uuid",
+            "tenantId": "tenant-uuid",
+            "module": "RENTAL",
+            "name": "Ravi Kumar",
+            "phone": "9876543210",
+            "rentalStartDate": "2026-10-10T00:00:00.000Z",
+            "rentalEndDate": "2026-10-12T00:00:00.000Z",
+            "rentalItems": [{ "quantity": 2, "rentalItem": { "id": "rental-item-uuid", "name": "Projector", "rentalPrice": 2500 } }],
+            "status": "NEW",
+            "createdAt": "2026-09-07T10:00:00.000Z"
+          }
+        }
+      '''
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,27 @@
+meta {
+  name: RBAC - Update User Status
+  type: http
+  seq: 13
+}
+
+put {
+  url: {{base-url}}/rbac/users/{{id}}/status
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "status": "ACTIVE"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

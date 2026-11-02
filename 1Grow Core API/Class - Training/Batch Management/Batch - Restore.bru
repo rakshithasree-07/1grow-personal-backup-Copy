@@ -1,0 +1,21 @@
+meta {
+  name: Batch - Restore
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{base-url}}/training/batches/{{batchId}}/restore
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,322 @@
+meta {
+  name: 02 - List Quotations
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/rental/quotations?page=1&pageSize=10
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.httpStatusCode: eq 200
+  res.body.data: isDefined
+}
+
+script:post-response {
+  const quotes = res.body?.data?.quotations || res.body?.data;
+  if (Array.isArray(quotes) && quotes.length > 0) {
+    bru.setVar('createdQuotationId', quotes[0].id);
+    bru.setEnvVar('createdQuotationId', quotes[0].id);
+  }
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/quotations?page=1&pageSize=10
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 85d33673-4a6d-4011-8c8c-fa86cbe75322
+      x-correlation-id: 85d33673-4a6d-4011-8c8c-fa86cbe75322
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"15c8-e9egWnu/L2RoNm9m1mCX69baajU"
+      date: Fri, 11 Sep 2026 15:40:17 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental quotations retrieved successfully",
+          "timestamp": "2026-09-11T15:40:17.222Z",
+          "data": [
+            {
+              "id": "043320fc-1ea7-4afc-9d0d-701597080a68",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "branchId": null,
+              "clientId": null,
+              "quotationNumber": "RQ-2026-000004",
+              "customerName": "Suriya Film Studios",
+              "customerPhone": "+919940123457",
+              "customerEmail": "suriya@studios.com",
+              "address": null,
+              "venue": null,
+              "startDate": "2026-12-01T00:00:00.000Z",
+              "endDate": "2026-12-04T00:00:00.000Z",
+              "durationDays": 4,
+              "subtotalAmount": "18000",
+              "discountAmount": "0",
+              "taxAmount": "0",
+              "totalAmount": "18000",
+              "depositAmount": "15000",
+              "notes": "Commercial shoot for automobile brand",
+              "terms": null,
+              "status": "DRAFT",
+              "sentAt": null,
+              "approvedAt": null,
+              "convertedAt": null,
+              "convertedBookingId": null,
+              "isArchived": false,
+              "createdBy": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+              "createdAt": "2026-09-11T15:39:33.809Z",
+              "updatedAt": "2026-09-11T15:39:33.809Z",
+              "items": [
+                {
+                  "id": "bdc7d976-de1f-4396-9853-f6a05e230535",
+                  "quotationId": "043320fc-1ea7-4afc-9d0d-701597080a68",
+                  "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                  "quantity": 1,
+                  "unitPrice": "4500",
+                  "depositAmount": "15000",
+                  "durationDays": 4,
+                  "subtotal": "18000",
+                  "discountAmount": "0",
+                  "taxAmount": "0",
+                  "totalAmount": "18000",
+                  "notes": null,
+                  "createdAt": "2026-09-11T15:39:33.809Z",
+                  "updatedAt": "2026-09-11T15:39:33.809Z",
+                  "item": {
+                    "id": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                    "name": "Sony FX6 Cinema Camera",
+                    "sku": "CAM-FA6-4K-001",
+                    "imageUrl": null
+                  }
+                }
+              ],
+              "client": null
+            },
+            {
+              "id": "d25ca719-82dc-441b-b40b-36351eace6f5",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "branchId": null,
+              "clientId": null,
+              "quotationNumber": "RQ-2026-000003",
+              "customerName": "Suriya Film Studios",
+              "customerPhone": "+919940123457",
+              "customerEmail": "suriya@studios.com",
+              "address": null,
+              "venue": null,
+              "startDate": "2026-12-01T00:00:00.000Z",
+              "endDate": "2026-12-04T00:00:00.000Z",
+              "durationDays": 4,
+              "subtotalAmount": "18000",
+              "discountAmount": "0",
+              "taxAmount": "0",
+              "totalAmount": "18000",
+              "depositAmount": "15000",
+              "notes": "Commercial shoot for automobile brand",
+              "terms": null,
+              "status": "DRAFT",
+              "sentAt": null,
+              "approvedAt": null,
+              "convertedAt": null,
+              "convertedBookingId": null,
+              "isArchived": false,
+              "createdBy": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+              "createdAt": "2026-09-11T15:39:28.277Z",
+              "updatedAt": "2026-09-11T15:39:28.277Z",
+              "items": [
+                {
+                  "id": "10c156c6-ac9a-492b-8f2b-2deb8e6c8afc",
+                  "quotationId": "d25ca719-82dc-441b-b40b-36351eace6f5",
+                  "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                  "quantity": 1,
+                  "unitPrice": "4500",
+                  "depositAmount": "15000",
+                  "durationDays": 4,
+                  "subtotal": "18000",
+                  "discountAmount": "0",
+                  "taxAmount": "0",
+                  "totalAmount": "18000",
+                  "notes": null,
+                  "createdAt": "2026-09-11T15:39:28.277Z",
+                  "updatedAt": "2026-09-11T15:39:28.277Z",
+                  "item": {
+                    "id": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                    "name": "Sony FX6 Cinema Camera",
+                    "sku": "CAM-FA6-4K-001",
+                    "imageUrl": null
+                  }
+                }
+              ],
+              "client": null
+            },
+            {
+              "id": "6bdda9a7-c39c-43d8-b422-bffa36c2e618",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "branchId": null,
+              "clientId": null,
+              "quotationNumber": "RQ-2026-000002",
+              "customerName": "Suriya Film Studios",
+              "customerPhone": "+919940123457",
+              "customerEmail": "suriya@studios.com",
+              "address": null,
+              "venue": null,
+              "startDate": "2026-12-01T00:00:00.000Z",
+              "endDate": "2026-12-04T00:00:00.000Z",
+              "durationDays": 4,
+              "subtotalAmount": "18000",
+              "discountAmount": "0",
+              "taxAmount": "0",
+              "totalAmount": "18000",
+              "depositAmount": "15000",
+              "notes": "Commercial shoot for automobile brand",
+              "terms": null,
+              "status": "DRAFT",
+              "sentAt": null,
+              "approvedAt": null,
+              "convertedAt": null,
+              "convertedBookingId": null,
+              "isArchived": false,
+              "createdBy": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+              "createdAt": "2026-09-11T15:39:20.292Z",
+              "updatedAt": "2026-09-11T15:39:20.292Z",
+              "items": [
+                {
+                  "id": "f1030854-6367-411b-b7bf-40934fd5ec39",
+                  "quotationId": "6bdda9a7-c39c-43d8-b422-bffa36c2e618",
+                  "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                  "quantity": 1,
+                  "unitPrice": "4500",
+                  "depositAmount": "15000",
+                  "durationDays": 4,
+                  "subtotal": "18000",
+                  "discountAmount": "0",
+                  "taxAmount": "0",
+                  "totalAmount": "18000",
+                  "notes": null,
+                  "createdAt": "2026-09-11T15:39:20.292Z",
+                  "updatedAt": "2026-09-11T15:39:20.292Z",
+                  "item": {
+                    "id": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                    "name": "Sony FX6 Cinema Camera",
+                    "sku": "CAM-FA6-4K-001",
+                    "imageUrl": null
+                  }
+                }
+              ],
+              "client": null
+            },
+            {
+              "id": "4cb567f4-13b2-4fa5-8732-550814f53e9e",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "branchId": null,
+              "clientId": null,
+              "quotationNumber": "RQ-2026-000001",
+              "customerName": "Suriya Film Studios",
+              "customerPhone": "+919940123456",
+              "customerEmail": "suriya@studios.com",
+              "address": null,
+              "venue": null,
+              "startDate": "2026-12-01T00:00:00.000Z",
+              "endDate": "2026-12-04T00:00:00.000Z",
+              "durationDays": 4,
+              "subtotalAmount": "18000",
+              "discountAmount": "0",
+              "taxAmount": "0",
+              "totalAmount": "18000",
+              "depositAmount": "15000",
+              "notes": "Commercial shoot for automobile brand",
+              "terms": null,
+              "status": "DRAFT",
+              "sentAt": null,
+              "approvedAt": null,
+              "convertedAt": null,
+              "convertedBookingId": null,
+              "isArchived": false,
+              "createdBy": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+              "createdAt": "2026-09-11T15:31:57.172Z",
+              "updatedAt": "2026-09-11T15:31:57.172Z",
+              "items": [
+                {
+                  "id": "de15f918-11d9-4bb7-90a1-3465fa5c0467",
+                  "quotationId": "4cb567f4-13b2-4fa5-8732-550814f53e9e",
+                  "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                  "quantity": 1,
+                  "unitPrice": "4500",
+                  "depositAmount": "15000",
+                  "durationDays": 4,
+                  "subtotal": "18000",
+                  "discountAmount": "0",
+                  "taxAmount": "0",
+                  "totalAmount": "18000",
+                  "notes": null,
+                  "createdAt": "2026-09-11T15:31:57.172Z",
+                  "updatedAt": "2026-09-11T15:31:57.172Z",
+                  "item": {
+                    "id": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                    "name": "Sony FX6 Cinema Camera",
+                    "sku": "CAM-FA6-4K-001",
+                    "imageUrl": null
+                  }
+                }
+              ],
+              "client": null
+            }
+          ],
+          "meta": {
+            "total": 4,
+            "page": 1,
+            "pageSize": 10,
+            "totalPages": 1,
+            "hasNextPage": false,
+            "hasPreviousPage": false
+          }
+        }
+      '''
+    }
+  }
+}

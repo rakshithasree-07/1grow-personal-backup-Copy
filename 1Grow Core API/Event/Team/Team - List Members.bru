@@ -1,0 +1,373 @@
+meta {
+  name: Team - List Members
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/events/{{eventId}}/team
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+vars:pre-request {
+  eventId: 97330d56-033e-4e25-b834-88bf255049d2
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success-WithMembers
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Team members retrieved successfully",
+          "data": [
+            {
+              "id": "member-uuid-1",
+              "eventId": "18536e20-85db-43e1-8c17-c975fa1ce96a",
+              "userId": "user-uuid-1",
+              "role": "MANAGER",
+              "status": "ASSIGNED",
+              "notes": "Event manager",
+              "createdAt": "2026-09-06T10:00:00.000Z",
+              "updatedAt": "2026-09-06T10:00:00.000Z",
+              "user": {
+                "id": "user-uuid-1",
+                "name": "John Smith",
+                "email": "john.smith@example.com",
+                "phone": "9876543210"
+              }
+            },
+            {
+              "id": "member-uuid-2",
+              "eventId": "18536e20-85db-43e1-8c17-c975fa1ce96a",
+              "userId": "user-uuid-2",
+              "role": "COORDINATOR",
+              "status": "ASSIGNED",
+              "notes": "Main coordinator",
+              "createdAt": "2026-09-06T10:30:00.000Z",
+              "updatedAt": "2026-09-06T10:30:00.000Z",
+              "user": {
+                "id": "user-uuid-2",
+                "name": "Jane Doe",
+                "email": "jane.doe@example.com",
+                "phone": "9876543211"
+              }
+            },
+            {
+              "id": "member-uuid-3",
+              "eventId": "18536e20-85db-43e1-8c17-c975fa1ce96a",
+              "userId": "user-uuid-3",
+              "role": "EXECUTION",
+              "status": "ASSIGNED",
+              "notes": "Execution team lead",
+              "createdAt": "2026-09-06T11:00:00.000Z",
+              "updatedAt": "2026-09-06T11:00:00.000Z",
+              "user": {
+                "id": "user-uuid-3",
+                "name": "Mike Johnson",
+                "email": "mike.johnson@example.com",
+                "phone": "9876543212"
+              }
+            },
+            {
+              "id": "member-uuid-4",
+              "eventId": "18536e20-85db-43e1-8c17-c975fa1ce96a",
+              "userId": "user-uuid-4",
+              "role": "SUPPORT",
+              "status": "ASSIGNED",
+              "notes": "Support staff",
+              "createdAt": "2026-09-06T11:30:00.000Z",
+              "updatedAt": "2026-09-06T11:30:00.000Z",
+              "user": {
+                "id": "user-uuid-4",
+                "name": "Sarah Williams",
+                "email": "sarah.williams@example.com",
+                "phone": "9876543213"
+              }
+            }
+          ],
+          "timestamp": "2026-09-06T14:48:09.197Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 404-Error-NoActiveMembers
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 404
+      text: Not Found
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 404,
+          "message": "No active team members found for this event",
+          "error": "Not Found",
+          "timestamp": "2026-09-06T19:20:06.894Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-success
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 4c56f13c-a51b-40c9-b9b7-678334ab607a
+      x-correlation-id: 4c56f13c-a51b-40c9-b9b7-678334ab607a
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 32
+      content-type: application/json; charset=utf-8
+      content-length: 501
+      etag: W/"1f5-jDCfIQof3ER8UTh/W0fwfvaPLKE"
+      date: Sun, 06 Sep 2026 19:23:08 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Team members retrieved successfully",
+          "data": [
+            {
+              "id": "99a37c63-f9b5-424c-93d8-0584fb70e347",
+              "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+              "userId": "2714b455-9f5c-4c58-8445-aa69f4d1120f",
+              "role": "COORDINATOR",
+              "status": "AVAILABLE",
+              "notes": "Main event coordinator",
+              "createdAt": "2026-09-06T19:12:18.346Z",
+              "user": {
+                "id": "2714b455-9f5c-4c58-8445-aa69f4d1120f",
+                "name": "Tharun",
+                "email": "student9.branch2@test.com",
+                "phone": "9000000032"
+              }
+            }
+          ],
+          "timestamp": "2026-09-06T19:23:08.612Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 404-error
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 93fdaed4-1551-4b0c-bf00-086d5efda752
+      x-correlation-id: 93fdaed4-1551-4b0c-bf00-086d5efda752
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 129
+      etag: W/"81-q0UrB+MQQiQC8iXCwUCf8e1090k"
+      date: Sun, 06 Sep 2026 19:39:39 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 404
+      text: Not Found
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 404,
+          "message": "No active team members found for this event",
+          "data": null,
+          "timestamp": "2026-09-06T19:39:39.883Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 9181b8ee-db38-43b4-92be-6c6c3f623483
+      x-correlation-id: 9181b8ee-db38-43b4-92be-6c6c3f623483
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 35
+      content-type: application/json; charset=utf-8
+      content-length: 498
+      etag: W/"1f2-4Fr/x0uTw0DN4q4B94dOVG0CCq0"
+      date: Tue, 08 Sep 2026 06:39:50 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Team members retrieved successfully",
+          "data": [
+            {
+              "id": "99a37c63-f9b5-424c-93d8-0584fb70e347",
+              "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+              "userId": "2714b455-9f5c-4c58-8445-aa69f4d1120f",
+              "role": "COORDINATOR",
+              "status": "ACTIVE",
+              "notes": "Main event coordinator",
+              "createdAt": "2026-09-06T19:12:18.346Z",
+              "user": {
+                "id": "2714b455-9f5c-4c58-8445-aa69f4d1120f",
+                "name": "Tharun",
+                "email": "student9.branch2@test.com",
+                "phone": "9000000032"
+              }
+            }
+          ],
+          "timestamp": "2026-09-08T06:39:50.054Z"
+        }
+      '''
+    }
+  }
+}

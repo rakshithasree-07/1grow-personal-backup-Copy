@@ -1,0 +1,194 @@
+meta {
+  name: Client - Get By ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/events/clients/{{clientId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+vars:pre-request {
+  clientId: 65449f19-dba4-4041-93f4-f3b634f6ce61
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: example
+  
+  request: {
+    url: {{base-url}}/events/clients/{{clientId}}
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 1e13c9b9-e0d5-4482-88af-d642c5f11859
+      x-correlation-id: 1e13c9b9-e0d5-4482-88af-d642c5f11859
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 612
+      etag: W/"264-wokUew+/C1ybf6nzujHND0/s+sM"
+      date: Wed, 02 Sep 2026 18:25:07 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event client retrieved successfully",
+          "data": {
+            "id": "11c84cbf-3966-4ac6-948f-ad9d1f049d4c",
+            "tenantId": "185d41a4-0abf-4829-80f2-f298e4405135",
+            "name": "Ravi Kumar",
+            "phone": "9876543210",
+            "email": "ravi@enterprises.com",
+            "companyName": "Ravi Enterprises Pvt Ltd",
+            "numberOfBranches": 3,
+            "gstNumber": "33AAACR1234F1Z5",
+            "panNumber": "AAACR1234F",
+            "designation": "Managing Director",
+            "preferredCommunication": "Email",
+            "street": "456 Business Park, Chennai - 600001",
+            "city": "Chennai",
+            "state": "Tamil Nadu",
+            "country": "India",
+            "notes": "Business Type: Private Limited",
+            "isActive": true,
+            "createdAt": "2026-09-02T18:13:21.845Z",
+            "updatedAt": "2026-09-02T18:13:21.845Z",
+            "events": [],
+            "_count": {
+              "events": 0,
+              "proposals": 0
+            }
+          },
+          "timestamp": "2026-09-02T18:25:07.115Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example (1)
+  
+  request: {
+    url: {{base-url}}/events/clients/{{clientId}}
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 98737c3e-4894-49ea-b14d-2229c2d063c2
+      x-correlation-id: 98737c3e-4894-49ea-b14d-2229c2d063c2
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 761
+      etag: W/"2f9-1XgQrEXqP76mkofFHNDNXQ6EO7E"
+      date: Thu, 03 Sep 2026 14:55:57 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event client retrieved successfully",
+          "data": {
+            "id": "5f552ccd-4f0a-47be-a870-af2baf6cf6b4",
+            "tenantId": "627aad99-1193-4364-8af3-0e4a34237370",
+            "name": "Ravi Enterprises Updated",
+            "phone": "8562456251",
+            "email": "ravi.new@enterprises.com",
+            "companyName": "Ravi Enterprises International",
+            "numberOfBranches": 4,
+            "gstNumber": "33sddsddd514",
+            "panNumber": "AAACR1234F",
+            "designation": "CEO",
+            "preferredCommunication": "Phone",
+            "street": "456 Business Park, Chennai - 600001",
+            "city": "Chennai",
+            "state": "Tamil Nadu",
+            "country": "India",
+            "notes": "Business Type: Private Limited",
+            "isActive": true,
+            "createdAt": "2026-09-03T10:30:46.941Z",
+            "updatedAt": "2026-09-03T14:55:53.555Z",
+            "events": [],
+            "_count": {
+              "events": 0,
+              "proposals": 0
+            }
+          },
+          "timestamp": "2026-09-03T14:55:57.566Z"
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,20 @@
+meta {
+  name: Google Link URL
+  type: http
+  seq: 17
+}
+
+get {
+  url: {{base-url}}/auth/google/link-url
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

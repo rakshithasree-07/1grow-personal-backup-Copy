@@ -1,0 +1,232 @@
+meta {
+  name: Event - Update Status
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{base-url}}/events/{{eventId}}/status
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "status": "DEACTIVE"//INACTIVE
+  }
+}
+
+vars:pre-request {
+  eventId: 4bd83e46-e759-4117-8336-cae92dbed13e
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Inactive Success
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/status
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "status": "INACTIVE"//DEACTIVE
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: ebf4a54a-f54f-4e7a-a7b7-61aba325a104
+      x-correlation-id: ebf4a54a-f54f-4e7a-a7b7-61aba325a104
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 26
+      content-type: application/json; charset=utf-8
+      content-length: 116
+      etag: W/"74-Aw1XGeFsAm8tIf+8rP9G9JrGu4g"
+      date: Sat, 05 Sep 2026 06:53:28 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event deactivated successfully",
+          "data": null,
+          "timestamp": "2026-09-05T06:53:28.588Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-Active success
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/status
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "status": "ACTIVE"//INACTIVE
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: cc6b224d-42f4-412b-b2c4-abeed25c859b
+      x-correlation-id: cc6b224d-42f4-412b-b2c4-abeed25c859b
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 114
+      etag: W/"72-kSegKZqSW3uf+GZxytBjzVZbeNc"
+      date: Sat, 05 Sep 2026 06:54:06 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event activated successfully",
+          "data": null,
+          "timestamp": "2026-09-05T06:54:06.016Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-Error
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/status
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "status": "DEACTIVE"//INACTIVE
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: a68aee53-494e-4c60-811f-91ccdd64fdc9
+      x-correlation-id: a68aee53-494e-4c60-811f-91ccdd64fdc9
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 30
+      content-type: application/json; charset=utf-8
+      content-length: 126
+      etag: W/"7e-tp7OPsP3braK3YqQRC6JkkpGq5E"
+      date: Sat, 05 Sep 2026 06:54:36 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "status must be either ACTIVE or INACTIVE",
+          "data": null,
+          "timestamp": "2026-09-05T06:54:36.495Z"
+        }
+      '''
+    }
+  }
+}

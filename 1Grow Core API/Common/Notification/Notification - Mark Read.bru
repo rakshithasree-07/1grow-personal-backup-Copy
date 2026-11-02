@@ -1,0 +1,21 @@
+meta {
+  name: Notification - Mark Read
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{base-url}}/notification/{{id}}/read
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

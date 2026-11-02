@@ -1,0 +1,28 @@
+meta {
+  name: Export Students
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base-url}}/bulk/students/export
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "batchId": "{{batchId}}",
+    "status": "ACTIVE"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

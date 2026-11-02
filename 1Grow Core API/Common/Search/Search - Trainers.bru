@@ -1,0 +1,25 @@
+meta {
+  name: Search - Trainers
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base-url}}/search/trainers
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  q: trainer
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

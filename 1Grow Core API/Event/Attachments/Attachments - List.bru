@@ -1,0 +1,176 @@
+meta {
+  name: Attachments - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/attachments?eventId={{eventId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+vars:pre-request {
+  eventId: 97330d56-033e-4e25-b834-88bf255049d2
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/attachments?eventId={{eventId}}
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 22f2dee2-b611-481b-9406-eca21f8c089b
+      x-correlation-id: 22f2dee2-b611-481b-9406-eca21f8c089b
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 570
+      etag: W/"23a-VL7XdNajB/5c/1rgUoQoysEX3SM"
+      date: Sun, 06 Sep 2026 11:14:00 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": [
+            {
+              "id": "859a412c-75b6-45a3-8582-911b55e6255d",
+              "type": "document",
+              "url": "https://example.com/documents/event-brochure.pdf",
+              "createdAt": "2026-09-06T11:05:10.821Z"
+            },
+            {
+              "id": "d6a6e6da-5d5d-489a-955c-d35af7b32c44",
+              "type": "document",
+              "url": "https://example.com/documents/event-brochure.pdf",
+              "createdAt": "2026-09-06T11:03:10.694Z"
+            },
+            {
+              "id": "61d4e864-210e-4d7d-ae90-0cedbf9f53ef",
+              "type": "document",
+              "url": "https://example.com/documents/event-brochure.pdf",
+              "createdAt": "2026-09-06T10:46:14.313Z"
+            }
+          ],
+          "timestamp": "2026-09-06T11:14:00.493Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/attachments?eventId={{eventId}}
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 81b8158e-f409-48fa-850e-5d237a73f2a1
+      x-correlation-id: 81b8158e-f409-48fa-850e-5d237a73f2a1
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 410
+      etag: W/"19a-K6vHyJguWL/J6sNXmQaK01vvHMU"
+      date: Sun, 06 Sep 2026 11:32:13 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": [
+            {
+              "id": "d6a6e6da-5d5d-489a-955c-d35af7b32c44",
+              "type": "document",
+              "url": "https://example.com/documents/event-brochure.pdf",
+              "createdAt": "2026-09-06T11:03:10.694Z"
+            },
+            {
+              "id": "61d4e864-210e-4d7d-ae90-0cedbf9f53ef",
+              "type": "document",
+              "url": "https://example.com/documents/event-brochure.pdf",
+              "createdAt": "2026-09-06T10:46:14.313Z"
+            }
+          ],
+          "timestamp": "2026-09-06T11:32:13.231Z"
+        }
+      '''
+    }
+  }
+}

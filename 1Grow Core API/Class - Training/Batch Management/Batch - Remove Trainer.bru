@@ -1,0 +1,27 @@
+meta {
+  name: Batch - Remove Trainer
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{base-url}}/training/batches/{{batchId}}/remove-trainer
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "trainerId": "00000000-0000-4000-8000-000000000004"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

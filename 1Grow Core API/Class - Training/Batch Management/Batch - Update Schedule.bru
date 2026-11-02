@@ -1,0 +1,30 @@
+meta {
+  name: Batch - Update Schedule
+  type: http
+  seq: 22
+}
+
+patch {
+  url: {{base-url}}/training/batches/{{batchId}}/schedules/{{scheduleId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "dayOfWeek": "WEDNESDAY",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "room": "Hall B"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

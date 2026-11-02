@@ -1,0 +1,73 @@
+meta {
+  name: Fee Plan - List
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/fee-plans
+  body: none
+  auth: inherit
+}
+
+query {
+  page: 1
+  pageSize: 20
+  search: 
+  status: 
+  module: 
+  courseId: 
+  rentalItemId: 
+  eventId: 
+  publicStatus: 
+}
+
+example {
+  name: success
+
+  response: {
+    status: { code: 200, text: OK }
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": {
+            "items": [
+              {
+                "id": "fee-plan-uuid",
+                "tenantId": "tenant-uuid",
+                "module": "RENTAL",
+                "sourceId": "rental-item-uuid",
+                "rentalItemId": "rental-item-uuid",
+                "source": { "id": "rental-item-uuid", "name": "Projector", "rentalPrice": 2500, "availableQty": 4 },
+                "planName": "Projector Weekend Rental",
+                "feeType": "ONE_TIME",
+                "totalAmount": 5000,
+                "currency": "INR",
+                "status": "active",
+                "isPublic": true,
+                "publicVisible": true,
+                "publicStatus": "PUBLIC",
+                "studentsAssigned": 0,
+                "createdAt": "2026-09-07T10:00:00.000Z",
+                "updatedAt": "2026-09-07T10:00:00.000Z"
+              }
+            ],
+            "total": 1,
+            "page": 1,
+            "pageSize": 20,
+            "totalPages": 1
+          },
+          "timestamp": "2026-09-07T10:00:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

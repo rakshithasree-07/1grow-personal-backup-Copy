@@ -1,0 +1,32 @@
+meta {
+  name: Security - Create Audit Log
+  type: http
+  seq: 13
+}
+
+post {
+  url: {{base-url}}/security/audit-logs
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "action": "CREATE",
+    "entity": "STUDENT",
+    "entityId": "student-uuid",
+    "metadata": {
+      "note": "New student created"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

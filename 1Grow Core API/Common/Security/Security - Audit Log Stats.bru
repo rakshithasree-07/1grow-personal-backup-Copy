@@ -1,0 +1,95 @@
+meta {
+  name: Security - Audit Log Stats
+  type: http
+  seq: 16
+}
+
+get {
+  url: {{base-url}}/security/audit-logs/stats
+  body: none
+  auth: inherit
+}
+
+docs {
+  # Audit log statistics
+
+  Aggregate counters for the caller's tenant (`SUPER_ADMIN` sees all tenants).
+
+  **Roles:** `SUPER_ADMIN`, `OWNER`, `BRANCH_MANAGER`
+
+  ## Scoping the counters
+
+  Every counter, including `logsLast24h` and `logsLast7d`, is computed over the
+  filtered set, so the numbers can be compared against a filtered list request.
+
+  | Name           | Type    | Notes                                                                 |
+  | -------------- | ------- | --------------------------------------------------------------------- |
+  | tenantId       | uuid    | `SUPER_ADMIN` only; ignored for other roles                           |
+  | userId         | uuid    | Filter by actor                                                        |
+  | action         | enum    | `AuditAction`                                                          |
+  | entity         | string  | **Exact**, case-insensitive match                                      |
+  | entityContains | string  | Explicit partial match                                                 |
+  | entities       | string  | Comma-separated list of exact names                                    |
+  | search         | string  | Matches actor name, actor email or entity                              |
+  | from           | date    | Inclusive lower bound, combined with the rolling windows                |
+  | to             | date    | Inclusive upper bound, combined with the rolling windows                |
+
+  `SUPER_ADMIN` may add `tenantId` to the URL to scope another tenant; other
+  roles are always forced to their own tenant.
+
+  ## Response
+
+  ```json
+  {
+    "httpStatusCode": 200,
+    "message": "Audit log stats",
+    "data": {
+      "totalLogs": 128,
+      "logsLast24h": 12,
+      "logsLast7d": 54,
+      "actionsByType": { "CREATE": 40, "UPDATE": 51, "EXPORT": 6 },
+      "topEntities": { "Task": 30, "StudentProgress": 22, "Certificate": 14 },
+      "scope": { "entity": null, "entities": [] }
+    },
+    "timestamp": "2026-09-27T10:00:00.000Z"
+  }
+  ```
+
+  `scope` echoes the entity filter that produced the numbers. An empty
+  `scope` means the counters cover the whole tenant.
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  entities: AttendanceSession,Task,TaskSubmission,StudentProgress,Certificate,CertificateTemplate,CertificateVerification
+}
+
+assert {
+  res.status: eq 200
+  res.body.message: eq "Audit log stats"
+  res.body.data.scope: count 2
+}
+
+script:post-response {
+  const data = res.body?.data;
+  if (data?.totalLogs !== undefined) {
+    bru.setVar('auditLogTotal', data.totalLogs);
+  }
+  if (data) {
+    const scope = data.scope ?? {};
+    const applied = scope.entity || (scope.entities || []).length
+      ? ` scoped to ${scope.entity ?? scope.entities.join(',')}`
+      : ' (whole tenant)';
+    console.log(`audit stats${applied}: total=${data.totalLogs} 24h=${data.logsLast24h} 7d=${data.logsLast7d}`);
+    console.log(`  actions: ${Object.entries(data.actionsByType ?? {}).map(([k, v]) => `${k}=${v}`).join(', ') || '(none)'}`);
+    console.log(`  top entities: ${Object.entries(data.topEntities ?? {}).map(([k, v]) => `${k}=${v}`).join(', ') || '(none)'}`);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

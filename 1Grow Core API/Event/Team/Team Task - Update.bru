@@ -1,0 +1,37 @@
+meta {
+  name: Team Task - Update
+  type: http
+  seq: 8
+}
+
+patch {
+  url: {{base-url}}/events/{{eventId}}/team/{{memberIdP}}/tasks/{{taskId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Check sound mixing desk - Updated",
+    "description": "Updated member task description",
+    "priority": "URGENT",
+    "dueDate": "2026-03-14T12:00:00.000Z",
+    "notifyClient": false
+  }
+}
+
+vars:pre-request {
+  eventId: 97330d56-033e-4e25-b834-88bf255049d2
+  memberIdP: 1c1a3f2e-7d84-4f6a-9b25-6f0c2d4e8a11
+  taskId: 486b5d62-3c6e-4e9d-a61f-7562f031ecc7
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

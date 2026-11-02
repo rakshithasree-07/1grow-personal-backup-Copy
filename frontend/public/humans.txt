@@ -1,0 +1,13 @@
+Project: 1Grow
+Company: 1Grow Technologies
+
+Frontend:
+Next.js
+TypeScript
+Tailwind CSS
+
+Backend:
+NestJS
+
+Database:
+PostgreSQL

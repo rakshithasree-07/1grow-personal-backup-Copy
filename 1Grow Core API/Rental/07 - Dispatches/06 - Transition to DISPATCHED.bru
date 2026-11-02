@@ -1,0 +1,179 @@
+meta {
+  name: 06 - Transition to DISPATCHED
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{base-url}}/rental/dispatches/{{createdDispatchId}}/status
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "status": "DISPATCHED"
+  }
+}
+
+assert {
+  res.status: in [200, 201]
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/dispatches/{{createdDispatchId}}/status
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "status": "DISPATCHED"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 15c62e34-0e35-41df-a2a4-b65f7cbf4a64
+      x-correlation-id: 15c62e34-0e35-41df-a2a4-b65f7cbf4a64
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"9dd-BYl1UrOTKC3QHPNiMZJ0j0YLtpA"
+      date: Fri, 11 Sep 2026 17:30:55 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental dispatch status updated to DISPATCHED",
+          "timestamp": "2026-09-11T17:30:55.210Z",
+          "data": {
+            "id": "19502331-b622-431c-9b14-27f97b497e69",
+            "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+            "bookingId": "d62bac70-8590-42a7-939f-ea19616dc34f",
+            "dispatchNumber": "DP-2026-000001",
+            "dispatchDate": "2026-11-10T00:00:00.000Z",
+            "expectedReturn": "2026-11-15T00:00:00.000Z",
+            "actualReturn": null,
+            "status": "DISPATCHED",
+            "dispatchedBy": "181be242-f78d-4037-8b6f-cebb45dfd44d",
+            "receivedBy": "Karthik Productions Logistics Team",
+            "condition": "GOOD",
+            "notes": "Vehicle assigned: TN 09 CC 8899",
+            "photos": null,
+            "createdAt": "2026-09-11T17:28:26.822Z",
+            "updatedAt": "2026-09-11T17:30:52.324Z",
+            "items": [
+              {
+                "id": "8eab6ba9-437e-4e2e-a2b9-a6367836a4cb",
+                "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+                "dispatchId": "19502331-b622-431c-9b14-27f97b497e69",
+                "bookingItemId": "b33db831-725e-4277-b218-8f0a6957e655",
+                "itemId": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+                "quantity": 1,
+                "notes": null,
+                "createdAt": "2026-09-11T17:28:26.822Z",
+                "updatedAt": "2026-09-11T17:28:26.822Z",
+                "item": {
+                  "id": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+                  "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+                  "categoryId": "c6009f74-71dd-4337-8173-f61932bc539b",
+                  "name": "Sony Cinema Camera",
+                  "description": "Updated: Includes dual high-capacity batteries and card reader",
+                  "sku": "CLEN-FA6-4K-001",
+                  "quantity": 5,
+                  "availableQty": 4,
+                  "rentalPrice": "4800",
+                  "depositAmount": "6000",
+                  "condition": "NEW",
+                  "status": "AVAILABLE",
+                  "imageUrl": null,
+                  "images": null,
+                  "tags": [
+                    "cinema",
+                    "sony",
+                    "4k",
+                    "pro-video"
+                  ],
+                  "isArchived": false,
+                  "isActive": true,
+                  "createdAt": "2026-09-11T16:57:43.922Z",
+                  "updatedAt": "2026-09-11T17:30:51.914Z"
+                },
+                "bookingItem": {
+                  "id": "b33db831-725e-4277-b218-8f0a6957e655",
+                  "bookingId": "d62bac70-8590-42a7-939f-ea19616dc34f",
+                  "itemId": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+                  "quantity": 1,
+                  "unitPrice": "4500",
+                  "totalPrice": "4500"
+                }
+              }
+            ],
+            "booking": {
+              "id": "d62bac70-8590-42a7-939f-ea19616dc34f",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "branchId": null,
+              "bookingNumber": "BK-2026-000007",
+              "customerName": "Aditya Walk-in Client",
+              "phone": "+919123456780",
+              "email": "aditya@walkin.com",
+              "clientId": null,
+              "enquiryId": null,
+              "startDate": "2026-12-10T00:00:00.000Z",
+              "endDate": "2026-12-12T00:00:00.000Z",
+              "totalAmount": "4500",
+              "depositAmount": "0",
+              "discountAmount": "0",
+              "taxAmount": "0",
+              "paidAmount": "0",
+              "status": "ADVANCE_PAID",
+              "notes": "Updated delivery location: Mahabalipuram Outdoor Set, Tamil Nadu",
+              "address": null,
+              "venue": null,
+              "isArchived": false,
+              "createdAt": "2026-09-11T17:05:48.694Z",
+              "updatedAt": "2026-09-11T17:27:25.893Z"
+            }
+          }
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,126 @@
+meta {
+  name: Vendor - Update Status
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base-url}}/vendors/{{vendor-Id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "isActive": false
+  }
+}
+
+vars:pre-request {
+  vendorId: vendor-uuid-placeholder
+  vendor-Id: 61cf355d-1711-4e21-a653-314b99f64eb8
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/vendors/{{vendor-Id}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "isActive": false
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 7379962b-1e64-46ac-b7b0-ee5697d30a82
+      x-correlation-id: 7379962b-1e64-46ac-b7b0-ee5697d30a82
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 51
+      content-type: application/json; charset=utf-8
+      content-length: 739
+      etag: W/"2e3-KQXNWIKL04DcwnpWykKHVdqnuPU"
+      date: Mon, 07 Sep 2026 15:07:09 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Vendor updated successfully",
+          "data": {
+            "id": "b42d1ba3-dd44-44cf-8a8d-d2f18c60276a",
+            "tenantId": "12bf3d33-1f28-4ec2-b2d7-17a8534e87f3",
+            "vendorName": "Sound Masters Co - Updated",
+            "vendorType": "Sound & Lighting",
+            "contactName": "Kumar Raj",
+            "phone": "9876543221",
+            "email": "kumar.raj@soundmasters.com",
+            "gstin": "29ABCDE1234F2Z5",
+            "address": {
+              "city": "Chennai",
+              "state": "Tamil Nadu",
+              "country": "India",
+              "postalCode": "600001",
+              "addressLine1": "123 Main Road"
+            },
+            "services": [
+              "b42d1ba3-dd44-44cf-8a8d-d2f18c60276a"
+            ],
+            "paymentTerms": {
+              "type": "ADVANCE",
+              "percentage": 50
+            },
+            "notes": "Updated vendor details",
+            "isActive": false,
+            "createdAt": "2026-09-07T14:58:10.416Z",
+            "updatedAt": "2026-09-07T15:07:09.326Z"
+          },
+          "timestamp": "2026-09-07T15:07:09.464Z"
+        }
+      '''
+    }
+  }
+}

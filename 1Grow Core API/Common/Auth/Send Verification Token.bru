@@ -1,0 +1,84 @@
+meta {
+  name: Send Verification Token
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base-url}}/auth/send-verification-token
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "abi.cbe.dev@gmail.com"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 400 Already Verified
+  
+  request: {
+    url: {{base-url}}/auth/send-verification-token
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "email": "abi.cbe.dev@gmail.com"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: d1e8581c-13c6-4644-9b8a-af6fe0deae75
+      x-correlation-id: d1e8581c-13c6-4644-9b8a-af6fe0deae75
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 10
+      x-ratelimit-remaining: 8
+      x-ratelimit-reset: 3584
+      content-type: application/json; charset=utf-8
+      content-length: 111
+      etag: W/"6f-8r1Z6qHahOdXWtKDthqJbUiBTi0"
+      date: Tue, 01 Sep 2026 14:55:13 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "Email is already verified",
+          "data": null,
+          "timestamp": "2026-09-01T14:55:13.537Z"
+        }
+      '''
+    }
+  }
+}

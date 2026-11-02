@@ -1,0 +1,25 @@
+meta {
+  name: Revenue - By Branch
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/revenue/by-branch
+  body: none
+  auth: inherit
+}
+
+query {
+  startDate: 2026-01-01
+  endDate: 2026-12-31
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

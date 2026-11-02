@@ -1,0 +1,96 @@
+meta {
+  name: Salary - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/finance/salary-payouts
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "staffUserId": "{{staffUserId}}",
+    "branchId": "{{branchId}}",
+    "payPeriodMonth": 9,
+    "payPeriodYear": 2026,
+    "baseSalary": 25000,
+    "allowances": 2000,
+    "bonus": 1000,
+    "deductions": 500,
+    "mode": "BANK_TRANSFER",
+    "reference": "SAL-SEP2026-001",
+    "status": "PAID",
+    "notes": "September 2026 salary"
+  }
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Create a staff salary payout. `staffUserId` + payPeriod (month/year)
+  are required; `netAmount` is AUTO-CALCULATED:
+
+      netAmount = baseSalary + allowances + bonus − deductions
+
+  Only one payout per staff/month/year is allowed
+  (unique constraint returns 400 on duplicate).
+
+  Use the "Staff Search" request to pick a valid staffUserId.
+
+
+  ━━━ Example — Manager payout ━━━
+
+  {
+    "staffUserId": "{{managerUserId}}",
+    "payPeriodMonth": 9,
+    "payPeriodYear": 2026,
+    "baseSalary": 45000,
+    "allowances": 5000,
+    "bonus": 3000,
+    "deductions": 1200,
+    "mode": "BANK_TRANSFER"
+  }
+
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Staff salary payout created successfully",
+    "data": {
+      "id": "p1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "tenantId": "t1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "branchId": "b1a2b3c4-5d6e-7f8a-9b0c",
+      "staffUserId": "u1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "staffName": "Priya Sharma",
+      "role": "STAFF",
+      "payPeriodMonth": 9,
+      "payPeriodYear": 2026,
+      "baseSalary": 25000,
+      "allowances": 2000,
+      "bonus": 1000,
+      "deductions": 500,
+      "netAmount": 27500,
+      "mode": "BANK_TRANSFER",
+      "reference": "SAL-SEP2026-001",
+      "status": "PAID",
+      "notes": "September 2026 salary",
+      "paidAt": "2026-09-03T09:00:00.000Z",
+      "branch": { "id": "b1a2b3c4", "name": "Main Branch" },
+      "staff": { "id": "u1a2b3c4", "name": "Priya Sharma", "email": "priya@example.com", "role": "STAFF" },
+      "createdAt": "2026-09-03T09:00:00.000Z",
+      "updatedAt": "2026-09-03T09:00:00.000Z"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

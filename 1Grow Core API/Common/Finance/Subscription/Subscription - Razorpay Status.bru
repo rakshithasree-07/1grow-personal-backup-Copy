@@ -1,0 +1,21 @@
+meta {
+  name: Subscription - Razorpay Status
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{base-url}}/subscriptions/razorpay-status/{{razorpaySubscriptionId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

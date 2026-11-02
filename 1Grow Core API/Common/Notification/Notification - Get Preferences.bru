@@ -1,0 +1,21 @@
+meta {
+  name: Notification - Get Preferences
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base-url}}/notification/preferences
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

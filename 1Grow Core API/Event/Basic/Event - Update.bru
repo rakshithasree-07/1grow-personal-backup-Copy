@@ -1,0 +1,247 @@
+meta {
+  name: Event - Update
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{base-url}}/events/{{eventId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  // branch is OPTIONAL - omit it (or leave branch out) and the branch stays unchanged
+  // attachments is an optional array of attachment ids; the id is returned by the API
+  // send the full list again, or an empty array [] to remove all attachments
+  {
+    "title": "Annual Day Celebration 2026 - Updated",
+    "description": "Updated description for the school annual day.",
+    "thumbnailImage": "https://example.com/images/annual-day-updated.png",
+    "attachments": [
+      "3f7cb8a2-1c4e-4b5a-9d6f-2a9c8d7e6b5a"
+    ],
+    "eventType": {
+      "id": "3a7799f8-d504-439a-b342-c9dcefdd9622"
+    },
+    "services": [
+      { "id": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b" }
+    ]
+  }
+}
+
+vars:pre-request {
+  eventId: 4bd83e46-e759-4117-8336-cae92dbed13e
+}
+
+script:pre-request {
+  const axios = require("axios");
+  
+  if (!bru.getVar("eventId") && !bru.getEnvVar("eventId")) {
+    const baseUrl = bru.getEnvVar("base-url") || bru.getVar("base-url");
+    const token = bru.getEnvVar("token") || bru.getVar("token");
+    
+    try {
+      const res = await axios.get(`${baseUrl}/events?page=1&pageSize=1`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      if (res.data && res.data.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
+        bru.setVar("eventId", res.data.data[0].id);
+      } else {
+        console.error("No events found to fetch.");
+      }
+    } catch (err) {
+      console.error("Failed to fetch events:", err.message);
+    }
+  }
+}
+
+script:post-response {
+  const body = res.getBody();
+  if (body && body.message === "Event updated successfully") {
+    console.log("Event updated successfully");
+  } else {
+    console.error("Update Event failed:", body.message || "Unknown error");
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: Success
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "title": "Annual Day Celebration 2026 - Updated",
+        "description": "Updated description for the school annual day.",
+        "thumbnailImage": "https://example.com/images/annual-day-updated.png",
+        "attachments": [
+          "3f7cb8a2-1c4e-4b5a-9d6f-2a9c8d7e6b5a"
+        ],
+        "eventType": {
+          "id": "f30799ec-c45a-47a5-9173-c2ce3a8edc19"
+        },
+        "services": [
+          { "id": "service-uuid-1" },
+          { "id": "service-uuid-2" },
+          { "id": "service-uuid-3" }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event updated successfully",
+          "data": null,
+          "timestamp": "2026-09-02T10:00:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-Updated the events
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "title": "Annual Day Celebration 2026 - Updated",
+        "description": "Updated description for the school annual day.",
+        "thumbnailImage": "https://example.com/images/annual-day-updated.png",
+        "attachments": [
+          "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d"
+        ],
+        "eventType": {
+          "id": "3a7799f8-d504-439a-b342-c9dcefdd9622"
+        },
+        "services": [
+          { "id": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b" }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: da24e14d-f7af-48d1-98c5-4a745718f25f
+      x-correlation-id: da24e14d-f7af-48d1-98c5-4a745718f25f
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 28
+      content-type: application/json; charset=utf-8
+      content-length: 112
+      etag: W/"70-dZSbJl43YHu4KHTeU5fLL0PETR8"
+      date: Sat, 05 Sep 2026 06:48:16 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event updated successfully",
+          "data": null,
+          "timestamp": "2026-09-05T06:48:16.626Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-Removed attachments
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "attachments": []
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event updated successfully",
+          "data": null
+        }
+      '''
+    }
+  }
+}

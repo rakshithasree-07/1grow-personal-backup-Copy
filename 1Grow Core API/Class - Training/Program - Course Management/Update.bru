@@ -1,0 +1,259 @@
+meta {
+  name: Update
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{base-url}}/training/courses/{{courseId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Dance class",
+    "description": "Step, groove, and shine with our engaging dance classes",
+    "thumbnailUrl": "https://cdn.example.com/dance-class-new.png"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 404 not found
+  
+  request: {
+    url: {{base-url}}/training/courses/{{courseId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Bharatanatyam Summer Camp",
+        "description": "An intensive summer camp featuring daily practice sessions",
+        "thumbnailUrl": "https://cdn.example.com/summer-camp.png"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 4a596658-78f5-49fd-bdb5-f2358978f5f6
+      x-correlation-id: 4a596658-78f5-49fd-bdb5-f2358978f5f6
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      content-type: application/json; charset=utf-8
+      content-length: 124
+      etag: W/"7c-3N4oY2L1SsqCCJgObPNlJ36QFuk"
+      date: Wed, 09 Sep 2026 12:58:00 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 404
+      text: Not Found
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 404,
+          "message": "Cannot PATCH /api/v1/training/courses/",
+          "data": null,
+          "timestamp": "2026-09-09T12:58:00.326Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200 success
+  
+  request: {
+    url: {{base-url}}/training/courses/{{courseId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Bharatanatyam Summer Camp",
+        "description": "An intensive summer camp featuring daily practice sessions",
+        "thumbnailUrl": "https://cdn.example.com/summer-camp-updated.png"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: c605d3fb-53f3-4f22-bda8-ccfec11d623b
+      x-correlation-id: c605d3fb-53f3-4f22-bda8-ccfec11d623b
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 592
+      etag: W/"250-2K32I90xpKoKle3Eg5d+X5Ydfwc"
+      date: Wed, 09 Sep 2026 13:59:05 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Course updated successfully",
+          "data": {
+            "id": "00c4fa87-fa4f-470a-ac45-4b6888b69ca4",
+            "tenantId": "12bf3d33-1f28-4ec2-b2d7-17a8534e87f3",
+            "name": "Bharatanatyam Summer Camp",
+            "description": "An intensive summer camp featuring daily practice sessions",
+            "thumbnailUrl": "https://cdn.example.com/summer-camp-updated.png",
+            "duration": null,
+            "isActive": true,
+            "createdAt": "2026-09-09T11:13:45.525Z",
+            "updatedAt": "2026-09-09T13:59:05.520Z",
+            "type": "SHORT_TERM",
+            "startDate": null,
+            "endDate": null
+          },
+          "timestamp": "2026-09-09T13:59:05.982Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200 success
+  
+  request: {
+    url: {{base-url}}/training/courses/{{courseId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Dance class",
+        "description": "Step, groove, and shine with our engaging dance classes",
+        "thumbnailUrl": "https://cdn.example.com/dance-class-new.png"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 2877fac3-d934-48eb-85f4-b440d5c72277
+      x-correlation-id: 2877fac3-d934-48eb-85f4-b440d5c72277
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 46
+      content-type: application/json; charset=utf-8
+      content-length: 495
+      etag: W/"1ef-fAcqPT2mN6yqR7HW7p5mKm13J8U"
+      date: Fri, 11 Sep 2026 04:54:37 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Course updated successfully",
+          "timestamp": "2026-09-11T04:54:37.826Z",
+          "data": {
+            "id": "0379e0d3-1888-4c00-bd3c-9c00e8f5e341",
+            "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+            "name": "Dance class",
+            "description": "Step, groove, and shine with our engaging dance classes",
+            "thumbnailUrl": "https://cdn.example.com/dance-class-new.png",
+            "duration": null,
+            "isActive": true,
+            "createdAt": "2026-09-11T04:06:48.948Z",
+            "updatedAt": "2026-09-11T04:54:37.557Z",
+            "type": "SHORT_TERM",
+            "startDate": null,
+            "endDate": null
+          }
+        }
+      '''
+    }
+  }
+}

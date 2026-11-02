@@ -1,0 +1,71 @@
+meta {
+  name: Create Pending Billing
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/billing/pending
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "amount": 5000,
+    "clientId": "{{clientId}}",
+    "description": "Event booking balance payment",
+    "dueDate": "2026-10-15",
+    "metadata": {
+      "source": "event_booking",
+      "eventId": "{{eventId}}"
+    }
+  }
+}
+
+docs {
+  ━━━ Student Billing ━━━
+
+  {
+    "amount": 15000,
+    "studentId": "{{studentId}}",
+    "description": "Annual exam fee",
+    "dueDate": "2026-12-01"
+  }
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Pending billing created",
+    "data": {
+      "id": "3f9a2c1e-8b3d-4f5a-9c1e-2d4f6a8b0c12",
+      "tenantId": "5f3c2a1e-9b4d-4f5a-9c1e-2d4f6a8b0c12",
+      "branchId": null,
+      "clientId": "7a1c2e3f-9b4d-4f5a-9c1e-2d4f6a8b0c12",
+      "studentId": null,
+      "invoiceId": null,
+      "amount": 5000,
+      "currency": "INR",
+      "description": "Event booking balance payment",
+      "status": "PENDING",
+      "dueDate": "2026-10-15T00:00:00.000Z",
+      "reminderCount": 0,
+      "lastReminderAt": null,
+      "metadata": {
+        "source": "event_booking",
+        "eventId": "e1a2b3c4-5d6e-7f8a-9b0c"
+      },
+      "createdAt": "2026-09-03T10:30:00.000Z",
+      "updatedAt": "2026-09-03T10:30:00.000Z"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

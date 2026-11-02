@@ -1,0 +1,83 @@
+meta {
+  name: Attachments - Update
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{base-url}}/attachments/{{attachmentId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "type": "image",
+    "url": "https://example.com/images/venue-layout.png",
+    "mimeType": "image/png",
+    "filename": "venue-layout.png",
+    "size": 1024000
+  }
+}
+
+vars:pre-request {
+  attachmentId: 0c49894f-f4a0-443e-81a6-6eb4f3d964be
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Updated
+  
+  request: {
+    url: {{base-url}}/attachments/{{attachmentId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "type": "image",
+        "url": "https://example.com/images/venue-layout.png"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+      access-control-allow-credentials: true
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Attachment updated successfully",
+          "data": {
+            "id": "0f9c2d3e-8b4a-4c6f-9d1e-2a3b4c5d6e7f",
+            "type": "image",
+            "url": "https://example.com/images/venue-layout.png"
+          }
+        }
+      '''
+    }
+  }
+}

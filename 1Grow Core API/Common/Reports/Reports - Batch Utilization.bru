@@ -1,0 +1,21 @@
+meta {
+  name: Reports - Batch Utilization
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{base-url}}/reports/batch-utilization
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

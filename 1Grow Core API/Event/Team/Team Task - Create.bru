@@ -1,0 +1,38 @@
+meta {
+  name: Team Task - Create
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base-url}}/events/{{eventId}}/team/{{memberIdP}}/tasks
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Check sound mixing desk",
+    "description": "Verify all input channels on the mixing desk",
+    "assignedTo": "99a37c63-f9b5-424c-93d8-0584fb70e347",
+    "status": "TODO",
+    "priority": "HIGH",
+    "dueDate": "2026-03-14T10:00:00.000Z",
+    "notifyClient": false
+  }
+}
+
+vars:pre-request {
+  eventId: 97330d56-033e-4e25-b834-88bf255049d2
+  memberIdP: 1c1a3f2e-7d84-4f6a-9b25-6f0c2d4e8a11
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

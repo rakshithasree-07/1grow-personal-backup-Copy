@@ -1,0 +1,79 @@
+meta {
+  name: Security - Audit Logs - CertificateTemplate
+  type: http
+  seq: 25
+}
+
+get {
+  url: {{base-url}}/security/audit-logs
+  body: none
+  auth: inherit
+}
+
+docs {
+  # CertificateTemplate audit records
+
+  Filtered view of the audit trail for the `CertificateTemplate` entity.
+
+  **Roles:** `SUPER_ADMIN`, `OWNER`, `BRANCH_MANAGER`
+
+  ## Written by
+
+  `POST /class/certificate-templates`, `PATCH /:id`, `DELETE /:id`, `POST /:id/duplicate`
+
+  `DELETE` is a soft delete and therefore logs `UPDATE` (`isActive` true to false), not `DELETE`.
+
+  `entity` is an exact, case-insensitive match, so this request returns only
+  template records and never the `Certificate` records. `entity` accepts
+  `CertificateTemplate`, not `Certificate`, because exact matching resolves the
+  previous ambiguity in both directions. Use `entityContains` for the old
+  partial behaviour, or see `Security - Audit Logs - Class Module` for all seven
+  Class entities in one request.
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 100
+  entity: CertificateTemplate
+}
+
+assert {
+  res.status: eq 200
+  res.body.message: eq "Audit logs fetched"
+}
+
+script:post-response {
+  const ENTITY = 'CertificateTemplate';
+  const rows = Array.isArray(res.body?.data) ? res.body.data : [];
+  const meta = res.body?.meta;
+
+  console.log(`${ENTITY}: ${rows.length} of ${meta?.total ?? '?'} records (page ${meta?.page ?? '?'}/${meta?.totalPages ?? '?'})`);
+
+  const deleted = rows.filter((row) => String(row.newValues?.isActive) === 'false');
+  if (deleted.length) console.log(`  note: ${deleted.length} record(s) are soft deletes logged as UPDATE, not DELETE`);
+
+  rows.forEach((row) => {
+    const changes = row.oldValues || row.newValues ? ' [before/after recorded]' : '';
+    console.log(`  ${row.action.padEnd(11)} ${String(row.entityId ?? '(no entityId)').padEnd(40)} ${row.createdAt}${changes}`);
+  });
+  if (!rows.length) console.log(`  -> no ${ENTITY} records; run the matching /class/* request first`);
+
+  if (meta && meta.total > rows.length) {
+    console.log(`  -> ${meta.total - rows.length} more record(s) on later pages; increase page`);
+  }
+
+  const newest = rows[0];
+  if (newest) {
+    bru.setVar('latestCertificateTemplateAuditId', newest.id);
+    bru.setVar('latestCertificateTemplateAuditEntityId', newest.entityId);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

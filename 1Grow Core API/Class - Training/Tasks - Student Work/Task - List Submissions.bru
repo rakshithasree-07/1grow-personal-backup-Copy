@@ -1,0 +1,20 @@
+meta {
+  name: Task - List Submissions
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{base-url}}/class/tasks/{{id}}/submissions
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

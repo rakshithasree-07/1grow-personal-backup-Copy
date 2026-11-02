@@ -1,0 +1,164 @@
+meta {
+  name: Type - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/events/types
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Mega Mass2k26 Event",
+    "description": "Traditional and modern cultural performances"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 400-Duplicate response
+  
+  request: {
+    url: {{base-url}}/events/types
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Maass Event",
+        "description": "Traditional and modern cultural performances"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 6157eef2-3512-43ea-87b1-fd139ea0b421
+      x-correlation-id: 6157eef2-3512-43ea-87b1-fd139ea0b421
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 117
+      x-ratelimit-reset: 29
+      content-type: application/json; charset=utf-8
+      content-length: 126
+      etag: W/"7e-ecRwNMffGZn6ZhS6E6k8jR9uPnM"
+      date: Mon, 07 Sep 2026 08:15:32 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "Event type with this name already exists",
+          "data": null,
+          "timestamp": "2026-09-07T08:15:32.558Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-success
+  
+  request: {
+    url: {{base-url}}/events/types
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Mega Mass2k26 Event",
+        "description": "Traditional and modern cultural performances"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 5594b3b8-cd90-495e-bcf2-89d9cf1bc48b
+      x-correlation-id: 5594b3b8-cd90-495e-bcf2-89d9cf1bc48b
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 44
+      content-type: application/json; charset=utf-8
+      content-length: 117
+      etag: W/"75-FjDPKKuZ9xvhMifOq8HVAzfK1tQ"
+      date: Mon, 07 Sep 2026 17:18:37 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Event type created successfully",
+          "data": null,
+          "timestamp": "2026-09-07T17:18:37.355Z"
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Reject Access Request
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{base-url}}/onboarding/access-requests/reject
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "accessRequestId": "access-request-uuid",
+    "reason": "Not applicable"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Subscription - Activate Plan
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base-url}}/subscriptions/activate
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "planId": "plan-uuid"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

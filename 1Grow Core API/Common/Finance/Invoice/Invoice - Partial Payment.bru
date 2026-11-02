@@ -1,0 +1,27 @@
+meta {
+  name: Invoice - Partial Payment
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base-url}}/invoices/{{id}}/partial-pay
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "amount": 2000
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

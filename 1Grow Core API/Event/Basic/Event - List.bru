@@ -1,0 +1,237 @@
+meta {
+  name: Event - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/events
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  pageSize: 10
+  search: 
+  status: 
+  eventTypeId: 
+  branchId: 
+  sortBy: 
+  sortDir: 
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: success
+  
+  request: {
+    url: {{base-url}}/events
+    method: GET
+    mode: none
+    params:query: {
+      page: 1
+      pageSize: 10
+      search: 
+      status: 
+      eventTypeId: 
+      branchId: 
+      sortBy: 
+      sortDir: 
+    }
+  
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: c26af723-90af-41e8-8a28-6796f4efa9e7
+      x-correlation-id: c26af723-90af-41e8-8a28-6796f4efa9e7
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"1f42-5RZqMRm5hYFO3bKX7NokrKw5lZY"
+      date: Tue, 01 Sep 2026 16:02:36 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": [
+            {
+              "eventId": "b7d874d0-19b1-4786-bd12-b4f7050ae0cf",
+              "title": "Annual Day Celebration 2026",
+              "description": "School annual day cultural event",
+              "thumbnailImage": "https://example.com/images/annual-day.jpg",
+              "attachments": [
+                { "id": "0f9c2d3e-8b4a-4c6f-9d1e-2a3b4c5d6e7f", "type": "document", "url": "https://example.com/documents/event-brochure.pdf" }
+              ],
+              "eventType": {
+                "id": "f30799ec-c45a-47a5-9173-c2ce3a8edc19",
+                "name": "Cultural Event",
+                "description": "Cultural and artistic celebrations",
+                "isActive": true
+              },
+              "services": [
+                {
+                  "id": "38513d81-5b9b-4cfd-96fb-63cece08bcce",
+                  "name": "Catering",
+                  "description": null,
+                  "unitPrice": null,
+                  "unit": "package",
+                  "isActive": true
+                }
+              ]
+            }
+          ],
+          "timestamp": "2026-09-03T10:00:36.232Z",
+          "meta": {
+            "page": 1,
+            "pageSize": 10,
+            "total": 2,
+            "totalPages": 1
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events
+    method: GET
+    mode: none
+    params:query: {
+      page: 1
+      pageSize: 10
+      search: 
+      status: 
+      eventTypeId: 
+      branchId: 
+      sortBy: 
+      sortDir: 
+    }
+  
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 7c100f00-9827-4e50-a7fe-452f582a2f31
+      x-correlation-id: 7c100f00-9827-4e50-a7fe-452f582a2f31
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"9cc-WBYt5kDwN+lV4P+5c1m++tymzms"
+      date: Sat, 05 Sep 2026 04:17:30 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": [
+            {
+              "eventId": "8c2e119b-da08-4af3-822f-f97be62349ab",
+              "title": "Cultural mass Celebration 2026",
+              "description": "Mass cultural event",
+              "thumbnailImage": "https://example.com/images/annual-day.jpg",
+              "attachments": [
+                { "id": "0f9c2d3e-8b4a-4c6f-9d1e-2a3b4c5d6e7f", "type": "document", "url": "https://example.com/documents/event-brochure.pdf" }
+              ],
+              "eventType": {
+                "id": "eaf5230f-d9b2-4949-931f-f7e88e2f1194",
+                "name": "Cultural Event",
+                "description": "Traditional and modern cultural performances",
+                "isActive": true
+              },
+              "services": [
+                {
+                  "id": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                  "name": "Sound System",
+                  "description": "Professional sound system with speakers and mixer",
+                  "unitPrice": "15000",
+                  "unit": "event",
+                  "isActive": true
+                }
+              ]
+            }
+          ],
+          "timestamp": "2026-09-05T04:17:30.889Z",
+          "meta": {
+            "page": 1,
+            "pageSize": 10,
+            "total": 3,
+            "totalPages": 1
+          }
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Subscription - Razorpay Setup
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base-url}}/subscriptions/razorpay-setup
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "planId": "plan-uuid"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

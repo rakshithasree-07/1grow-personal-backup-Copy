@@ -1,0 +1,84 @@
+meta {
+  name: Alerts
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/dashboard/alerts
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/dashboard/alerts
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 150f0d16-5d66-426a-b273-8a32dbf7e3a3
+      x-correlation-id: 150f0d16-5d66-426a-b273-8a32dbf7e3a3
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 151
+      etag: W/"97-uqQUlV6TPybx2gptamsArs5PzPM"
+      date: Sat, 05 Sep 2026 16:54:25 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": {
+            "overdueInvoices": [],
+            "pendingFollowups": [],
+            "overdueTasks": []
+          },
+          "timestamp": "2026-09-05T16:54:25.550Z"
+        }
+      '''
+    }
+  }
+}

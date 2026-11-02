@@ -1,0 +1,264 @@
+meta {
+  name: 01 - Create Primary Rental Item
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/rental/items
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "categoryId": "{{createdCategoryId}}",
+    "name": "Sony Cinema Camera",
+    "sku": "CLEN-FA6-4K-001",
+    "description": "Full-frame 4K cinema line camera with fast hybrid AF and electronic variable ND",
+    "quantity": 5,
+    "rentalPrice": 4000,
+    "depositAmount": 5000,
+    "condition": "NEW",
+    "status": "AVAILABLE",
+    "tags": ["cinema", "sony", "4k", "pro-video"]
+  }
+}
+
+assert {
+  res.status: in [200, 201, 409]
+}
+
+script:post-response {
+  if (res.body?.data?.id) {
+    bru.setVar('createdItemId', res.body.data.id);
+    bru.setEnvVar('createdItemId', res.body.data.id);
+  }
+}
+
+example {
+  name: 409
+  
+  request: {
+    url: {{base-url}}/rental/items
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "categoryId": "{{createdCategoryId}}",
+        "name": "Sony FX6 Cinema Camera",
+        "sku": "CAM-FX6-4K-001",
+        "description": "Full-frame 4K cinema line camera with fast hybrid AF and electronic variable ND",
+        "quantity": 5,
+        "rentalPrice": 4500,
+        "depositAmount": 15000,
+        "condition": "NEW",
+        "status": "AVAILABLE",
+        "tags": ["cinema", "sony", "4k", "pro-video"]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 06680258-e30f-4aa9-b7ee-191b0fb347a2
+      x-correlation-id: 06680258-e30f-4aa9-b7ee-191b0fb347a2
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 156
+      etag: W/"9c-+MOgKAA0T44+TG8irtoHLZ7iA5M"
+      date: Thu, 10 Sep 2026 16:28:16 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 409
+      text: Conflict
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 409,
+          "message": "A rental item with SKU 'CAM-FX6-4K-001' already exists for this tenant",
+          "data": null,
+          "timestamp": "2026-09-10T16:28:16.797Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201
+  
+  request: {
+    url: {{base-url}}/rental/items
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "categoryId": "{{createdCategoryId}}",
+        "name": "Sony FX6 Cinema Camera",
+        "sku": "CAM-FA6-4K-001",
+        "description": "Full-frame 4K cinema line camera with fast hybrid AF and electronic variable ND",
+        "quantity": 5,
+        "rentalPrice": 4500,
+        "depositAmount": 15000,
+        "condition": "NEW",
+        "status": "AVAILABLE",
+        "tags": ["cinema", "sony", "4k", "pro-video"]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 7e3ca6c1-b164-448b-b242-6b92a3305cc2
+      x-correlation-id: 7e3ca6c1-b164-448b-b242-6b92a3305cc2
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 34
+      content-type: application/json; charset=utf-8
+      content-length: 106
+      etag: W/"6a-upbptOWNrEOuGwPGEb3iZ52X8ks"
+      date: Thu, 10 Sep 2026 16:28:45 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Rental item created successfully",
+          "timestamp": "2026-09-10T16:28:45.072Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201
+  
+  request: {
+    url: {{base-url}}/rental/items
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "categoryId": "{{createdCategoryId}}",
+        "name": "Sony Cinema Camera",
+        "sku": "CLEN-FA6-4K-001",
+        "description": "Full-frame 4K cinema line camera with fast hybrid AF and electronic variable ND",
+        "quantity": 5,
+        "rentalPrice": 4000,
+        "depositAmount": 5000,
+        "condition": "NEW",
+        "status": "AVAILABLE",
+        "tags": ["cinema", "sony", "4k", "pro-video"]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 742057b8-d1c5-4922-8caa-dd459a90aa6c
+      x-correlation-id: 742057b8-d1c5-4922-8caa-dd459a90aa6c
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 106
+      etag: W/"6a-ls7eVr4LKKcVi9YdjozWJ0Y9zpY"
+      date: Fri, 11 Sep 2026 16:57:44 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Rental item created successfully",
+          "timestamp": "2026-09-11T16:57:44.946Z"
+        }
+      '''
+    }
+  }
+}

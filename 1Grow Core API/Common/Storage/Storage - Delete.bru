@@ -1,0 +1,27 @@
+meta {
+  name: Storage - Delete
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base-url}}/storage/delete
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "key": "tenant-id/documents/file-uuid.pdf"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

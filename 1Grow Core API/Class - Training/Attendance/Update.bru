@@ -1,0 +1,33 @@
+meta {
+  name: Update
+  type: http
+  seq: 8
+}
+
+patch {
+  url: {{base-url}}/class/attendance/{{id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "records": [
+      { "studentId": "{{studentId}}", "status": "LATE", "remarks": "Arrived 15 min late", "checkInTime": "10:12" }
+    ]
+  }
+}
+
+vars:pre-request {
+  id: 
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

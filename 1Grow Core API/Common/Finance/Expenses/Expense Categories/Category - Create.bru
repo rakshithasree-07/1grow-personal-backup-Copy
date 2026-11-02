@@ -1,0 +1,104 @@
+meta {
+  name: Category - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/finance/expense-categories
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Office Supplies",
+    "code": "OFFICE",
+    "description": "Stationery, printing, and general office purchases",
+    "isActive": true
+  }
+}
+
+docs {
+  ━━━ REQUEST PAYLOAD ━━━
+
+  {
+    "name":        "Office Supplies",   // REQUIRED (2-100 chars, unique per tenant)
+    "code":        "OFFICE",            // optional (max 20 chars)
+    "description": "...",               // optional (max 5000 chars)
+    "isActive":    true                 // optional (default true)
+  }
+
+  The category `name` must be UNIQUE within the tenant
+  (case-insensitive). Duplicate name → 400 error.
+
+
+  ━━━ SUCCESS (201/200) ━━━
+
+  {
+    "message": "Expense category created successfully",
+    "data": {
+      "id": "c1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "tenantId": "t1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "name": "Office Supplies",
+      "code": "OFFICE",
+      "description": "Stationery, printing, and general office purchases",
+      "isActive": true,
+      "createdBy": "u1a2b3c4-5d6e-7f8a-9b0c",
+      "createdAt": "2026-09-03T09:00:00.000Z",
+      "updatedAt": "2026-09-03T09:00:00.000Z"
+    }
+  }
+
+
+  ━━━ ERROR RESPONSES ━━━
+
+  400 — Duplicate category name (same tenant):
+
+  {
+    "message": "An expense category with this name already exists",
+    "data": null
+  }
+
+  400 — Validation error (missing name):
+
+  {
+    "message": "Validation failed",
+    "data": [
+      { "property": "name", "message": ["name must be longer than or equal to 2 characters"] }
+    ]
+  }
+
+  400 — Invalid UUID for createdBy / tenant context:
+
+  {
+    "message": "Validation failed",
+    "data": [
+      { "property": "tenantId", "message": ["tenantId must be a UUID"] }
+    ]
+  }
+
+  401 — Unauthorized (missing/invalid token):
+
+  {
+    "message": "Unauthorized",
+    "data": null
+  }
+
+  403 — Forbidden (role not allowed):
+
+  {
+    "message": "Forbidden resource",
+    "data": null
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

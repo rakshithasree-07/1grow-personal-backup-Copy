@@ -1,0 +1,31 @@
+meta {
+  name: Transfer - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/enrollments/transfers
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "enrollmentId": "00000000-0000-4000-8000-000000000007",
+    "tenantId": "00000000-0000-4000-8000-000000000008",
+    "fromBatchId": "{{batchId}}",
+    "toBatchId": "{{batchId}}",
+    "reason": "Testing standard enrollment transfer process"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

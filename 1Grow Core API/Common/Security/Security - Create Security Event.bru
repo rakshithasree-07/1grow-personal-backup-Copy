@@ -1,0 +1,29 @@
+meta {
+  name: Security - Create Security Event
+  type: http
+  seq: 15
+}
+
+post {
+  url: {{base-url}}/security/security-events
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "eventType": "FAILED_LOGIN",
+    "severity": "MEDIUM",
+    "description": "Multiple failed login attempts"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

@@ -1,0 +1,48 @@
+meta {
+  name: Salary - Deactivate
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{base-url}}/finance/salary-payouts/{{id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Soft-deletes (deactivates) a salary payout — sets isActive=false and
+  status=CANCELLED. The record is kept for audit/history.
+
+  For a hard/permanent delete use:
+  DELETE /finance/salary-payouts/{{id}}?hard=true
+
+  ━━━ Sample Response (soft delete) ━━━
+
+  {
+    "message": "Salary payout deactivated successfully",
+    "data": {
+      "id": "p1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "status": "CANCELLED",
+      "isActive": false
+    }
+  }
+
+  ━━━ Sample Response (hard delete) ━━━
+
+  {
+    "message": "Salary payout deleted successfully",
+    "data": null
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

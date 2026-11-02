@@ -1,0 +1,21 @@
+meta {
+  name: Security - Revoke Session
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{base-url}}/security/sessions/{{id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

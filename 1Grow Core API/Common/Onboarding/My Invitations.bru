@@ -1,0 +1,20 @@
+meta {
+  name: My Invitations
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{base-url}}/onboarding/my-invitations
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

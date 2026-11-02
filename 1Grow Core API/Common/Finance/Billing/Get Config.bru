@@ -1,0 +1,20 @@
+meta {
+  name: Get Config
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base-url}}/billing/config
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

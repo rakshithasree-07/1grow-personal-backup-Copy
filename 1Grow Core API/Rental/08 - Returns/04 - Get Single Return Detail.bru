@@ -1,0 +1,215 @@
+meta {
+  name: 04 - Get Single Return Detail
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/rental/returns/{{createdReturnId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.httpStatusCode: eq 200
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/returns/{{createdReturnId}}
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: e6050b4d-aa95-4a30-bfb4-17d12373da67
+      x-correlation-id: e6050b4d-aa95-4a30-bfb4-17d12373da67
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"e31-fZ6H0pyP+a56h95BuMIfNrk4Axw"
+      date: Fri, 11 Sep 2026 17:33:02 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental return retrieved successfully",
+          "timestamp": "2026-09-11T17:33:02.431Z",
+          "data": {
+            "id": "95fb4fcb-38b3-496f-9ee1-207add09e717",
+            "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+            "bookingId": "d62bac70-8590-42a7-939f-ea19616dc34f",
+            "dispatchId": "19502331-b622-431c-9b14-27f97b497e69",
+            "returnNumber": "RET-2026-000001",
+            "returnDate": "2026-11-15T00:00:00.000Z",
+            "receivedBy": "Chennai Depot Receiving Officer",
+            "status": "PENDING",
+            "inspectedBy": null,
+            "inspectedAt": null,
+            "condition": "GOOD",
+            "notes": "Equipment arrived back from shoot.",
+            "photos": null,
+            "createdAt": "2026-09-11T17:32:01.040Z",
+            "updatedAt": "2026-09-11T17:32:01.040Z",
+            "items": [
+              {
+                "id": "de7663a0-da8d-484e-962f-8dbf30ded65f",
+                "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+                "returnId": "95fb4fcb-38b3-496f-9ee1-207add09e717",
+                "bookingItemId": "b33db831-725e-4277-b218-8f0a6957e655",
+                "dispatchItemId": null,
+                "itemId": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+                "quantity": 1,
+                "condition": "GOOD",
+                "restockedQty": 0,
+                "damagedQty": 0,
+                "maintenanceQty": 0,
+                "notes": null,
+                "createdAt": "2026-09-11T17:32:01.040Z",
+                "updatedAt": "2026-09-11T17:32:01.040Z",
+                "item": {
+                  "id": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+                  "name": "Sony Cinema Camera",
+                  "sku": "CLEN-FA6-4K-001",
+                  "condition": "NEW",
+                  "status": "AVAILABLE",
+                  "availableQty": 4,
+                  "quantity": 5
+                },
+                "bookingItem": {
+                  "id": "b33db831-725e-4277-b218-8f0a6957e655",
+                  "bookingId": "d62bac70-8590-42a7-939f-ea19616dc34f",
+                  "itemId": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+                  "quantity": 1,
+                  "unitPrice": "4500",
+                  "totalPrice": "4500"
+                },
+                "dispatchItem": null
+              }
+            ],
+            "booking": {
+              "id": "d62bac70-8590-42a7-939f-ea19616dc34f",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "branchId": null,
+              "bookingNumber": "BK-2026-000007",
+              "customerName": "Aditya Walk-in Client",
+              "phone": "+919123456780",
+              "email": "aditya@walkin.com",
+              "clientId": null,
+              "enquiryId": null,
+              "startDate": "2026-12-10T00:00:00.000Z",
+              "endDate": "2026-12-12T00:00:00.000Z",
+              "totalAmount": "4500",
+              "depositAmount": "0",
+              "discountAmount": "0",
+              "taxAmount": "0",
+              "paidAmount": "0",
+              "status": "DELIVERED",
+              "notes": "Updated delivery location: Mahabalipuram Outdoor Set, Tamil Nadu",
+              "address": null,
+              "venue": null,
+              "isArchived": false,
+              "createdAt": "2026-09-11T17:05:48.694Z",
+              "updatedAt": "2026-09-11T17:31:17.120Z",
+              "client": null,
+              "items": [
+                {
+                  "id": "b33db831-725e-4277-b218-8f0a6957e655",
+                  "bookingId": "d62bac70-8590-42a7-939f-ea19616dc34f",
+                  "itemId": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+                  "quantity": 1,
+                  "unitPrice": "4500",
+                  "totalPrice": "4500",
+                  "item": {
+                    "id": "4ac0dc5f-5daf-4348-a6b1-f504fcac1329",
+                    "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+                    "categoryId": "c6009f74-71dd-4337-8173-f61932bc539b",
+                    "name": "Sony Cinema Camera",
+                    "description": "Updated: Includes dual high-capacity batteries and card reader",
+                    "sku": "CLEN-FA6-4K-001",
+                    "quantity": 5,
+                    "availableQty": 4,
+                    "rentalPrice": "4800",
+                    "depositAmount": "6000",
+                    "condition": "NEW",
+                    "status": "AVAILABLE",
+                    "imageUrl": null,
+                    "images": null,
+                    "tags": [
+                      "cinema",
+                      "sony",
+                      "4k",
+                      "pro-video"
+                    ],
+                    "isArchived": false,
+                    "isActive": true,
+                    "createdAt": "2026-09-11T16:57:43.922Z",
+                    "updatedAt": "2026-09-11T17:30:51.914Z"
+                  }
+                }
+              ]
+            },
+            "dispatch": {
+              "id": "19502331-b622-431c-9b14-27f97b497e69",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "bookingId": "d62bac70-8590-42a7-939f-ea19616dc34f",
+              "dispatchNumber": "DP-2026-000001",
+              "dispatchDate": "2026-11-10T00:00:00.000Z",
+              "expectedReturn": "2026-11-15T00:00:00.000Z",
+              "actualReturn": null,
+              "status": "DELIVERED",
+              "dispatchedBy": "181be242-f78d-4037-8b6f-cebb45dfd44d",
+              "receivedBy": "Karthik Productions Logistics Team",
+              "condition": "GOOD",
+              "notes": "Vehicle assigned: TN 09 CC 8899",
+              "photos": null,
+              "createdAt": "2026-09-11T17:28:26.822Z",
+              "updatedAt": "2026-09-11T17:31:15.618Z"
+            },
+            "tenant": {
+              "id": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "name": "testing"
+            }
+          }
+        }
+      '''
+    }
+  }
+}

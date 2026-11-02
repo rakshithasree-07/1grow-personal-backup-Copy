@@ -1,0 +1,145 @@
+meta {
+  name: 05 - Update Quotation
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{base-url}}/rental/quotations/{{createdQuotationId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "notes": "Updated terms: Includes 1 spare high-speed media card"
+  }
+}
+
+assert {
+  res.status: in [200, 201]
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/quotations/{{createdQuotationId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  
+    body:json: {
+      {
+        "notes": "Updated terms: Includes 1 spare high-speed media card"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 96cf65a0-6378-4d7d-af0f-8400b3303068
+      x-correlation-id: 96cf65a0-6378-4d7d-af0f-8400b3303068
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"5b2-I0plXFTc7oQhE17F0uehWLkVNOg"
+      date: Fri, 11 Sep 2026 15:41:18 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental quotation updated successfully",
+          "timestamp": "2026-09-11T15:41:18.468Z",
+          "data": {
+            "id": "043320fc-1ea7-4afc-9d0d-701597080a68",
+            "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+            "branchId": null,
+            "clientId": null,
+            "quotationNumber": "RQ-2026-000004",
+            "customerName": "Suriya Film Studios",
+            "customerPhone": "+919940123457",
+            "customerEmail": "suriya@studios.com",
+            "address": null,
+            "venue": null,
+            "startDate": "2026-12-01T00:00:00.000Z",
+            "endDate": "2026-12-04T00:00:00.000Z",
+            "durationDays": 4,
+            "subtotalAmount": "18000",
+            "discountAmount": "0",
+            "taxAmount": "0",
+            "totalAmount": "18000",
+            "depositAmount": "15000",
+            "notes": "Updated terms: Includes 1 spare high-speed media card",
+            "terms": null,
+            "status": "DRAFT",
+            "sentAt": null,
+            "approvedAt": null,
+            "convertedAt": null,
+            "convertedBookingId": null,
+            "isArchived": false,
+            "createdBy": "ce0ac3a7-4ecb-4162-bab7-24c4d893b928",
+            "createdAt": "2026-09-11T15:39:33.809Z",
+            "updatedAt": "2026-09-11T15:41:17.036Z",
+            "items": [
+              {
+                "id": "bdc7d976-de1f-4396-9853-f6a05e230535",
+                "quotationId": "043320fc-1ea7-4afc-9d0d-701597080a68",
+                "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                "quantity": 1,
+                "unitPrice": "4500",
+                "depositAmount": "15000",
+                "durationDays": 4,
+                "subtotal": "18000",
+                "discountAmount": "0",
+                "taxAmount": "0",
+                "totalAmount": "18000",
+                "notes": null,
+                "createdAt": "2026-09-11T15:39:33.809Z",
+                "updatedAt": "2026-09-11T15:39:33.809Z",
+                "item": {
+                  "id": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                  "name": "Sony FX6 Cinema Camera",
+                  "sku": "CAM-FA6-4K-001",
+                  "imageUrl": null
+                }
+              }
+            ]
+          }
+        }
+      '''
+    }
+  }
+}

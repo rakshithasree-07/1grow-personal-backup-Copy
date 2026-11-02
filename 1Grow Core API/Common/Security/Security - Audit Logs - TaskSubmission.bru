@@ -1,0 +1,79 @@
+meta {
+  name: Security - Audit Logs - TaskSubmission
+  type: http
+  seq: 21
+}
+
+get {
+  url: {{base-url}}/security/audit-logs
+  body: none
+  auth: inherit
+}
+
+docs {
+  # TaskSubmission audit records
+
+  Filtered view of the audit trail for the `TaskSubmission` entity.
+
+  **Roles:** `SUPER_ADMIN`, `OWNER`, `BRANCH_MANAGER`
+
+  ## Written by
+
+  `POST /class/tasks/:id/submissions`, `PATCH /class/tasks/:id/submissions/:submissionId`
+
+  A first submission logs `CREATE`; a resubmission of the same `(taskId, studentId)` pair logs `UPDATE` carrying the full prior and new submission state in `oldValues` / `newValues` (`status`, `fileUrl`, `score`, `feedback`, `gradedBy`, `gradedAt`, `submittedAt`). Because a resubmission clears the grade, an `UPDATE` row for a `GRADED` submission shows `gradedBy`, `gradedAt`, `score` and `feedback` going back to `null`. Grading always logs `UPDATE`.
+
+  `entity` is an exact, case-insensitive match. The previous partial match
+  returned `Task` rows too, which is why this entity used to need a
+  client-side filter. Use `entityContains` for the old partial behaviour, or
+  see `Security - Audit Logs - Class Module` for all seven Class entities in one
+  request.
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 100
+  entity: TaskSubmission
+}
+
+assert {
+  res.status: eq 200
+  res.body.message: eq "Audit logs fetched"
+}
+
+script:post-response {
+  const ENTITY = 'TaskSubmission';
+  const rows = Array.isArray(res.body?.data) ? res.body.data : [];
+  const meta = res.body?.meta;
+
+  console.log(`${ENTITY}: ${rows.length} of ${meta?.total ?? '?'} records (page ${meta?.page ?? '?'}/${meta?.totalPages ?? '?'})`);
+
+  const creates = rows.filter((row) => row.action === 'CREATE').length;
+  const updates = rows.filter((row) => row.action === 'UPDATE').length;
+  if (rows.length) console.log(`  CREATE (first submission)=${creates}  UPDATE (resubmission/grading)=${updates}`);
+
+  rows.forEach((row) => {
+    const changes = row.oldValues || row.newValues ? ' [before/after recorded]' : '';
+    console.log(`  ${row.action.padEnd(11)} ${String(row.entityId ?? '(no entityId)').padEnd(40)} ${row.createdAt}${changes}`);
+  });
+  if (!rows.length) console.log(`  -> no ${ENTITY} records; run the matching /class/* request first`);
+
+  if (meta && meta.total > rows.length) {
+    console.log(`  -> ${meta.total - rows.length} more record(s) on later pages; increase page`);
+  }
+
+  const newest = rows[0];
+  if (newest) {
+    bru.setVar('latestTaskSubmissionAuditId', newest.id);
+    bru.setVar('latestTaskSubmissionAuditEntityId', newest.entityId);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

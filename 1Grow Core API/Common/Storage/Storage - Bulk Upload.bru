@@ -1,0 +1,27 @@
+meta {
+  name: Storage - Bulk Upload
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base-url}}/storage/upload/bulk
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:multipart-form {
+  files: @file()
+  category: documents
+  subCategory: 
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

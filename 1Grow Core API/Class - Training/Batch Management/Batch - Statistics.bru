@@ -1,0 +1,21 @@
+meta {
+  name: Batch - Statistics
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/training/batches/statistics
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

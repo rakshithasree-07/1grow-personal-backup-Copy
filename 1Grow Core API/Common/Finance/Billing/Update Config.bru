@@ -1,0 +1,27 @@
+meta {
+  name: Update Config
+  type: http
+  seq: 9
+}
+
+patch {
+  url: {{base-url}}/billing/config
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "currency": "INR",
+    "paymentMethods": ["CARD", "UPI", "NETBANKING"]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

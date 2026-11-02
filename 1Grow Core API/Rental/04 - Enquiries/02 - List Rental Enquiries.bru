@@ -1,0 +1,148 @@
+meta {
+  name: 02 - List Rental Enquiries
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/rental/enquiries?page=1&pageSize=10
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.httpStatusCode: eq 200
+  res.body.data: isDefined
+}
+
+script:post-response {
+  const enquiries = res.body?.data?.enquiries || res.body?.data?.items || res.body?.data;
+  if (Array.isArray(enquiries) && enquiries.length > 0) {
+    bru.setVar('createdEnquiryId', enquiries[0].id);
+    bru.setEnvVar('createdEnquiryId', enquiries[0].id);
+  }
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/rental/enquiries?page=1&pageSize=10
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{accessToken}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: c470c26d-3d66-4790-880f-72ae2917c3bc
+      x-correlation-id: c470c26d-3d66-4790-880f-72ae2917c3bc
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 45
+      content-type: application/json; charset=utf-8
+      etag: W/"6b1-g6GZz25E7+i7zDhoXYjFWkNW+Y4"
+      date: Thu, 10 Sep 2026 16:41:55 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Rental enquiries retrieved successfully",
+          "timestamp": "2026-09-10T16:41:55.177Z",
+          "data": [
+            {
+              "id": "a0e2b84d-4e3f-4d5f-80ff-d05f178f3857",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "branchId": null,
+              "customerName": "Karthik Media Productions",
+              "phone": "+919840123456",
+              "email": "karthik@mediapro.com",
+              "itemId": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+              "requirements": "Feature film shoot in Chennai and Pondicherry",
+              "eventDate": "2026-11-10T00:00:00.000Z",
+              "eventEndDate": "2026-11-15T00:00:00.000Z",
+              "quantity": 2,
+              "source": "WALK_IN",
+              "notes": null,
+              "status": "NEW",
+              "assignedTo": null,
+              "leadId": null,
+              "createdAt": "2026-09-10T16:39:16.457Z",
+              "updatedAt": "2026-09-10T16:39:16.457Z",
+              "item": {
+                "id": "904ccaba-59b1-42f1-8eaf-a3f3da4f4e1f",
+                "name": "Sony FX6 Cinema Camera",
+                "sku": "CAM-FA6-4K-001"
+              },
+              "branch": null
+            },
+            {
+              "id": "646cec48-0b21-4976-a18a-3891f1379da3",
+              "tenantId": "b06ce5b5-e821-426d-a3f0-cd336bcab33c",
+              "branchId": null,
+              "customerName": "Karthik Media Productions",
+              "phone": "+919840123456",
+              "email": "karthik@mediapro.com",
+              "itemId": "43131a78-defe-4d6d-a59d-091894ffdfcc",
+              "requirements": "Updated: Client requested 2 extra high-capacity V-Mount batteries",
+              "eventDate": "2026-11-10T00:00:00.000Z",
+              "eventEndDate": "2026-11-15T00:00:00.000Z",
+              "quantity": 2,
+              "source": "WALK_IN",
+              "notes": "Contacted director of photography. Confirmed camera kit specification.\nFormal commercial quotation shared with producer",
+              "status": "CONVERTED",
+              "assignedTo": null,
+              "leadId": null,
+              "createdAt": "2026-09-10T16:15:05.908Z",
+              "updatedAt": "2026-09-10T16:15:25.623Z",
+              "item": {
+                "id": "43131a78-defe-4d6d-a59d-091894ffdfcc",
+                "name": "Sony FX6 Cinema Camera",
+                "sku": "CAM-FX6-NEW-0942"
+              },
+              "branch": null
+            }
+          ],
+          "meta": {
+            "page": 1,
+            "pageSize": 10,
+            "total": 2,
+            "totalPages": 1
+          }
+        }
+      '''
+    }
+  }
+}

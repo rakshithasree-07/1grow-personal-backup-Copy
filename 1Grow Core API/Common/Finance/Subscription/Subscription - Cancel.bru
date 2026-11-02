@@ -1,0 +1,27 @@
+meta {
+  name: Subscription - Cancel
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base-url}}/subscriptions/{{id}}/cancel
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "reason": "No longer needed"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

@@ -1,0 +1,28 @@
+meta {
+  name: Batch - Generate Sessions
+  type: http
+  seq: 24
+}
+
+post {
+  url: {{base-url}}/training/batches/{{batchId}}/schedules/generate
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "dateFrom": "2026-07-01",
+    "dateTo": "2026-09-30"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,20 @@
+meta {
+  name: Renewal - Reject
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base-url}}/enrollments/renewals/00000000-0000-4000-8000-000000000009/reject
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

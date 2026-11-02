@@ -1,0 +1,287 @@
+meta {
+  name: Proposal - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/events/proposals
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+    "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+    "title": "Cultural Event Proposal - Annual Day",
+    "shortSummary": "Complete event management and production support for the annual cultural day celebration.",
+    "scope": "Full event management including sound, lighting, stage setup, and artist coordination",
+    "dateAndTime": {
+      "eventDate": "2026-04-20",
+      "startTime": "17:00",
+      "endTime": "22:00"
+    },
+    "targetAudience": "Students, staff and parents of the institution (approx 1200 attendees)",
+    "servicePlanning": [
+      {
+        "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b"
+      },
+      {
+        "serviceId": "037b30b4-22b5-4acd-8e52-6fbd036c0309"
+      }
+    ],
+    "includes": ["Sound system", "Stage lighting", "LED backdrop", "Event coordinator"],
+    "excludes": ["Catering", "Transportation"],
+    "pricing": {
+      "subtotal": 320000,
+      "discount": 10000,
+      "tax": 40000,
+      "additionalCharges": 0,
+      "totalAmount": 350000,
+      "currency": "INR"
+    },
+    "totalAmount": 350000,
+    "paymentTerms": "30% advance at booking, 70% balance after event",
+    "budgetValidUntil": "2026-04-30",
+    "termsConditions": [
+      "Payment due before event date",
+      "Catering and transportation excluded",
+      "Logistics and cleanup by venue"
+    ],
+    "companyLogo": {
+      "url": "https://example.com/logo.png",
+      "altText": "Company logo"
+    },
+    "notes": "Proposal valid for 30 days",
+    "status": "DRAFT"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Proposal created
+  
+  request: {
+    url: {{base-url}}/events/proposals
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+        "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+        "title": "Cultural Event Proposal - Annual Day",
+        "shortSummary": "Complete event management and production support for the annual cultural day celebration.",
+        "scope": "Full event management including sound, lighting, stage setup, and artist coordination",
+        "dateAndTime": {
+          "eventDate": "2026-04-20",
+          "startTime": "17:00",
+          "endTime": "22:00"
+        },
+        "targetAudience": "Students, staff and parents of the institution (approx 1200 attendees)",
+        "servicePlanning": [
+          {
+            "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b"
+          },
+          {
+            "serviceId": "037b30b4-22b5-4acd-8e52-6fbd036c0309"
+          }
+        ],
+        "includes": ["Sound system", "Stage lighting", "LED backdrop", "Event coordinator"],
+        "excludes": ["Catering", "Transportation"],
+        "pricing": {
+          "subtotal": 320000,
+          "discount": 10000,
+          "tax": 40000,
+          "additionalCharges": 0,
+          "totalAmount": 350000,
+          "currency": "INR"
+        },
+        "totalAmount": 350000,
+        "paymentTerms": "30% advance at booking, 70% balance after event",
+        "budgetValidUntil": "2026-04-30",
+        "termsConditions": [
+          "Payment due before event date",
+          "Catering and transportation excluded",
+          "Logistics and cleanup by venue"
+        ],
+        "companyLogo": {
+          "url": "https://example.com/logo.png",
+          "altText": "Company logo"
+        },
+        "notes": "Proposal valid for 30 days",
+        "status": "DRAFT"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 899afdaa-3a76-4b7a-9260-565da84d236b
+      x-correlation-id: 899afdaa-3a76-4b7a-9260-565da84d236b
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 117
+      x-ratelimit-reset: 23
+      content-type: application/json; charset=utf-8
+      content-length: 115
+      etag: W/"73-YcJKyi5Bf+/wHSacfBDb+ULvyCU"
+      date: Sat, 05 Sep 2026 10:58:20 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Proposal created successfully",
+          "data": null,
+          "timestamp": "2026-09-05T10:58:20.164Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 409-Duplicate proposal
+  
+  request: {
+    url: {{base-url}}/events/proposals
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+        "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+        "title": "Cultural Event Proposal - Annual Day",
+        "shortSummary": "Complete event management and production support for the annual cultural day celebration.",
+        "scope": "Full event management including sound, lighting, stage setup, and artist coordination",
+        "dateAndTime": {
+          "eventDate": "2026-04-20",
+          "startTime": "17:00",
+          "endTime": "22:00"
+        },
+        "targetAudience": "Students, staff and parents of the institution (approx 1200 attendees)",
+        "servicePlanning": [
+          {
+            "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b"
+          },
+          {
+            "serviceId": "037b30b4-22b5-4acd-8e52-6fbd036c0309"
+          }
+        ],
+        "includes": ["Sound system", "Stage lighting", "LED backdrop", "Event coordinator"],
+        "excludes": ["Catering", "Transportation"],
+        "pricing": {
+          "subtotal": 320000,
+          "discount": 10000,
+          "tax": 40000,
+          "additionalCharges": 0,
+          "totalAmount": 350000,
+          "currency": "INR"
+        },
+        "totalAmount": 350000,
+        "paymentTerms": "30% advance at booking, 70% balance after event",
+        "budgetValidUntil": "2026-04-30",
+        "termsConditions": [
+          "Payment due before event date",
+          "Catering and transportation excluded",
+          "Logistics and cleanup by venue"
+        ],
+        "companyLogo": {
+          "url": "https://example.com/logo.png",
+          "altText": "Company logo"
+        },
+        "notes": "Proposal valid for 30 days",
+        "status": "DRAFT"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 9cd854f8-5f77-4323-b401-2806b0510b71
+      x-correlation-id: 9cd854f8-5f77-4323-b401-2806b0510b71
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 217
+      etag: W/"d9-fDYgd07V0fUq9X+PESlDF5R43Dw"
+      date: Sat, 05 Sep 2026 15:05:50 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 409
+      text: Conflict
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 409,
+          "message": "A proposal for this event and client with the same services already exists. Please modify the event, client or service combination.",
+          "data": null,
+          "timestamp": "2026-09-05T15:05:50.212Z"
+        }
+      '''
+    }
+  }
+}

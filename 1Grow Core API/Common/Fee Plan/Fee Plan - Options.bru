@@ -1,0 +1,45 @@
+meta {
+  name: Fee Plan - Module Options
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base-url}}/fee-plans/options
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: success
+
+  response: {
+    status: { code: 200, text: OK }
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Fee plan options retrieved successfully",
+          "data": {
+            "modules": ["TRAINING", "RENTAL", "EVENT"],
+            "sources": {
+              "training": [{ "id": "course-uuid", "name": "Java Full Stack", "type": "SHORT_TERM", "fee": 25000 }],
+              "rental": [{ "id": "rental-item-uuid", "name": "Projector", "sku": "PROJ-001", "rentalPrice": 2500, "depositAmount": 5000, "availableQty": 4, "category": { "id": "category-uuid", "name": "AV Equipment" } }],
+              "event": [{ "id": "event-uuid", "eventNumber": "EVT-20260907-0001", "title": "Corporate Annual Meet", "eventType": { "id": "event-type-uuid", "name": "Corporate Event" }, "services": [{ "id": "service-uuid", "name": "Catering", "unitPrice": 15000, "unit": "package" }] }]
+            }
+          }
+        }
+      '''
+    }
+  }
+}

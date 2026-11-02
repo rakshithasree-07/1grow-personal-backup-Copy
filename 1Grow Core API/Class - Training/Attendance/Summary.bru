@@ -1,0 +1,28 @@
+meta {
+  name: Summary
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base-url}}/class/attendance/summary
+  body: none
+  auth: inherit
+}
+
+params:query {
+  batchId: {{batchId}}
+  studentId: {{studentId}}
+  branchId: {{branchId}}
+  dateFrom: 2026-09-01
+  dateTo: 2026-09-30
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

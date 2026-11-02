@@ -1,0 +1,21 @@
+meta {
+  name: Support - Ticket Stats
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/support/tickets/stats
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

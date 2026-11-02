@@ -1,0 +1,28 @@
+meta {
+  name: Support - Update Status
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{base-url}}/support/tickets/{{id}}/status
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "status": "RESOLVED",
+    "assignedTo": "user-uuid"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

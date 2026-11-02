@@ -1,0 +1,21 @@
+meta {
+  name: Batch - Progress
+  type: http
+  seq: 15
+}
+
+get {
+  url: {{base-url}}/training/batches/{{batchId}}/progress
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

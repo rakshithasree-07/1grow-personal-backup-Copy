@@ -1,0 +1,25 @@
+meta {
+  name: Search - Batches
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base-url}}/search/batches
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  q: web
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

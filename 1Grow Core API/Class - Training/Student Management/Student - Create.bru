@@ -1,0 +1,29 @@
+meta {
+  name: Student - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/students
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "{{studentName}}",
+    "phone": "{{studentPhone}}",
+    "email": "{{studentEmail}}"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

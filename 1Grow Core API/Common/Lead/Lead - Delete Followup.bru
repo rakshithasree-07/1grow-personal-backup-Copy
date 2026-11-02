@@ -1,0 +1,21 @@
+meta {
+  name: Lead - Delete Followup
+  type: http
+  seq: 18
+}
+
+delete {
+  url: {{base-url}}/leads/followups/{{id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

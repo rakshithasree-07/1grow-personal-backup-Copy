@@ -1,0 +1,263 @@
+meta {
+  name: Event - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/events
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  // thumbnailImage can be a URL link or a direct image link
+  // attachments is an optional array of attachment ids; the id is returned by the API
+  //   (e.g. brochures, contracts, reference documents)
+  // eventType / branch / services accept objects whose "id" is resolved to
+  // show the full details (name/city for branch, service details, type details)
+  // branch is OPTIONAL - if omitted (or the id is empty/invalid) the event is created without a branch
+  {
+    "title": "Cuulteural mass Celebration 2026",
+    "description": "Mass cultural event",
+    "thumbnailImage": "https://example.com/images/annual-day.jpg",
+    "attachments": [
+      "0f9c2d3e-8b4a-4c6f-9d1e-2a3b4c5d6e7f",
+      "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d"
+    ],
+    "eventType": {
+      "id": "851838ec-c0d6-4b0d-9de4-8ecadc799e6a"
+    },
+    "services": [
+      { }
+    ]
+  }
+}
+
+script:post-response {
+  const body = res.getBody();
+  if (body && body.message === "Event created successfully") {
+    console.log("Event created successfully");
+  } else {
+    console.error("Event Create failed:", body.message || "Unknown error");
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: Success
+  
+  request: {
+    url: {{base-url}}/events
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "title": "Annual Day Celebration 2026",
+        "description": "School annual day cultural event",
+        "thumbnailImage": "https://example.com/images/annual-day.jpg",
+        "attachments": [
+          "3f7cb8a2-1c4e-4b5a-9d6f-2a9c8d7e6b5a"
+        ],
+        "eventType": {
+          "id": "f30799ec-c45a-47a5-9173-c2ce3a8edc19"
+        },
+        "services": [
+          { "id": "service-uuid-1" },
+          { "id": "service-uuid-2" }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Event created successfully",
+          "data": null,
+          "timestamp": "2026-09-02T10:00:00.000Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 404- Type not found
+  
+  request: {
+    url: {{base-url}}/events
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "title": "Annual Day Celebration 2026",
+        "description": "School annual day cultural event",
+        "thumbnailImage": "https://example.com/images/annual-day.jpg",
+        "attachments": [
+          "0f9c2d3e-8b4a-4c6f-9d1e-2a3b4c5d6e7f"
+        ],
+        "eventType": {
+          "id": "f30799ec-c45a-47a5-9173-c2ce3a8edc19"
+        },
+        "services": [
+          { "id": "38513d81-5b9b-4cfd-96fb-63cece08bcce" },
+          { "id": "b9b36c52-ad48-47a0-9af3-066e7959af48" }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 8445484e-501d-4c6d-8540-c6bcdd33dddf
+      x-correlation-id: 8445484e-501d-4c6d-8540-c6bcdd33dddf
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 106
+      etag: W/"6a-ZwbUK5XQP/v/i708+CCR1gW2zKc"
+      date: Sat, 05 Sep 2026 03:54:08 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 404
+      text: Not Found
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 404,
+          "message": "Event type not found",
+          "data": null,
+          "timestamp": "2026-09-05T03:54:08.126Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 201-Success with attachments file
+  
+  request: {
+    url: {{base-url}}/events
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "title": "Cultural mass Celebration 2026",
+        "description": "Mass cultural event",
+        "thumbnailImage": "https://example.com/images/annual-day.jpg",
+        "attachments": [
+          "0f9c2d3e-8b4a-4c6f-9d1e-2a3b4c5d6e7f",
+          "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d"
+        ],
+        "eventType": {
+          "id": "eaf5230f-d9b2-4949-931f-f7e88e2f1194"
+        },
+        "services": [
+          { "id": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b" }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 38f7b2d5-66d1-49a1-820d-48dba82d6c12
+      x-correlation-id: 38f7b2d5-66d1-49a1-820d-48dba82d6c12
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 112
+      etag: W/"70-Wi/1zw1k7bxwHuuBKJrbdb+1c50"
+      date: Sat, 05 Sep 2026 04:39:55 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 201,
+          "message": "Event created successfully",
+          "data": null,
+          "timestamp": "2026-09-05T04:39:55.691Z"
+        }
+      '''
+    }
+  }
+}

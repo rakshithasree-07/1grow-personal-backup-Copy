@@ -1,0 +1,58 @@
+meta {
+  name: Staff Search
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{base-url}}/finance/staff/search
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+params:query {
+  search: 
+  limit: 10
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Search staff / manager users (in the authed tenant) to attach to a
+  salary payout. Returns STAFF, BRANCH_MANAGER, OWNER and SUPER_ADMIN
+  users with status ACTIVE/APPROVED.
+
+  Without `search`, returns staff ordered by name (capped at `limit`).
+
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Staff retrieved",
+    "data": [
+      {
+        "id": "u1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "name": "Priya Sharma",
+        "email": "priya@example.com",
+        "phone": "9876543210",
+        "role": "STAFF"
+      },
+      {
+        "id": "u2b3c4d5-6e7f-8a9b-0c1d-2e3f4a5b6c7d",
+        "name": "Rahul Nair",
+        "email": "rahul@example.com",
+        "phone": "9876543222",
+        "role": "BRANCH_MANAGER"
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

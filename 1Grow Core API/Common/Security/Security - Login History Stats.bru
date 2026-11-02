@@ -1,0 +1,21 @@
+meta {
+  name: Security - Login History Stats
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base-url}}/security/login-history/stats
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

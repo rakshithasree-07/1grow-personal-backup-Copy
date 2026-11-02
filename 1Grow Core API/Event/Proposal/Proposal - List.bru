@@ -1,0 +1,794 @@
+meta {
+  name: Proposal - List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base-url}}/events/proposals
+  body: none
+  auth: inherit
+}
+
+params:query {
+  search: 
+  status: 
+  page: 1
+  pageSize: 10
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events/proposals
+    method: GET
+    mode: none
+    params:query: {
+      search: 
+      status: 
+      page: 1
+      pageSize: 10
+    }
+  
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 57632df9-74fa-46b1-9afc-daac35d5df57
+      x-correlation-id: 57632df9-74fa-46b1-9afc-daac35d5df57
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      etag: W/"48fe-azA/R2nEo91p34Q/Y6T/ahjex4Q"
+      date: Sat, 05 Sep 2026 15:06:19 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+      transfer-encoding: chunked
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": [
+            {
+              "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "PROP-20260905-0009",
+              "title": "Cultural Event Proposal - Annual Day",
+              "scope": "Full event management including sound, lighting, stage setup, and artist coordination",
+              "shortSummary": "Complete event management and production support for the annual cultural day celebration.",
+              "dateAndTime": {
+                "endTime": "22:00",
+                "eventDate": "2026-04-20",
+                "startTime": "17:00"
+              },
+              "targetAudience": "Students, staff and parents of the institution (approx 1200 attendees)",
+              "servicePlanning": [
+                {
+                  "unit": "event",
+                  "service": "Sound System",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                  "unitPrice": 15000,
+                  "description": "Professional sound system with speakers and mixer"
+                },
+                {
+                  "unit": "event",
+                  "service": "Light System",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "037b30b4-22b5-4acd-8e52-6fbd036c0309",
+                  "unitPrice": 18000,
+                  "description": "Professional sound system with speakers and mixer"
+                }
+              ],
+              "pricing": {
+                "tax": 40000,
+                "currency": "INR",
+                "discount": 10000,
+                "subtotal": 320000,
+                "totalAmount": 350000,
+                "additionalCharges": 0
+              },
+              "paymentTerms": "30% advance at booking, 70% balance after event",
+              "budgetValidUntil": "2026-04-30T00:00:00.000Z",
+              "termsConditions": [
+                "Payment due before event date",
+                "Catering and transportation excluded",
+                "Logistics and cleanup by venue"
+              ],
+              "companyLogo": {
+                "url": "https://example.com/logo.png",
+                "altText": "Company logo"
+              },
+              "signature": null,
+              "includes": [
+                "Sound system",
+                "Stage lighting",
+                "LED backdrop",
+                "Event coordinator"
+              ],
+              "excludes": [
+                "Catering",
+                "Transportation"
+              ],
+              "totalAmount": "350000",
+              "validUntil": null,
+              "status": "DRAFT",
+              "notes": "Proposal valid for 30 days",
+              "sentAt": null,
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T10:58:19.915Z",
+              "updatedAt": "2026-09-05T10:58:19.915Z",
+              "event": {
+                "id": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+                "eventNumber": "EVT-20260905-0004",
+                "title": "Cultural mass Celebration 2026"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "b978a49e-4a76-4777-977c-11f41ec34592"
+            },
+            {
+              "eventId": "bbee39f7-854e-4e7d-869d-3f35aae15d31",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "PROP-20260905-0008",
+              "title": "LED Proposal for College Event",
+              "scope": null,
+              "shortSummary": null,
+              "dateAndTime": null,
+              "targetAudience": null,
+              "servicePlanning": [
+                {
+                  "unit": "event",
+                  "service": "LED Display",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "40feea45-0ed7-4215-b481-61929e5c48c6",
+                  "unitPrice": 25000,
+                  "description": "LED backdrop and display screens"
+                }
+              ],
+              "pricing": null,
+              "paymentTerms": null,
+              "budgetValidUntil": null,
+              "termsConditions": null,
+              "companyLogo": null,
+              "signature": null,
+              "includes": null,
+              "excludes": null,
+              "totalAmount": "250000",
+              "validUntil": null,
+              "status": "DRAFT",
+              "notes": null,
+              "sentAt": null,
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T10:54:59.456Z",
+              "updatedAt": "2026-09-05T10:54:59.456Z",
+              "event": {
+                "id": "bbee39f7-854e-4e7d-869d-3f35aae15d31",
+                "eventNumber": "EVT-20260905-0006",
+                "title": "Cultural mass Celebration 2026"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "b5666a04-5dc2-4982-ba81-6ac85de94486"
+            },
+            {
+              "eventId": "bbee39f7-854e-4e7d-869d-3f35aae15d31",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "PROP-20260905-0007",
+              "title": "Sound System Proposal for College Event",
+              "scope": null,
+              "shortSummary": "Proposal for cultural event sound.",
+              "dateAndTime": null,
+              "targetAudience": null,
+              "servicePlanning": [
+                {
+                  "unit": "event",
+                  "service": "Sound System",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                  "unitPrice": 15000,
+                  "description": "Professional sound system with speakers and mixer"
+                }
+              ],
+              "pricing": null,
+              "paymentTerms": null,
+              "budgetValidUntil": null,
+              "termsConditions": null,
+              "companyLogo": null,
+              "signature": null,
+              "includes": null,
+              "excludes": null,
+              "totalAmount": "150000",
+              "validUntil": null,
+              "status": "DRAFT",
+              "notes": null,
+              "sentAt": null,
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T10:54:54.228Z",
+              "updatedAt": "2026-09-05T10:54:54.228Z",
+              "event": {
+                "id": "bbee39f7-854e-4e7d-869d-3f35aae15d31",
+                "eventNumber": "EVT-20260905-0006",
+                "title": "Cultural mass Celebration 2026"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "9645ba62-6826-4974-896b-0d1f0868721a"
+            },
+            {
+              "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "PROP-20260905-0006",
+              "title": "Cultural Event Proposal - Annual Day",
+              "scope": "Full event management including sound, lighting, stage setup, and artist coordination",
+              "shortSummary": "Complete event management and production support for the annual cultural day celebration.",
+              "dateAndTime": {
+                "endTime": "22:00",
+                "eventDate": "2026-04-20",
+                "startTime": "17:00"
+              },
+              "targetAudience": "Students, staff and parents of the institution (approx 1200 attendees)",
+              "servicePlanning": [
+                {
+                  "unit": "event",
+                  "service": "Sound System",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                  "unitPrice": 15000,
+                  "description": "Professional sound system with speakers and mixer"
+                },
+                {
+                  "unit": null,
+                  "service": null,
+                  "quantity": 1,
+                  "description": null
+                }
+              ],
+              "pricing": {
+                "tax": 40000,
+                "currency": "INR",
+                "discount": 10000,
+                "subtotal": 320000,
+                "totalAmount": 350000,
+                "additionalCharges": 0
+              },
+              "paymentTerms": "30% advance at booking, 70% balance after event",
+              "budgetValidUntil": "2026-04-30T00:00:00.000Z",
+              "termsConditions": [
+                "Payment due before event date",
+                "Catering and transportation excluded",
+                "Logistics and cleanup by venue"
+              ],
+              "companyLogo": {
+                "url": "https://example.com/logo.png",
+                "altText": "Company logo"
+              },
+              "signature": null,
+              "includes": [
+                "Sound system",
+                "Stage lighting",
+                "LED backdrop",
+                "Event coordinator"
+              ],
+              "excludes": [
+                "Catering",
+                "Transportation"
+              ],
+              "totalAmount": "350000",
+              "validUntil": null,
+              "status": "DRAFT",
+              "notes": "Proposal valid for 30 days",
+              "sentAt": null,
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T10:52:48.762Z",
+              "updatedAt": "2026-09-05T10:52:48.762Z",
+              "event": {
+                "id": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+                "eventNumber": "EVT-20260905-0004",
+                "title": "Cultural mass Celebration 2026"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "d868fbfb-8658-4a14-848b-16c3daf43497"
+            },
+            {
+              "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "PROP-20260905-0005",
+              "title": "Cultural Event Proposal - Annual Day",
+              "scope": "Full event management incl sound, lighting, stage setup",
+              "shortSummary": "Complete event management.",
+              "dateAndTime": {
+                "endTime": "22:00",
+                "eventDate": "2026-04-20",
+                "startTime": "17:00"
+              },
+              "targetAudience": "Students, staff and parents",
+              "servicePlanning": [
+                {
+                  "unit": "event",
+                  "service": "Sound System",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                  "unitPrice": 15000,
+                  "description": "Professional sound system with speakers and mixer"
+                }
+              ],
+              "pricing": {
+                "tax": 40000,
+                "currency": "INR",
+                "discount": 10000,
+                "subtotal": 320000,
+                "totalAmount": 350000,
+                "additionalCharges": 0
+              },
+              "paymentTerms": "30% advance at booking, 70% balance after event",
+              "budgetValidUntil": "2026-04-30T00:00:00.000Z",
+              "termsConditions": [
+                "Payment due before event date"
+              ],
+              "companyLogo": {
+                "url": "https://example.com/logo.png",
+                "altText": "Company logo"
+              },
+              "signature": null,
+              "includes": [
+                "Sound system"
+              ],
+              "excludes": [
+                "Catering"
+              ],
+              "totalAmount": "350000",
+              "validUntil": null,
+              "status": "DRAFT",
+              "notes": "Proposal valid for 30 days",
+              "sentAt": null,
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T10:39:38.638Z",
+              "updatedAt": "2026-09-05T10:39:38.638Z",
+              "event": {
+                "id": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+                "eventNumber": "EVT-20260905-0004",
+                "title": "Cultural mass Celebration 2026"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "ebc8c4b3-3247-4541-9e27-15c2b866e000"
+            },
+            {
+              "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "PROP-20260905-0004",
+              "title": "Cultural Event Proposal - Annual Day",
+              "scope": "Full event management including sound, lighting, stage setup, and artist coordination",
+              "shortSummary": "Complete event management and production support for the annual cultural day celebration.",
+              "dateAndTime": {
+                "endTime": "22:00",
+                "eventDate": "2026-04-20",
+                "startTime": "17:00"
+              },
+              "targetAudience": "Students, staff and parents of the institution (approx 1200 attendees)",
+              "servicePlanning": [
+                {
+                  "unit": "event",
+                  "service": "Sound System",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                  "unitPrice": 15000,
+                  "description": "Professional sound system with speakers and mixer"
+                },
+                {
+                  "unit": null,
+                  "service": null,
+                  "quantity": 1,
+                  "description": null
+                }
+              ],
+              "pricing": {
+                "tax": 40000,
+                "currency": "INR",
+                "discount": 10000,
+                "subtotal": 320000,
+                "totalAmount": 350000,
+                "additionalCharges": 0
+              },
+              "paymentTerms": "30% advance at booking, 70% balance after event",
+              "budgetValidUntil": "2026-04-30T00:00:00.000Z",
+              "termsConditions": [
+                "Payment due before event date",
+                "Catering and transportation excluded",
+                "Logistics and cleanup by venue"
+              ],
+              "companyLogo": {
+                "url": "https://example.com/logo.png",
+                "altText": "Company logo"
+              },
+              "signature": null,
+              "includes": [
+                "Sound system",
+                "Stage lighting",
+                "LED backdrop",
+                "Event coordinator"
+              ],
+              "excludes": [
+                "Catering",
+                "Transportation"
+              ],
+              "totalAmount": "350000",
+              "validUntil": null,
+              "status": "SENT",
+              "notes": "Proposal valid for 30 days",
+              "sentAt": "2026-09-05T10:33:54.897Z",
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T10:27:16.311Z",
+              "updatedAt": "2026-09-05T10:33:54.898Z",
+              "event": {
+                "id": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+                "eventNumber": "EVT-20260905-0004",
+                "title": "Cultural mass Celebration 2026"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "aa4d46bd-8402-4aef-acdf-92427eadaba1"
+            },
+            {
+              "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "PROP-20260905-0003",
+              "title": "Cultural Event Proposal - Annual Day",
+              "scope": "Full event management incl sound, lighting, stage setup",
+              "shortSummary": "Complete event management.",
+              "dateAndTime": {
+                "endTime": "22:00",
+                "eventDate": "2026-04-20",
+                "startTime": "17:00"
+              },
+              "targetAudience": "Students, staff and parents",
+              "servicePlanning": [
+                {
+                  "unit": "event",
+                  "service": "Sound System",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                  "unitPrice": 15000,
+                  "description": "Professional sound system with speakers and mixer"
+                }
+              ],
+              "pricing": {
+                "tax": 40000,
+                "currency": "INR",
+                "discount": 10000,
+                "subtotal": 320000,
+                "totalAmount": 350000,
+                "additionalCharges": 0
+              },
+              "paymentTerms": "30% advance at booking, 70% balance after event",
+              "budgetValidUntil": "2026-04-30T00:00:00.000Z",
+              "termsConditions": [
+                "Payment due before event date"
+              ],
+              "companyLogo": {
+                "url": "https://example.com/logo.png",
+                "altText": "Company logo"
+              },
+              "signature": {
+                "name": "Authorized Signatory",
+                "type": "digital",
+                "designation": "Event Manager",
+                "signatureUrl": "https://example.com/signature.png"
+              },
+              "includes": [
+                "Sound system"
+              ],
+              "excludes": [
+                "Catering"
+              ],
+              "totalAmount": "350000",
+              "validUntil": null,
+              "status": "DRAFT",
+              "notes": "Proposal valid for 30 days",
+              "sentAt": null,
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T10:18:29.231Z",
+              "updatedAt": "2026-09-05T10:18:29.231Z",
+              "event": {
+                "id": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+                "eventNumber": "EVT-20260905-0004",
+                "title": "Cultural mass Celebration 2026"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "5e0e2b6c-eb92-4644-a229-bb9e322f4a69"
+            },
+            {
+              "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "PROP-20260905-0002",
+              "title": "Cultural Event Proposal - Annual Day",
+              "scope": "Full event management incl sound, lighting",
+              "shortSummary": "Complete event management.",
+              "dateAndTime": {
+                "endTime": "22:00",
+                "eventDate": "2026-04-20",
+                "startTime": "17:00"
+              },
+              "targetAudience": "Students, staff and parents",
+              "servicePlanning": [
+                {
+                  "unit": "event",
+                  "service": "Sound System",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                  "unitPrice": 15000,
+                  "description": "Full sound system"
+                }
+              ],
+              "pricing": {
+                "tax": 40000,
+                "currency": "INR",
+                "discount": 10000,
+                "subtotal": 320000,
+                "totalAmount": 350000,
+                "additionalCharges": 0
+              },
+              "paymentTerms": "30% advance at booking, 70% balance after event",
+              "budgetValidUntil": "2026-04-30T00:00:00.000Z",
+              "termsConditions": [
+                "Payment due before event date"
+              ],
+              "companyLogo": {
+                "url": "https://example.com/logo.png",
+                "altText": "Company logo"
+              },
+              "signature": {
+                "name": "Authorized Signatory",
+                "type": "digital",
+                "designation": "Event Manager",
+                "signatureUrl": "https://example.com/signature.png"
+              },
+              "includes": [
+                "Sound system"
+              ],
+              "excludes": [
+                "Catering"
+              ],
+              "totalAmount": "350000",
+              "validUntil": null,
+              "status": "DRAFT",
+              "notes": "Proposal valid for 30 days",
+              "sentAt": null,
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T10:07:44.337Z",
+              "updatedAt": "2026-09-05T10:07:44.337Z",
+              "event": {
+                "id": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+                "eventNumber": "EVT-20260905-0004",
+                "title": "Cultural mass Celebration 2026"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "8025f4c5-6a2c-4d92-8782-1cc3e0da92c7"
+            },
+            {
+              "eventId": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "REPROTEST1",
+              "title": "Repro test",
+              "scope": "scope",
+              "shortSummary": "short",
+              "dateAndTime": {
+                "endTime": "22:00",
+                "eventDate": "2026-04-20",
+                "startTime": "17:00"
+              },
+              "targetAudience": "aud",
+              "servicePlanning": [
+                {
+                  "unit": "event",
+                  "service": "Sound System",
+                  "isActive": true,
+                  "quantity": 1,
+                  "serviceId": "9a41f5cd-6219-41ea-b5e0-6c0ec4bd551b",
+                  "unitPrice": 15000,
+                  "description": "desc"
+                }
+              ],
+              "pricing": {
+                "tax": 40000,
+                "currency": "INR",
+                "discount": 10000,
+                "subtotal": 320000,
+                "totalAmount": 350000,
+                "additionalCharges": 0
+              },
+              "paymentTerms": "30% advance at booking, 70% balance after event",
+              "budgetValidUntil": "2026-04-30T00:00:00.000Z",
+              "termsConditions": [
+                "Payment due before event date"
+              ],
+              "companyLogo": {
+                "url": "https://example.com/logo.png",
+                "altText": "Company logo"
+              },
+              "signature": {
+                "name": "Authorized Signatory",
+                "type": "digital",
+                "designation": "Event Manager",
+                "signatureUrl": "https://example.com/signature.png"
+              },
+              "includes": [
+                "Sound system",
+                "Stage lighting"
+              ],
+              "excludes": [
+                "Catering"
+              ],
+              "totalAmount": "350000",
+              "validUntil": "2026-04-15T00:00:00.000Z",
+              "status": "DRAFT",
+              "notes": "notes",
+              "sentAt": null,
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T10:07:04.830Z",
+              "updatedAt": "2026-09-05T10:07:04.830Z",
+              "event": {
+                "id": "aef632ca-5941-42e9-8fe4-c77ff8e67229",
+                "eventNumber": "EVT-20260905-0004",
+                "title": "Cultural mass Celebration 2026"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "37a7add7-d8a5-44e4-8f45-1ee21917bbf8"
+            },
+            {
+              "eventId": "d7947fb6-a3f9-4766-a4ec-b336b7201e7e",
+              "clientId": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+              "proposalNumber": "PROP-20260905-0001",
+              "title": "Cultural Event Proposal - Annual Day",
+              "scope": "Full event management including sound, lighting, and stage setup",
+              "shortSummary": null,
+              "dateAndTime": null,
+              "targetAudience": null,
+              "servicePlanning": null,
+              "pricing": null,
+              "paymentTerms": null,
+              "budgetValidUntil": null,
+              "termsConditions": null,
+              "companyLogo": null,
+              "signature": null,
+              "includes": [
+                "Sound system",
+                "Stage lighting",
+                "LED backdrop",
+                "Event coordinator"
+              ],
+              "excludes": [
+                "Catering",
+                "Transportation"
+              ],
+              "totalAmount": "350000",
+              "validUntil": "2026-04-15T00:00:00.000Z",
+              "status": "DRAFT",
+              "notes": "Proposal valid for 30 days",
+              "sentAt": null,
+              "viewedAt": null,
+              "approvedAt": null,
+              "rejectedAt": null,
+              "createdAt": "2026-09-05T06:37:44.136Z",
+              "updatedAt": "2026-09-05T06:37:44.136Z",
+              "event": {
+                "id": "d7947fb6-a3f9-4766-a4ec-b336b7201e7e",
+                "eventNumber": "EVT-20260905-0002",
+                "title": "Annual Day Celebration 2026 - Updated"
+              },
+              "client": {
+                "id": "41eebfdf-b662-441a-977c-47a2af81dc9f",
+                "name": "Ravi Kumar",
+                "phone": "9788583045"
+              },
+              "proposalId": "67a6a2dc-75e7-4cac-acc5-90127e792d66"
+            }
+          ],
+          "timestamp": "2026-09-05T15:06:19.623Z",
+          "meta": {
+            "page": 1,
+            "pageSize": 10,
+            "total": 10,
+            "totalPages": 1
+          }
+        }
+      '''
+    }
+  }
+}

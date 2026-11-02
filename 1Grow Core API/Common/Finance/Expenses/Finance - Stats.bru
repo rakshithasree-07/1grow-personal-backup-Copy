@@ -1,0 +1,51 @@
+meta {
+  name: Finance - Stats
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base-url}}/finance/stats
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+params:query {
+  year: 2026
+  month: 
+}
+
+docs {
+  ━━━ OVERVIEW ━━━
+
+  Aggregated finance figures for the tenant.
+  Defaults to the current year; add `month` (1-12) to filter a month.
+
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Finance stats retrieved",
+    "data": {
+      "period": { "year": 2026, "month": 9 },
+      "expenses": {
+        "total": 85450,
+        "count": 23,
+        "pending": 5
+      },
+      "salaryPayouts": {
+        "total": 150000,
+        "pending": 2
+      }
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

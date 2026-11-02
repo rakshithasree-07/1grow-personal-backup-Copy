@@ -1,0 +1,25 @@
+meta {
+  name: Reports - Progress Export
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{base-url}}/reports/progress/export
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  format: csv
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

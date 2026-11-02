@@ -1,0 +1,112 @@
+meta {
+  name: Invoice - List
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base-url}}/invoices
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+params:query {
+  page: 1
+  pageSize: 20
+  search: 
+  status: 
+  studentId: 
+  clientId: 
+  dateFrom: 
+  dateTo: 
+  sortBy: createdAt
+  sortDir: desc
+}
+
+docs {
+  ━━━ Search by client name ━━━
+
+  GET /invoices?search=ravi&clientId=7a1c2e3f-9b4d-4f5a-9c1e-2d4f6a8b0c12
+
+  ━━━ Filter student invoices ━━━
+
+  GET /invoices?studentId=4b2c3d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e&status=pending
+
+  ━━━ Sample Response ━━━
+
+  {
+    "message": "Invoices retrieved",
+    "items": [
+      {
+        "id": "f1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "tenantId": "t1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "branchId": "b1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "invoiceNumber": "INV-t1a2b3-1725360600000",
+        "description": "Bharatanatyam - Monthly Fee",
+        "studentId": "s1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "clientId": null,
+        "student": {
+          "id": "s1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+          "name": "Priya Sharma",
+          "email": "priya@example.com",
+          "phone": "9876543210"
+        },
+        "client": null,
+        "subtotal": 27000,
+        "discount": 1000,
+        "tax": 4680,
+        "totalAmount": 30680,
+        "paidAmount": 15000,
+        "dueAmount": 15680,
+        "currency": "INR",
+        "status": "PARTIALLY_PAID",
+        "issueDate": "2026-09-03",
+        "dueDate": "2026-10-01",
+        "paidAt": null,
+        "notes": "Monthly fee",
+        "items": [
+          { "id": "item-uuid-1", "description": "Tuition Fee", "quantity": 1, "price": 25000, "total": 25000 },
+          { "id": "item-uuid-2", "description": "Practice Room Rental", "quantity": 4, "price": 500, "total": 2000 }
+        ],
+        "payments": [
+          { "id": "pay-uuid-1", "amount": 15000, "createdAt": "2026-09-05T10:00:00.000Z" }
+        ],
+        "createdAt": "2026-09-03T10:30:00.000Z",
+        "updatedAt": "2026-09-05T10:00:00.000Z"
+      },
+      {
+        "id": "g2a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "invoiceNumber": "INV-t1a2b3-1725360700000",
+        "description": "Event service - Wedding Decoration",
+        "studentId": null,
+        "clientId": "c1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+        "student": null,
+        "client": {
+          "id": "c1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+          "name": "Ravi Kumar",
+          "email": "ravi@example.com",
+          "phone": "9876543211"
+        },
+        "totalAmount": 65000,
+        "paidAmount": 0,
+        "dueAmount": 65000,
+        "status": "SENT",
+        "items": [],
+        "payments": []
+      }
+    ],
+    "total": 2,
+    "page": 1,
+    "pageSize": 20,
+    "totalPages": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

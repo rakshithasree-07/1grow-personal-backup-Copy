@@ -1,0 +1,55 @@
+meta {
+  name: Send Reminder
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/billing/pending/{{pendingBillingId}}/remind
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "message": "Dear Ravi, your payment of ₹5,000 is due for event booking. Please complete it at your earliest.",
+    "channel": "IN_APP"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  ━━━ Via WhatsApp ━━━
+  
+  {
+    "channel": "WHATSAPP",
+    "message": "Reminder: Your event booking balance of ₹5,000 is overdue. Please pay at the earliest."
+  }
+  
+  ━━━ Sample Response ━━━
+  
+  {
+    "message": "Reminder sent successfully",
+    "data": {
+      "id": "3f9a2c1e-8b3d-4f5a-9c1e-2d4f6a8b0c12",
+      "clientId": "7a1c2e3f-9b4d-4f5a-9c1e-2d4f6a8b0c12",
+      "amount": 5000,
+      "status": "REMINDER_SENT",
+      "reminderCount": 1,
+      "lastReminderAt": "2026-09-04T10:00:00.000Z",
+      "client": {
+        "id": "7a1c2e3f-9b4d-4f5a-9c1e-2d4f6a8b0c12",
+        "name": "Ravi Kumar",
+        "phone": "9876543210"
+      }
+    }
+  }
+}

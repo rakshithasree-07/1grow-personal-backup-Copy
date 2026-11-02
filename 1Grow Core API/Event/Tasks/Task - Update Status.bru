@@ -1,0 +1,114 @@
+meta {
+  name: Task - Update Status
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base-url}}/events/{{eventId}}/tasks/{{taskId}}/status
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "status": "COMPLETED",//TODO,IN_PROGRESS,REVIEW,COMPLETED,BLOCKED,CANCELLED,
+    "notifyClient": true
+  }
+}
+
+vars:pre-request {
+  eventId: 4bd83e46-e759-4117-8336-cae92dbed13e
+  taskId: a345c6a2-8ca6-4fa7-86c1-ace49f2caf31
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/tasks/{{taskId}}/status
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "status": "IN_PROGRESS"//TODO,IN_PROGRESS,REVIEW,COMPLETED,BLOCKED,CANCELLED,
+        "notifyClient": false
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 205fc007-12f6-4739-9de9-df33f83752af
+      x-correlation-id: 205fc007-12f6-4739-9de9-df33f83752af
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 555
+      etag: W/"22b-d8qXVXqirFb6AEZVeHr90ycmjWc"
+      date: Mon, 07 Sep 2026 17:09:05 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Task status updated to IN_PROGRESS",
+          "data": {
+            "id": "486b5d62-3c6e-4e9d-a61f-7562f031ecc7",
+            "tenantId": "12bf3d33-1f28-4ec2-b2d7-17a8534e87f3",
+            "eventId": "460e138d-d11c-4e6b-a65e-570b093ec809",
+            "title": "Setup sound system - Updated",
+            "description": "Updated task description",
+            "assignedTo": "99a37c63-f9b5-424c-93d8-0584fb70e347",
+            "status": "IN_PROGRESS",
+            "priority": "URGENT",
+            "dueDate": "2026-03-14T00:00:00.000Z",
+            "completedAt": null,
+            "createdAt": "2026-09-07T17:01:11.276Z",
+            "updatedAt": "2026-09-07T17:09:05.198Z"
+          },
+          "timestamp": "2026-09-07T17:09:05.415Z"
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,99 @@
+meta {
+  name: Security - Audit Logs - CertificateVerification
+  type: http
+  seq: 24
+}
+
+get {
+  url: {{base-url}}/security/audit-logs
+  body: none
+  auth: inherit
+}
+
+docs {
+  # CertificateVerification audit records
+
+  Filtered view of the audit trail for the `CertificateVerification` entity.
+
+  **Roles:** `SUPER_ADMIN`, `OWNER`, `BRANCH_MANAGER`
+
+  ## Written by
+
+  `POST /class/certificates/verify`
+
+  A successful scan returns the holder's name, course and issue date, so it
+  discloses PII to whoever presented the certificate number. It is therefore
+  logged as `EXPORT`, not `READ`, with `entityId` set to the **certificate id**
+  (not the verification row id) so the trail can be joined back to the
+  `Certificate` record.
+
+  `newValues` carries `certNumber`, `studentName`, `courseName`, `issuedDate`,
+  `verifiedAt` and `attributed`.
+
+  ## Attribution
+
+  The verify route is `@Public()`, so an anonymous scan has no session: `userId`
+  is `null` and the row shows only `ipAddress` / `userAgent`. When a JWT *is*
+  present the request is attributed to that user. `newValues.attributed` tells
+  the two apart, and is `false` for the common anonymous case.
+
+  Only scans of a **valid** certificate log a row. An unknown number or a
+  revoked certificate returns `valid: false` and writes nothing, so repeated
+  guessing attempts are invisible here — check `Security - Security Events` for
+  that.
+
+  `entity` is an exact, case-insensitive match, so every returned row is a
+  genuine `CertificateVerification` record. Use `entityContains` for the old
+  partial behaviour, or see `Security - Audit Logs - Class Module` for all seven
+  Class entities in one request.
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+query {
+  page: 1
+  pageSize: 100
+  entity: CertificateVerification
+}
+
+assert {
+  res.status: eq 200
+  res.body.message: eq "Audit logs fetched"
+}
+
+script:post-response {
+  const ENTITY = 'CertificateVerification';
+  const rows = Array.isArray(res.body?.data) ? res.body.data : [];
+  const meta = res.body?.meta;
+
+  console.log(`${ENTITY}: ${rows.length} of ${meta?.total ?? '?'} records (page ${meta?.page ?? '?'}/${meta?.totalPages ?? '?'})`);
+
+  const anonymous = rows.filter((row) => !row.userId);
+  if (anonymous.length) console.log(`  note: ${anonymous.length} of ${rows.length} scan(s) were anonymous (public verify route); check ipAddress`);
+
+  const missingIp = rows.filter((row) => !row.ipAddress);
+  if (missingIp.length) console.log(`  note: ${missingIp.length} row(s) have no ipAddress recorded`);
+
+  rows.forEach((row) => {
+    const who = row.userId ? `by ${row.userId}` : `anonymous${row.ipAddress ? ` from ${row.ipAddress}` : ''}`;
+    console.log(`  ${row.action.padEnd(11)} ${String(row.entityId ?? '(no entityId)').padEnd(40)} ${row.createdAt} ${who}`);
+  });
+  if (!rows.length) console.log(`  -> no ${ENTITY} records; verify a valid certificate via POST /class/certificates/verify first`);
+
+  if (meta && meta.total > rows.length) {
+    console.log(`  -> ${meta.total - rows.length} more record(s) on later pages; increase page`);
+  }
+
+  const newest = rows[0];
+  if (newest) {
+    bru.setVar('latestCertificateVerificationAuditId', newest.id);
+    bru.setVar('latestCertificateVerificationAuditEntityId', newest.entityId);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

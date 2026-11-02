@@ -1,0 +1,273 @@
+meta {
+  name: Team - Assign Member
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base-url}}/events/{{eventId}}/team
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "userId": "2714b455-9f5c-4c58-8445-aa69f4d1120f",
+    "role": "COORDINATOR",
+    "notes": "Main event coordinator"
+  }
+}
+
+vars:pre-request {
+  eventId: 97330d56-033e-4e25-b834-88bf255049d2
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "userId": "user-uuid",
+        "role": "COORDINATOR",
+        "notes": "Main event coordinator"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Team member assigned successfully",
+          "data": {
+            "id": "member-uuid",
+            "tenantId": "tenant-uuid",
+            "eventId": "event-uuid",
+            "userId": "user-uuid",
+            "role": "COORDINATOR",
+            "status": "ASSIGNED",
+            "notes": "Main event coordinator",
+            "createdAt": "2026-09-06T14:48:09.197Z",
+            "updatedAt": "2026-09-06T14:48:09.197Z",
+            "user": {
+              "id": "user-uuid",
+              "name": "John Doe",
+              "email": "john@example.com"
+            }
+          },
+          "timestamp": "2026-09-06T14:48:09.197Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-Error-UserNotFound
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "userId": "invalid-user-uuid",
+        "role": "COORDINATOR",
+        "notes": "Main event coordinator"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 404
+      text: Not Found
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 404,
+          "message": "User not found",
+          "error": "Not Found",
+          "timestamp": "2026-09-06T14:48:09.197Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-Error-NotEligible
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "userId": "client-user-uuid",
+        "role": "COORDINATOR",
+        "notes": "Client user not eligible"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "User is not eligible for team assignment",
+          "error": "Bad Request",
+          "timestamp": "2026-09-06T14:48:09.197Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-Error-DuplicateAssignment
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "userId": "user-uuid",
+        "role": "COORDINATOR",
+        "notes": "Already assigned"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "User is already assigned to this event with the same role",
+          "error": "Bad Request",
+          "timestamp": "2026-09-06T14:48:09.197Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400-Error-OverAllocation
+  
+  request: {
+    url: {{base-url}}/events/{{eventId}}/team
+    method: POST
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "userId": "user-uuid",
+        "role": "COORDINATOR",
+        "notes": "Already assigned to 5 events"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-type: application/json; charset=utf-8
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 400,
+          "message": "User is already assigned to 5 active events. Maximum allowed is 5.",
+          "error": "Bad Request",
+          "timestamp": "2026-09-06T14:48:09.197Z"
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,110 @@
+meta {
+  name: Type - Update
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{base-url}}/events/types/{{typeId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Cultural Event Updated",
+    "description": "Updated description for cultural events",
+    "isActive": true
+  }
+}
+
+vars:pre-request {
+  typeId: 531c955a-b700-472c-9b13-ea1f662b382c
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200-Success
+  
+  request: {
+    url: {{base-url}}/events/types/{{typeId}}
+    method: PATCH
+    mode: json
+    headers: {
+      Authorization: Bearer {{token}}
+      Content-Type: application/json
+    }
+  
+    body:json: {
+      {
+        "name": "Cultural Event Updated",
+        "description": "Updated description for cultural events",
+        "isActive": true
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 08b2a24b-7644-419a-bed9-b20fa2534bc2
+      x-correlation-id: 08b2a24b-7644-419a-bed9-b20fa2534bc2
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 118
+      x-ratelimit-reset: 44
+      content-type: application/json; charset=utf-8
+      content-length: 390
+      etag: W/"186-BIteqKlou8Cgl3xMVVjsh9YsGhc"
+      date: Mon, 07 Sep 2026 08:31:59 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Event type updated successfully",
+          "data": {
+            "id": "e1554254-380a-44b7-bf7f-65f2c23c475b",
+            "tenantId": "12bf3d33-1f28-4ec2-b2d7-17a8534e87f3",
+            "name": "Cultural Event Updated",
+            "description": "Updated description for cultural events",
+            "isActive": true,
+            "createdAt": "2026-09-07T08:25:49.424Z",
+            "updatedAt": "2026-09-07T08:31:59.066Z"
+          },
+          "timestamp": "2026-09-07T08:31:59.392Z"
+        }
+      '''
+    }
+  }
+}

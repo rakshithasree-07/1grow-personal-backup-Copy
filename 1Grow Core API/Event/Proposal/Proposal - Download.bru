@@ -1,0 +1,24 @@
+meta {
+  name: Proposal - Download
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base-url}}/events/proposals/{{proposalId}}/download
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+vars:pre-request {
+  proposalId: 234561d1-02af-4207-8ef7-bfa475038304
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

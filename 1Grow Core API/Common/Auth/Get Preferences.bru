@@ -1,0 +1,84 @@
+meta {
+  name: Get Preferences
+  type: http
+  seq: 15
+}
+
+get {
+  url: {{base-url}}/auth/preferences
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: 200
+  
+  request: {
+    url: {{base-url}}/auth/preferences
+    method: GET
+    mode: none
+    headers: {
+      Authorization: Bearer {{token}}
+    }
+  }
+  
+  response: {
+    headers: {
+      content-security-policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+      cross-origin-opener-policy: same-origin
+      cross-origin-resource-policy: same-origin
+      origin-agent-cluster: ?1
+      referrer-policy: no-referrer
+      strict-transport-security: max-age=31536000; includeSubDomains
+      x-content-type-options: nosniff
+      x-dns-prefetch-control: off
+      x-download-options: noopen
+      x-frame-options: SAMEORIGIN
+      x-permitted-cross-domain-policies: none
+      x-xss-protection: 0
+      x-request-id: 98639a0c-939d-4c4d-bfdc-143771dc9931
+      x-correlation-id: 98639a0c-939d-4c4d-bfdc-143771dc9931
+      vary: Origin, Accept-Encoding
+      access-control-allow-credentials: true
+      x-ratelimit-limit: 120
+      x-ratelimit-remaining: 119
+      x-ratelimit-reset: 60
+      content-type: application/json; charset=utf-8
+      content-length: 159
+      etag: W/"9f-aW+Nmjd2jglqFyA3RHafwWUS4PI"
+      date: Tue, 01 Sep 2026 18:23:11 GMT
+      connection: keep-alive
+      keep-alive: timeout=5
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Success",
+          "data": {
+            "theme": "light",
+            "pushNotifications": true,
+            "notificationsEnabled": true
+          },
+          "timestamp": "2026-09-01T18:23:11.428Z"
+        }
+      '''
+    }
+  }
+}

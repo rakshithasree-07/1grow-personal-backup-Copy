@@ -1,0 +1,29 @@
+meta {
+  name: Task - Grade Submission
+  type: http
+  seq: 11
+}
+
+patch {
+  url: {{base-url}}/class/tasks/{{id}}/submissions/{{submission-id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "score": 18,
+    "feedback": "Excellent footwork, watch your balance in the final turn",
+    "status": "GRADED"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,55 @@
+meta {
+  name: Fee Plan - Get By ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base-url}}/fee-plans/{{id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+example {
+  name: success
+
+  response: {
+    status: { code: 200, text: OK }
+    body: {
+      type: json
+      content: '''
+        {
+          "httpStatusCode": 200,
+          "message": "Fee plan retrieved successfully",
+          "data": {
+            "id": "fee-plan-uuid",
+            "module": "EVENT",
+            "eventId": "event-uuid",
+            "source": {
+              "id": "event-uuid",
+              "eventNumber": "EVT-20260907-0001",
+              "title": "Corporate Annual Meet",
+              "eventType": { "id": "event-type-uuid", "name": "Corporate Event" },
+              "services": [{ "id": "service-uuid", "name": "Catering", "unitPrice": 15000, "unit": "package" }]
+            },
+            "planName": "Annual Meet Package",
+            "totalAmount": 125000,
+            "publicStatus": "PRIVATE",
+            "publicVisible": false,
+            "status": "active",
+            "studentsAssigned": 0
+          }
+        }
+      '''
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
