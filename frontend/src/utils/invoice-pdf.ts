@@ -2,9 +2,9 @@ import { jsPDF } from "jspdf";
 
 export interface InvoicePdfData {
   invoiceNumber: string;
-  studentName: string;
-  courseName: string;
-  feePlanName: string;
+  studentName?: string;
+  courseName?: string;
+  feePlanName?: string;
   totalAmount: number;
   paidAmount: number;
   dueAmount: number;
@@ -98,7 +98,7 @@ export async function generateInvoicePdf(
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
   doc.setTextColor(50, 50, 50);
-  doc.text(data.studentName, margin, y);
+  doc.text(data.studentName || "Valued Customer", margin, y);
   y += 5;
   if (data.studentEmail) {
     doc.text(data.studentEmail, margin, y);
@@ -129,9 +129,9 @@ export async function generateInvoicePdf(
   y += 8;
 
   const summaryItems = [
-    { label: "Total Amount", value: `$${data.totalAmount.toLocaleString()}`, bold: true },
-    { label: "Paid Amount", value: `$${data.paidAmount.toLocaleString()}`, bold: false },
-    { label: "Due Amount", value: `$${data.dueAmount.toLocaleString()}`, bold: true },
+    { label: "Total Amount", value: `INR ${data.totalAmount.toLocaleString("en-IN")}`, bold: true },
+    { label: "Paid Amount", value: `INR ${data.paidAmount.toLocaleString("en-IN")}`, bold: false },
+    { label: "Due Amount", value: `INR ${data.dueAmount.toLocaleString("en-IN")}`, bold: true },
   ];
 
   summaryItems.forEach((item) => {
@@ -194,7 +194,7 @@ export async function generateInvoicePdf(
         y = margin;
       }
       doc.text(new Date(p.createdAt).toLocaleDateString(), margin, y);
-      doc.text(`$${p.amount.toLocaleString()}`, margin + 60, y);
+      doc.text(`INR ${p.amount.toLocaleString("en-IN")}`, margin + 60, y);
       y += 5;
     });
     y += 3;

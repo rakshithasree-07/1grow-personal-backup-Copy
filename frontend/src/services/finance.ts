@@ -108,12 +108,26 @@ export interface Invoice {
   tenantId: string;
   branchId: string;
   invoiceNumber: string;
-  studentId: string;
+  studentId?: string | null;
   studentName: string;
-  courseId: string;
+  clientId?: string | null;
+  client?: {
+    id: string;
+    name: string;
+    email?: string;
+    phone?: string;
+  } | null;
+  student?: {
+    id: string;
+    name: string;
+    email?: string;
+    phone?: string;
+  } | null;
+  description?: string | null;
+  courseId?: string | null;
   courseName: string;
-  batchName: string;
-  feePlanId: string;
+  batchName?: string;
+  feePlanId?: string | null;
   feePlanName: string;
   totalAmount: number;
   paidAmount: number;
@@ -129,14 +143,33 @@ export interface Invoice {
     amount: number;
     createdAt: string;
   }>;
+  items?: Array<{
+    id: string;
+    description: string;
+    quantity: number;
+    price: number;
+    total: number;
+  }>;
 }
 
 export interface CreateInvoiceRequest {
-  studentId: string;
-  feePlanId: string;
-  issueDate: string;
+  studentId?: string;
+  clientId?: string;
+  feePlanId?: string;
+  amount: number;
+  description?: string;
+  issueDate?: string;
   dueDate: string;
   notes?: string;
+  items?: Array<{
+    description: string;
+    quantity: number;
+    price: number;
+  }>;
+  discount?: number;
+  taxPercent?: number;
+  installments?: number;
+  initialStatus?: "DRAFT" | "SENT";
 }
 
 export interface InvoiceListParams {
@@ -148,6 +181,7 @@ export interface InvoiceListParams {
   dateFrom?: string;
   dateTo?: string;
   studentId?: string;
+  clientId?: string;
   sortBy?: string;
   sortDir?: "asc" | "desc";
 }

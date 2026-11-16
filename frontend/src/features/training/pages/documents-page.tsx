@@ -6,7 +6,7 @@ import { PageContainer } from "@/components/layout";
 import { Button, Badge, Pagination, SearchBar, FilterBar, Modal, ConfirmModal, Card, StatCard, Input, Select, Textarea } from "@/components/ui";
 import { DocumentGrid } from "../components/DocumentGrid";
 import { UploadZone } from "../components/UploadZone";
-import { getDocuments, createDocument, verifyDocument, rejectDocument, archiveDocument, restoreDocument, uploadFile, getFileDownloadUrl, type TrainingDocument } from "@/services/training";
+import { getDocuments, createDocument, verifyDocument, rejectDocument, archiveDocument, restoreDocument, uploadFile, getFileDownloadUrl, downloadFile, getFileBlobUrl, type TrainingDocument } from "@/services/training";
 import { toast } from "sonner";
 
 export function DocumentsPage() {

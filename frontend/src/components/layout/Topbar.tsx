@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { useAuthStore } from "@/store/auth.store";
 import { useNotificationStore } from "@/store/notification.store";
 import { useSubscriptionStore, trialDaysRemaining } from "@/store/subscription.store";
+import { useProfileModal } from "@/store/profile.store";
 import { notificationService } from "@/services/notification.service";
 
 interface TopbarProps {

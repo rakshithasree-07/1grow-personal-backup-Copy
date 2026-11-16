@@ -35,6 +35,14 @@ const statusFilters: FilterDef[] = [
   },
 ];
 
+function formatINR(amount: number): string {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(amount || 0);
+}
+
 export default function InvoicesPage() {
   const user = useAuthStore((s) => s.user);
   const role = user?.role ?? "";
@@ -50,11 +58,19 @@ export default function InvoicesPage() {
     modalOpen, setModalOpen,
     saving,
     openCreate, onSubmit,
-    studentOptions, feePlanOptions,
+    studentOptions, feePlanOptions, feePlans,
+    handleFeePlanChange,
     register, errors, handleSubmit,
     setValue, watch,
     summaryCards,
   } = useInvoices();
+
+  const selectedFeePlanId = watch("feePlanId");
+  const selectedFeePlan = React.useMemo(
+    () => feePlans.find((p) => p.id === selectedFeePlanId),
+    [feePlans, selectedFeePlanId]
+  );
+  const currentAmount = watch("amount");
 
   const columns: Column<Invoice>[] = React.useMemo(() => [
     { key: "invoiceNumber", header: "Invoice #", sortable: true },
@@ -76,7 +92,7 @@ export default function InvoicesPage() {
       header: "Due",
       render: (row) => (
         <span className={row.dueAmount > 0 ? "text-danger font-medium" : "text-success"}>
-          ${row.dueAmount.toLocaleString()}
+          ₹{row.dueAmount.toLocaleString()}
         </span>
       ),
     },
@@ -231,19 +247,21 @@ export default function InvoicesPage() {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         title="Create Invoice"
+        description="Generate a new invoice for a student with fee plan or custom amount."
         size="lg"
         footer={
-          <>
+          <div className="flex items-center justify-end gap-2 w-full">
             <Button variant="outline" onClick={() => setModalOpen(false)} disabled={saving}>
               Cancel
             </Button>
             <Button onClick={handleSubmit(onSubmit)} loading={saving}>
               Create Invoice
             </Button>
-          </>
+          </div>
         }
       >
         <div className="space-y-4">
+          {/* Row 1: Student and Fee Plan */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <SearchableSelect
               label="Student Name"
@@ -255,17 +273,53 @@ export default function InvoicesPage() {
               error={errors.studentId?.message}
               emptyMessage="No students available"
             />
-            <SearchableSelect
-              label="Fee Plan"
-              required
-              placeholder="Search fee plan..."
-              options={feePlanOptions}
-              value={watch("feePlanId") ?? ""}
-              onChange={(v) => setValue("feePlanId", v, { shouldValidate: true })}
-              error={errors.feePlanId?.message}
-              emptyMessage="No fee plans available"
-            />
+            <div>
+              <SearchableSelect
+                label="Fee Plan"
+                placeholder="Search fee plan (optional)..."
+                options={feePlanOptions}
+                value={watch("feePlanId") ?? ""}
+                onChange={handleFeePlanChange}
+                error={errors.feePlanId?.message}
+                emptyMessage="No fee plans available"
+              />
+              <p className="mt-1 text-xs text-text-secondary">
+                {selectedFeePlan
+                  ? `Configured Fee: ${formatINR(selectedFeePlan.totalAmount)}`
+                  : "Selecting a plan auto-populates the amount"}
+              </p>
+            </div>
           </div>
+
+          {/* Row 2: Total Amount and Live Amount Display */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Input
+              label="Total Amount"
+              type="number"
+              min="1"
+              step="any"
+              required
+              leftAddon={<span className="text-text-secondary font-medium">₹</span>}
+              placeholder="e.g. 5000"
+              error={errors.amount?.message}
+              hint={
+                selectedFeePlan && Number(currentAmount) === selectedFeePlan.totalAmount
+                  ? "Auto-populated from selected fee plan"
+                  : "Enter total invoice amount in INR"
+              }
+              {...register("amount", { valueAsNumber: true })}
+            />
+            <div className="flex flex-col justify-end">
+              <div className="rounded-[var(--radius-md)] border border-border bg-surface-raised px-4 py-2.5">
+                <span className="text-xs text-text-secondary block">Calculated Invoice Amount</span>
+                <span className="text-lg font-bold text-primary tabular-nums">
+                  {formatINR(Number(currentAmount) || 0)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Row 3: Issue Date and Due Date */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Input
               label="Issue Date"
@@ -278,15 +332,44 @@ export default function InvoicesPage() {
               label="Due Date"
               type="date"
               required
+              min={watch("issueDate")}
               error={errors.dueDate?.message}
               {...register("dueDate")}
             />
           </div>
+
+          {/* Row 4: Notes */}
           <Textarea
             label="Notes"
             {...register("notes")}
-            placeholder="Optional notes about this invoice"
+            placeholder="Optional notes or billing instructions for this invoice"
           />
+
+          {/* Summary Callout before submission */}
+          {Number(currentAmount) > 0 && (
+            <div className="rounded-[var(--radius-md)] border border-border bg-surface-raised/70 p-3 text-xs space-y-1.5">
+              <div className="flex items-center justify-between text-text-secondary">
+                <span>Billing:</span>
+                <span className="font-medium text-text-primary">
+                  {studentOptions.find((s) => s.value === watch("studentId"))?.label || "Student not selected"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-text-secondary">
+                <span>Payment Window:</span>
+                <span className="font-medium text-text-primary">
+                  {watch("issueDate") && watch("dueDate")
+                    ? `${new Date(watch("issueDate")).toLocaleDateString("en-IN", { day: "numeric", month: "short" })} → ${new Date(watch("dueDate")).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}`
+                    : "Dates not set"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between border-t border-border-subtle pt-1.5 font-semibold text-text-primary">
+                <span>Total Payable:</span>
+                <span className="text-sm text-primary font-bold tabular-nums">
+                  {formatINR(Number(currentAmount) || 0)}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </Modal>
     </PageContainer>

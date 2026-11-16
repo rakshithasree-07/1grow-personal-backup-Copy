@@ -41,12 +41,12 @@ export default function ClientInvoicesPage() {
       setLoading(true);
       try {
         const res = await getInvoices({
-          studentId: user.id,
+          clientId: user.id,
           search: search || undefined,
           status: (statusFilter as InvoiceStatus) || undefined,
           pageSize: 50,
         });
-        setInvoices(res.data.items);
+        setInvoices(res.data.items ?? []);
       } catch {
         // silent
       } finally {
@@ -77,7 +77,7 @@ export default function ClientInvoicesPage() {
       header: "Due",
       render: (row) => (
         <span className={row.dueAmount > 0 ? "text-danger font-medium" : "text-success"}>
-          ${row.dueAmount.toLocaleString()}
+          ₹{row.dueAmount.toLocaleString()}
         </span>
       ),
     },

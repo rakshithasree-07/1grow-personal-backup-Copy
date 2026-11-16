@@ -180,14 +180,14 @@ export function FilesPage() {
               <div className="flex items-center justify-center h-16 mb-3 rounded-[var(--radius-sm)] bg-surface-raised">
                 {(file.category && categoryIcons[file.category]) ?? <File size={24} className="text-text-secondary" />}
               </div>
-              <p className="text-sm font-medium text-text-primary truncate">{file.name}</p>
+              <p className="text-sm font-medium text-text-primary truncate">{file.originalName}</p>
               <p className="text-xs text-text-secondary">{file.size != null ? formatSize(file.size) : "—"}</p>
               {file.isArchived && <Badge size="sm" variant="outline" className="mt-1">Archived</Badge>}
               <div className="mt-3 flex items-center justify-end gap-1 border-t border-border pt-1.5">
                 <button onClick={() => { setPreviewFile(file); if (file.mimeType?.startsWith("image/")) getFileBlobUrl(file.id, "files").then(setPreviewBlobUrl).catch(() => setPreviewBlobUrl(null)); }} title="Preview" className="rounded p-1.5 text-text-secondary hover:bg-surface-overlay transition-colors">
                   <Eye size={14} />
                 </button>
-                <button onClick={() => downloadFile(file.id, "files", file.name)} title="Download" className="rounded p-1.5 text-text-secondary hover:bg-surface-overlay transition-colors">
+                <button onClick={() => downloadFile(file.id, "files", file.originalName)} title="Download" className="rounded p-1.5 text-text-secondary hover:bg-surface-overlay transition-colors">
                   <Download size={14} />
                 </button>
                 {file.isArchived ? (
@@ -209,12 +209,12 @@ export function FilesPage() {
             <div key={file.id} className="flex items-center gap-3 rounded-[var(--radius-sm)] border border-border px-4 py-2.5 transition-colors hover:bg-surface-overlay">
               {(file.category && categoryIcons[file.category]) ?? <File size={16} className="text-text-secondary shrink-0" />}
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-text-primary truncate">{file.name}</p>
+                <p className="text-sm text-text-primary truncate">{file.originalName}</p>
                 <p className="text-xs text-text-secondary">{file.size != null ? formatSize(file.size) : "—"} • {file.category ?? "other"}</p>
               </div>
               <Badge size="sm" variant={file.isArchived ? "outline" : "success"}>{file.isArchived ? "Archived" : "Active"}</Badge>
               <div className="flex items-center gap-0.5">
-                <button onClick={() => downloadFile(file.id, "files", file.name)} title="Download" className="flex items-center gap-1 rounded px-2 py-1 text-xs text-text-secondary hover:bg-surface-overlay transition-colors">
+                <button onClick={() => downloadFile(file.id, "files", file.originalName)} title="Download" className="flex items-center gap-1 rounded px-2 py-1 text-xs text-text-secondary hover:bg-surface-overlay transition-colors">
                   <Download size={13} /> Download
                 </button>
                 {file.isArchived ? (
@@ -240,13 +240,13 @@ export function FilesPage() {
         <UploadZone onUpload={handleUpload} />
       </Modal>
 
-      <Modal open={!!previewFile} onClose={() => { if (previewBlobUrl) { URL.revokeObjectURL(previewBlobUrl); setPreviewBlobUrl(null); } setPreviewFile(null); }} title={previewFile?.name ?? "File"} size="lg">
+      <Modal open={!!previewFile} onClose={() => { if (previewBlobUrl) { URL.revokeObjectURL(previewBlobUrl); setPreviewBlobUrl(null); } setPreviewFile(null); }} title={previewFile?.originalName ?? "File"} size="lg">
         {previewFile && (
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               {(previewFile.category && categoryIcons[previewFile.category]) ?? <File size={24} className="text-primary" />}
               <div>
-                <p className="font-medium text-text-primary">{previewFile.name}</p>
+                <p className="font-medium text-text-primary">{previewFile.originalName}</p>
                 <p className="text-sm text-text-secondary">
                   {previewFile.size != null ? formatSize(previewFile.size) : "—"}
                   {previewFile.mimeType ? ` • ${previewFile.mimeType}` : ""}
@@ -257,19 +257,19 @@ export function FilesPage() {
             </div>
             <div className="rounded-[var(--radius-md)] border border-border bg-surface-raised p-8 text-center">
               {previewBlobUrl ? (
-                <img src={previewBlobUrl} alt={previewFile.name} className="max-h-[300px] mx-auto object-contain" />
+                <img src={previewBlobUrl} alt={previewFile.originalName} className="max-h-[300px] mx-auto object-contain" />
               ) : (
                 <div className="flex flex-col items-center gap-2">
                   {(previewFile.category && categoryIcons[previewFile.category]) ?? <File size={48} className="text-text-disabled" />}
                   <p className="text-sm text-text-secondary">{previewFile.mimeType?.startsWith("image/") ? "Loading preview…" : "Preview not available"}</p>
-                  <Button size="sm" onClick={() => downloadFile(previewFile.id, "files", previewFile.name)}>
+                  <Button size="sm" onClick={() => downloadFile(previewFile.id, "files", previewFile.originalName)}>
                     <Download size={16} /> Download
                   </Button>
                 </div>
               )}
             </div>
             <div className="flex items-center justify-between pt-2">
-              <Button size="sm" variant="outline" onClick={() => downloadFile(previewFile.id, "files", previewFile.name)}>
+              <Button size="sm" variant="outline" onClick={() => downloadFile(previewFile.id, "files", previewFile.originalName)}>
                 <Download size={16} /> Download
               </Button>
               <div className="flex gap-2">
@@ -293,7 +293,7 @@ export function FilesPage() {
         onClose={() => setArchiveConfirm(null)}
         onConfirm={async () => { if (archiveConfirm) await handleArchive(archiveConfirm.id); }}
         title="Archive File"
-        description={`Archive "${archiveConfirm?.name}"?`}
+        description={`Archive "${archiveConfirm?.originalName}"?`}
         confirmLabel="Archive"
         intent="warning"
       />
@@ -303,7 +303,7 @@ export function FilesPage() {
         onClose={() => setRestoreConfirm(null)}
         onConfirm={async () => { if (restoreConfirm) await handleRestore(restoreConfirm.id); }}
         title="Restore File"
-        description={`Restore "${restoreConfirm?.name}"?`}
+        description={`Restore "${restoreConfirm?.originalName}"?`}
         confirmLabel="Restore"
         intent="info"
       />

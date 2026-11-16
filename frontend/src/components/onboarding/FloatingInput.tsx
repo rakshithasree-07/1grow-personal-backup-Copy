@@ -13,15 +13,15 @@ export interface FloatingInputProps extends React.InputHTMLAttributes<HTMLInputE
 }
 
 export const FloatingInput = React.forwardRef<HTMLInputElement, FloatingInputProps>(
-  ({ label, error, hint, leftIcon, rightIcon, className, id, type, displayValue, value: _value, defaultValue, ...props }, ref) => {
+  ({ label, error, hint, leftIcon, rightIcon, className, id, type, displayValue, value, defaultValue, ...props }, ref) => {
     const inputId = id ?? label.toLowerCase().replace(/\s+/g, "-");
     const [focused, setFocused] = React.useState(false);
-    const [hasValue, setHasValue] = React.useState(() => !!defaultValue || !!_value || !!displayValue);
+    const [hasValue, setHasValue] = React.useState(() => !!defaultValue || !!value || !!displayValue);
     const [showPassword, setShowPassword] = React.useState(false);
 
     React.useEffect(() => {
-      if (_value !== undefined) setHasValue(!!_value);
-    }, [_value]);
+      if (value !== undefined) setHasValue(!!value);
+    }, [value]);
 
     React.useEffect(() => {
       if (displayValue !== undefined) setHasValue(!!displayValue);
@@ -67,7 +67,7 @@ export const FloatingInput = React.forwardRef<HTMLInputElement, FloatingInputPro
               setHasValue(!!e.target.value);
               props.onChange?.(e);
             }}
-            value={displayValue ?? props.value}
+            value={displayValue ?? value}
             className={cn(
               "w-full h-12 rounded-xl border-2 bg-transparent px-4 py-3 text-sm text-text-primary",
               "placeholder-text-placeholder",
